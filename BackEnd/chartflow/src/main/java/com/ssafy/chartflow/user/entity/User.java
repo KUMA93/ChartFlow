@@ -7,6 +7,7 @@ import com.ssafy.chartflow.board.entity.ReComments;
 import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
 import com.ssafy.chartflow.game.entity.GameHistory;
+import com.ssafy.chartflow.quiz.entity.UserQuiz;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -74,6 +75,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private final List<ReComments> userRecomments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private final List<UserQuiz> userQuiz = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

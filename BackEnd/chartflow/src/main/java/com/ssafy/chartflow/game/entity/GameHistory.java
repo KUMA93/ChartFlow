@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Table(name = "user_emblem")
+@Table(name = "game_history")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 public class GameHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "key")
-    private int key;
+    @Column(name = "game_history_id")
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
