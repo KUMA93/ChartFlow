@@ -17,8 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "user")
 @Builder
 @AllArgsConstructor
@@ -36,6 +35,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "nickname")
     private String nickname;
 
@@ -51,6 +53,9 @@ public class User implements UserDetails {
 
     @Column(name = "social")
     private short social;
+
+    @Column(name = "cancel")
+    private boolean cancel;
 
     @OneToMany(mappedBy = "user")
     private final List<UserEmblem> emblems = new ArrayList<>();
