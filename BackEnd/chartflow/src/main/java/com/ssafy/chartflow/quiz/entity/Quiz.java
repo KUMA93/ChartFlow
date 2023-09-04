@@ -3,6 +3,9 @@ package com.ssafy.chartflow.quiz.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -17,10 +20,12 @@ public class Quiz {
     @Column(name = "quiz_id")
     private long id;
 
-    @Column(name = "question")
-    private String question;
+    @OneToMany(mappedBy = "quiz")
+    private final List<QuizChoices> quizChoices = new ArrayList<>();
+
+    @OneToMany(mappedBy = "quiz")
+    private final List<UserQuiz> userQuiz = new ArrayList<>();
 
     @Column(name = "answer")
     private String answer;
-    // getters, setters, etc.
 }

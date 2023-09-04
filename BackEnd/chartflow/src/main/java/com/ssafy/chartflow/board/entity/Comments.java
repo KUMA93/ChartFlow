@@ -18,7 +18,7 @@ public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private int commentId;
+    private long commentId;
 
     @ManyToOne
     @JoinColumn(name = "article_id")

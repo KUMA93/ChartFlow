@@ -16,11 +16,13 @@ public class UserQuiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_quiz_id")
-    private int id;
+    private long id;
 
     @ManyToOne
-    private User user;
-
-    @ManyToOne
+    @JoinColumn(name = "quiz_id")
     private Quiz quiz;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

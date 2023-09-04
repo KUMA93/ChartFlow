@@ -11,15 +11,14 @@ import lombok.*;
 @Builder
 public class QuizChoices {
     @Id
-    @Column(name = "Key")
-    private String key;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "quiz_choice_id")
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
+    @Column(name = "content")
+    private String content;
 }
