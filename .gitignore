@@ -341,6 +341,7 @@ $RECYCLE.BIN/
  .idea/modules.xml
  .idea/*.iml
  .idea/modules
+ .idea/*
  *.iml
  *.ipr
 
@@ -369,10 +370,10 @@ $RECYCLE.BIN/
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
- *.iml
- modules.xml
- .idea/misc.xml
- *.ipr
+
+modules.xml
+.idea/misc.xml
+
 
 # Sonarlint plugin
 # https://plugins.jetbrains.com/plugin/7973-sonarlint
