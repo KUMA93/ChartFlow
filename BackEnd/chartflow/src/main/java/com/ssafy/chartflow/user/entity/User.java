@@ -56,7 +56,7 @@ public class User implements UserDetails {
     private short social;
 
     @Column(name = "cancel")
-    private boolean cancel;
+    private int cancel;
 
     @OneToMany(mappedBy = "user")
     private final List<UserEmblem> emblems = new ArrayList<>();
