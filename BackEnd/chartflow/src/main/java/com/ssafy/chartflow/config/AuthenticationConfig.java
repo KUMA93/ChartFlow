@@ -1,6 +1,6 @@
 package com.ssafy.chartflow.config;
 
-import com.ssafy.jarviser.repository.UserRepository;
+import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

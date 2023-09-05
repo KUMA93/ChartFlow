@@ -1,5 +1,6 @@
-package com.ssafy.chartflow.security;
+package com.ssafy.chartflow.security.filter;
 
+import com.ssafy.chartflow.security.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

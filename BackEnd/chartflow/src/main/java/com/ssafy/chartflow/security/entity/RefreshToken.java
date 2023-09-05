@@ -1,4 +1,4 @@
-package com.ssafy.chartflow.security;
+package com.ssafy.chartflow.security.entity;
 
 import com.ssafy.chartflow.user.entity.User;
 import jakarta.persistence.*;

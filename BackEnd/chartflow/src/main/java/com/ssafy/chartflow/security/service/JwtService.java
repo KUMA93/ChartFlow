@@ -1,12 +1,16 @@
-package com.ssafy.chartflow.security;
+package com.ssafy.chartflow.security.service;
 
+import com.ssafy.chartflow.security.entity.RefreshToken;
 import com.ssafy.chartflow.user.entity.User;
+import com.ssafy.chartflow.user.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +28,11 @@ import java.util.function.Function;
 @Slf4j
 public class JwtService {
 
+    @Autowired
+    private RefreshTokenService refreshTokenService;
+
+    @Autowired
+    private UserService userService;
     private final String secretKey;
     private final long expirationHours;
     private final String issuer;
@@ -67,6 +76,33 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
+    public String generateRefreshToken(UserDetails userDetails) {
+        String refreshToken = generateToken(new HashMap<>(), userDetails);
+        RefreshToken refreshTokenEntity = new RefreshToken();
+        refreshTokenEntity.setToken(refreshToken);
+        refreshTokenEntity.setUser((User) userDetails);
+        refreshTokenService.save(refreshTokenEntity);
+        return refreshToken;
+    }
+
+    public String refreshToken(String expiredToken, String refreshToken) {
+        if (isTokenValid(refreshToken, loadUserByRefreshToken(refreshToken))) {  // Refresh Token 검증
+            UserDetails userDetails = loadUserByRefreshToken(refreshToken);  // DB에서 UserDetails 가져오기
+            return generateToken(userDetails);  // 새 Access Token 발급
+        } else {
+            throw new RuntimeException("Invalid refresh token");
+        }
+    }
+
+    private UserDetails loadUserByRefreshToken(String refreshToken) {
+        RefreshToken storedRefreshToken = refreshTokenService.findByToken(refreshToken);
+        if (storedRefreshToken != null) {
+            return userService.getUserByRefreshToken(refreshToken);
+        } else {
+            throw new RuntimeException("Refresh token does not exist");
+        }
+    }
+
     public String generateToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails
@@ -84,6 +120,8 @@ public class JwtService {
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
+
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
