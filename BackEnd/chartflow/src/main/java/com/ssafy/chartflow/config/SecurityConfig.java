@@ -1,5 +1,6 @@
 package com.ssafy.chartflow.config;
 
+import com.ssafy.chartflow.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
