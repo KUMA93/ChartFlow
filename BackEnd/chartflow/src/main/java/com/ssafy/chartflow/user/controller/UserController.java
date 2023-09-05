@@ -2,6 +2,8 @@ package com.ssafy.chartflow.user.controller;
 
 import com.ssafy.chartflow.exception.NotRegisteredException;
 import com.ssafy.chartflow.exception.PasswordWrongException;
+import com.ssafy.chartflow.user.dto.RequestLoginDto;
+import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.service.EmailService;
 import com.ssafy.chartflow.user.service.UserService;
@@ -16,8 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -35,6 +40,31 @@ public class UserController {
 
     @Autowired
     EmailService emailService;
+
+    @Operation(summary = "회원가입", description = "email과 password 기반 로그인 기능")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "로그인 성공"),
+            @ApiResponse(responseCode = "403", description = "로그인 실패 - 로그인 권한 없음"),
+            @ApiResponse(responseCode = "500", description = "로그인 실패 - 내부 서버 오류")
+    })
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody RequestLoginDto requestLoginDto) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status;
+
+        try {
+            ResponseAuthenticationDto response = userService.login(requestLoginDto);
+            resultMap.put("message", "Success");
+            resultMap.put("access-token", response.getAccessToken());
+            resultMap.put("refresh-token", response.getRefreshToken());
+            status = HttpStatus.ACCEPTED;
+        } catch (Exception e) {
+            resultMap.put("message", "Login failed: " + e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(resultMap, status);
+    }
 
     @Operation(summary = "회원가입", description = "User 객체를 이용해 회원가입을 하는 API")
     @ApiResponses({
