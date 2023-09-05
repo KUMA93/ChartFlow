@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .authorizeHttpRequests(requests ->
-                        requests.requestMatchers("*").permitAll()
+                        requests.requestMatchers("**").permitAll()
                                 //TODO: API 완성됐을 때 상세히 구현. 메인페이지, 로그인, 회원가입 permit해야함. allowedUrl 활용
                                 .anyRequest().authenticated()
                 )
