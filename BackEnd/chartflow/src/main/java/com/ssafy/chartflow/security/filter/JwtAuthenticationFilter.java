@@ -27,23 +27,39 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {//Request -> 
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain //거쳐갈 다른 필터들
+            @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization"); //헤더에 jwt토큰
+        final String authHeader = request.getHeader("Authorization");
+        final String refreshHeader = request.getHeader("Refresh-Token");
         final Long userId;
-        final String jwt;
+        String jwt;
         final String userEmail;
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response); //검증되면 다음 필터로 넘거간다.
+            filterChain.doFilter(request, response);
             return;
         }
-        jwt = authHeader.split(" ")[1].trim(); //authHeader에서 Bearer 이후의 실질적 jwt토큰을 뽑아냄.
+
+        jwt = authHeader.split(" ")[1].trim();
         userEmail = jwtService.extractUserEmail(jwt);
         userId = jwtService.extractUserId(jwt);
-        //SecurityContextHolder로부터 검증받기 위함
-        if (userId!= null && userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+        if (userId != null && userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-            if (jwtService.isTokenValid(jwt, userDetails)){
+
+            if (jwtService.isTokenExpired(jwt)) {
+                if (refreshHeader != null) {
+                    // Renew the access token using the refresh token
+                    jwt = jwtService.refreshToken(jwt, refreshHeader);
+
+                    response.setHeader("New-Access-Token", jwt);
+                } else {
+                    filterChain.doFilter(request, response);
+                    return;
+                }
+            }
+
+            if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -55,8 +71,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {//Request -> 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
+
         filterChain.doFilter(request, response);
     }
+
 
 }
 

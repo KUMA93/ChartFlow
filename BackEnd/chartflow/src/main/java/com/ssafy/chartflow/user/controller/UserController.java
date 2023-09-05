@@ -41,31 +41,6 @@ public class UserController {
     @Autowired
     EmailService emailService;
 
-    @Operation(summary = "회원가입", description = "email과 password 기반 로그인 기능")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "로그인 성공"),
-            @ApiResponse(responseCode = "403", description = "로그인 실패 - 로그인 권한 없음"),
-            @ApiResponse(responseCode = "500", description = "로그인 실패 - 내부 서버 오류")
-    })
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody RequestLoginDto requestLoginDto) {
-        Map<String, Object> resultMap = new HashMap<>();
-        HttpStatus status;
-
-        try {
-            ResponseAuthenticationDto response = userService.login(requestLoginDto);
-            resultMap.put("message", "Success");
-            resultMap.put("access-token", response.getAccessToken());
-            resultMap.put("refresh-token", response.getRefreshToken());
-            status = HttpStatus.ACCEPTED;
-        } catch (Exception e) {
-            resultMap.put("message", "Login failed: " + e.getMessage());
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-
-        return new ResponseEntity<>(resultMap, status);
-    }
-
     @Operation(summary = "회원가입", description = "User 객체를 이용해 회원가입을 하는 API")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "회원가입 성공"),
