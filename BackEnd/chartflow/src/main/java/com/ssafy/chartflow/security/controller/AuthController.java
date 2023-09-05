@@ -1,5 +1,7 @@
 package com.ssafy.chartflow.security.controller;
 
+import com.ssafy.chartflow.security.entity.RefreshToken;
+import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
 import com.ssafy.chartflow.user.service.UserService;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,6 +28,7 @@ import java.util.Map;
 public class AuthController {
 
     private final UserService userService;
+    private final JwtService jwtService;
 
     @Operation(summary = "로그인", description = "email과 password 기반 로그인 기능")
     @ApiResponses({
@@ -49,6 +53,34 @@ public class AuthController {
         }
 
         return new ResponseEntity<>(resultMap, status);
+    }
+
+    @Operation(summary = "refresh", description = "토큰 재발급 기능")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "재발급 성공"),
+            @ApiResponse(responseCode = "500", description = "로그인 실패 - 내부 서버 오류")
+    })
+    @PostMapping("/refresh")
+    public ResponseEntity<Map<String, Object>> refreshToken(
+            @RequestHeader("Authorization") String accessToken,
+            @RequestHeader("Refresh-token") String refreshToken
+    ) {
+        Map<String, Object> resultMap = new HashMap<>();
+        if (refreshToken == null || refreshToken.isBlank()) {
+            resultMap.put("message", "Refresh token is required");
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            String newAccessToken = jwtService.refreshToken(accessToken, refreshToken);
+
+            resultMap.put("accessToken", newAccessToken);
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+
+        } catch (Exception e) {
+            resultMap.put("message", "Invalid refresh token");
+            return new ResponseEntity<>(resultMap, HttpStatus.UNAUTHORIZED);
+        }
     }
 
 }
