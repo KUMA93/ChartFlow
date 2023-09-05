@@ -3,6 +3,7 @@ package com.ssafy.chartflow.user.controller;
 import com.ssafy.chartflow.exception.NotRegisteredException;
 import com.ssafy.chartflow.exception.PasswordWrongException;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
+import com.ssafy.chartflow.user.dto.RequestRegistDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.service.EmailService;
@@ -47,11 +48,12 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "회원가입 실패 - 내부 서버 오류"),
     })
     @PostMapping("/regist")
-    public ResponseEntity<?> regist(@RequestBody User user) {
+    public ResponseEntity<?> regist(@RequestBody RequestRegistDto requestRegistDto) {
         try{
-            userService.regist(user.getEmail(), user.getPassword(), user.getName(), user.getNickname());
+            userService.regist(requestRegistDto.getEmail(), requestRegistDto.getPassword(), requestRegistDto.getName(), requestRegistDto.getNickname());
             log.info("회원가입 성공");
-            return new ResponseEntity<User>(user, HttpStatus.OK);    
+
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }catch (Exception e) {
             log.info("회원가입 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);

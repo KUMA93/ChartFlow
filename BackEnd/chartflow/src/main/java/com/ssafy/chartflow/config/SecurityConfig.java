@@ -21,18 +21,17 @@ import java.util.Arrays;
 @EnableWebSecurity //default security setting을 모두 버리겠다.
 @Configuration
 public class SecurityConfig {
-    private final String[] allowedUrls = {"/", "/swagger-ui/**", "*/signup", "*/login"};	// sign-up, sign-in 추가
+    private final String[] allowedUrls = {"/", "/swagger-ui/**", "**/signup", "**/login"};	// sign-up, sign-in 추가
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf()
-                .disable()
+                .csrf().disable()
                 .cors()
                 .and()
                 .authorizeHttpRequests(requests ->
-                        requests.requestMatchers("*").permitAll()
+                        requests.requestMatchers("**").permitAll()
                                 //TODO: API 완성됐을 때 상세히 구현. 메인페이지, 로그인, 회원가입 permit해야함. allowedUrl 활용
                                 .anyRequest().authenticated()
                 )

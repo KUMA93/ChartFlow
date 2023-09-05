@@ -3,6 +3,7 @@ package com.ssafy.chartflow.user.service;
 import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
+import com.ssafy.chartflow.user.entity.Role;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,9 @@ public class UserService {
                 .name(name)
                 .password(encodedPassword)
                 .nickname(nickname)
+                .coin(20)
+                .budget(100000000L)
+                .role(Role.USER)
                 .build();
 
         return userRepository.save(user);
