@@ -8,6 +8,7 @@ import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.quiz.entity.UserQuiz;
+import com.ssafy.chartflow.security.RefreshToken;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -79,6 +80,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private final List<UserQuiz> userQuiz = new ArrayList<>();
 
+    @OneToOne
+    private RefreshToken refreshToken;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
