@@ -34,18 +34,24 @@ public class JwtService {
 
     @Autowired
     private UserRepository userRepository;
-    private final String secretKey;
-    private final long expirationHours;
+    private final String accessTokenSecretKey;
+    private final String refreshTokenSecretKey;
+    private final long accessTokenExpirationHours;
+    private final long refreshTokenExpirationHours;
     private final String issuer;
     private final long hour = 60 * 60 * 1000;
 
     public JwtService(
-            @Value("${secret-key}") String secretKey,
-            @Value("${expiration-hours}") long expirationHours,
+            @Value("${access-token-secret-key}") String accessTokenSecretKey,
+            @Value("${refresh-token-secret-key}") String refreshTokenSecretKey,
+            @Value("${access-token-expiration-hours}") long accessTokenExpirationHours,
+            @Value("${refresh-token-expiration-hours}") long refreshTokenExpirationHours,
             @Value("${issuer}") String issuer
     ){
-        this.secretKey = secretKey;
-        this.expirationHours = expirationHours;
+        this.accessTokenSecretKey = accessTokenSecretKey;
+        this.refreshTokenSecretKey = refreshTokenSecretKey;
+        this.accessTokenExpirationHours = accessTokenExpirationHours;
+        this.refreshTokenExpirationHours = refreshTokenExpirationHours;
         this.issuer = issuer;
     }
     public String extractUserEmail(String token) {
@@ -74,11 +80,11 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+        return generateToken(new HashMap<>(), userDetails, accessTokenSecretKey, accessTokenExpirationHours);
     }
 
     public String generateRefreshToken(UserDetails userDetails) {
-        String refreshToken = generateToken(new HashMap<>(), userDetails);
+        String refreshToken = generateToken(new HashMap<>(), userDetails, refreshTokenSecretKey, refreshTokenExpirationHours);
         RefreshToken refreshTokenEntity = new RefreshToken();
         refreshTokenEntity.setToken(refreshToken);
         refreshTokenEntity.setUser((User) userDetails);
@@ -104,10 +110,9 @@ public class JwtService {
         }
     }
 
-    public String generateToken(
-            Map<String, Object> extraClaims,
-            UserDetails userDetails
-    ) {
+    private String generateToken
+            (Map<String, Object> extraClaims, UserDetails userDetails,
+             String secretKey, long expirationHours) {
         User user = (User) userDetails;
         extraClaims.put("userId", user.getId());
         extraClaims.put("username", user.getName());
@@ -118,10 +123,9 @@ public class JwtService {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expirationHours * hour))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignInKey(secretKey), SignatureAlgorithm.HS256)
                 .compact();
     }
-
 
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -130,16 +134,16 @@ public class JwtService {
     }
 
     public Claims extractAllClaims(String token) {
-        log.info("secretKey : " + secretKey);
+        log.info("secretKey : " + accessTokenSecretKey);
         return Jwts
                 .parserBuilder()
-                .setSigningKey(secretKey.getBytes())
+                .setSigningKey(accessTokenSecretKey.getBytes())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
 
-    private Key getSignInKey() {
+    private Key getSignInKey(String secretKey) {
         log.info(secretKey);
         byte[] keyBytes = secretKey.getBytes();
         return Keys.hmacShaKeyFor(keyBytes);
