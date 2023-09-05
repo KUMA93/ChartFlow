@@ -2,6 +2,8 @@ package com.ssafy.chartflow.user.controller;
 
 import com.ssafy.chartflow.exception.NotRegisteredException;
 import com.ssafy.chartflow.exception.PasswordWrongException;
+import com.ssafy.chartflow.user.dto.RequestLoginDto;
+import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.service.EmailService;
 import com.ssafy.chartflow.user.service.UserService;
@@ -16,8 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
