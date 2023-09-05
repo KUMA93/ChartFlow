@@ -64,8 +64,4 @@ public class UserService {
         user.setPassword(encodedPassword);
         userRepository.save(user);
     }
-
-    public User getUserByRefreshToken(String refreshToken) {
-        return userRepository.findUserByRefreshToken_token(refreshToken);
-    }
 }

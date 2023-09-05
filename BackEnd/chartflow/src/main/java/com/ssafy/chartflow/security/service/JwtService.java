@@ -2,6 +2,7 @@ package com.ssafy.chartflow.security.service;
 
 import com.ssafy.chartflow.security.entity.RefreshToken;
 import com.ssafy.chartflow.user.entity.User;
+import com.ssafy.chartflow.user.repository.UserRepository;
 import com.ssafy.chartflow.user.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -32,7 +33,7 @@ public class JwtService {
     private RefreshTokenService refreshTokenService;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
     private final String secretKey;
     private final long expirationHours;
     private final String issuer;
@@ -97,7 +98,7 @@ public class JwtService {
     private UserDetails loadUserByRefreshToken(String refreshToken) {
         RefreshToken storedRefreshToken = refreshTokenService.findByToken(refreshToken);
         if (storedRefreshToken != null) {
-            return userService.getUserByRefreshToken(refreshToken);
+            return userRepository.findUserByRefreshToken_token(refreshToken);
         } else {
             throw new RuntimeException("Refresh token does not exist");
         }
