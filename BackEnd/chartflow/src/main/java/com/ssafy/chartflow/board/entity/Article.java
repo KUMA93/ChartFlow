@@ -46,4 +46,14 @@ public class Article {
     @OneToMany(mappedBy = "article")
     private List<Likes> likes = new ArrayList<>();
     // getters, setters, etc.
+
+    // 양방향 맵핑
+    public void setUser(User user) {
+        if(user!=null){
+            user.getArticles().remove(this);
+        }
+        this.user = user;
+        assert user != null;
+        user.getArticles().add(this);
+    }
 }
