@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BoardServiceImp implements BoardService{
     @Override
-    public ArticleResponseDto getArticle(String email, String content) {
+    public ArticleResponseDto writeArticle(String email, String content) {
         return null;
     }
 
