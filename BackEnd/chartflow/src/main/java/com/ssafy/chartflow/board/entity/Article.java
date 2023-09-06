@@ -37,6 +37,9 @@ public class Article {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
+
     @OneToMany(mappedBy = "article")
     private List<Comments> comments = new ArrayList<>();
 
