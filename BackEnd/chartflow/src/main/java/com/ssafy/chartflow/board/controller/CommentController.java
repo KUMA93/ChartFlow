@@ -1,6 +1,8 @@
 package com.ssafy.chartflow.board.controller;
 
 import com.ssafy.chartflow.board.dto.request.RequestWriteCommentDto;
+import com.ssafy.chartflow.board.dto.request.RequestWriteReCommentDto;
+import com.ssafy.chartflow.board.dto.response.ResponseCommentDto;
 import com.ssafy.chartflow.board.entity.Comments;
 import com.ssafy.chartflow.board.service.CommentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,10 +27,11 @@ public class CommentController {
     CommentService commentService;
 
     @GetMapping("/{articleId}")
-    public ResponseEntity<?> getCommentList(@PathVariable int articleId){
+    public ResponseEntity<?> getCommentList(@PathVariable long articleId){
         try {
             log.info("Comment Controller - 댓글 목록 조회");
-            List<Comments> comments
+            List<ResponseCommentDto> comments = commentService.searchAll(articleId);
+            return new ResponseEntity<List<ResponseCommentDto>>(comments, HttpStatus.OK);
         }catch (Exception e) {
             log.info("Comment Controller - 댓글 목록 조회 실패");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -39,11 +42,24 @@ public class CommentController {
     public ResponseEntity<?> writeComment(@RequestBody RequestWriteCommentDto requestWriteCommentDto) {
         try {
             log.info("Comment Controller - 댓글 작성");
-            Comments comments = commentService.write(requestWriteCommentDto.getArticleId(), requestWriteCommentDto.getUserId(), requestWriteCommentDto.getContent());
+            commentService.write(requestWriteCommentDto.getArticleId(), requestWriteCommentDto.getUserId(), requestWriteCommentDto.getContent());
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }catch (Exception e) {
             log.info("Comment Controller - 댓글 작성 실패");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/recomment")
+    public ResponseEntity<?> writeReComment(@RequestBody RequestWriteReCommentDto requestWriteReCommentDto) {
+        try {
+            log.info("Comment Controller - 대댓글 작성");
+            commentService.writeReComment(requestWriteReCommentDto.getCommentId(), requestWriteReCommentDto.getUserId(), requestWriteReCommentDto.getContent());
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }catch (Exception e) {
+            log.info("Comment Controller - 대댓글 작성 실패");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

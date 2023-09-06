@@ -7,8 +7,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "recomment")
 @NoArgsConstructor
 @AllArgsConstructor

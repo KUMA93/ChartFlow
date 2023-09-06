@@ -4,5 +4,5 @@ import com.ssafy.chartflow.board.entity.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ArticleRepository extends JpaRepository<Article,Long> {
-    public Article getArticleByArticleId(Long articleId);
+    public Article findArticleByArticleId(Long articleId);
 }
