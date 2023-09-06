@@ -17,4 +17,6 @@ public class ResponseReCommentDto {
     private long userId;
     private String content;
     private LocalDateTime registerTime;
+    private int cancel;
+    private int modify;
 }

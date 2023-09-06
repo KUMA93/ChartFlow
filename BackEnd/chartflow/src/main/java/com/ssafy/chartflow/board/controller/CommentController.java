@@ -1,5 +1,7 @@
 package com.ssafy.chartflow.board.controller;
 
+import com.ssafy.chartflow.board.dto.request.RequestModifyCommentDto;
+import com.ssafy.chartflow.board.dto.request.RequestModifyReCommentDto;
 import com.ssafy.chartflow.board.dto.request.RequestWriteCommentDto;
 import com.ssafy.chartflow.board.dto.request.RequestWriteReCommentDto;
 import com.ssafy.chartflow.board.dto.response.ResponseCommentDto;
@@ -50,7 +52,7 @@ public class CommentController {
         }
     }
 
-    @PostMapping("/recomment")
+    @PostMapping("/re")
     public ResponseEntity<?> writeReComment(@RequestBody RequestWriteReCommentDto requestWriteReCommentDto) {
         try {
             log.info("Comment Controller - 대댓글 작성");
@@ -58,6 +60,54 @@ public class CommentController {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }catch (Exception e) {
             log.info("Comment Controller - 대댓글 작성 실패");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping()
+    public ResponseEntity<?> modifyComment(@RequestBody RequestModifyCommentDto requestModifyCommentDto) {
+        try {
+            log.info("Comment Controller - 댓글 수정");
+            commentService.modifyComment(requestModifyCommentDto.getCommentId(), requestModifyCommentDto.getContent());
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }catch (Exception e) {
+            log.info("Comment Controller - 댓글 수정 실패");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping("/re")
+    public ResponseEntity<?> modifyReComment(@RequestBody RequestModifyReCommentDto requestModifyReCommentDto) {
+        try {
+            log.info("Comment Controller - 대댓글 수정");
+            commentService.modifyReComment(requestModifyReCommentDto.getReCommentId(), requestModifyReCommentDto.getContent());
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }catch (Exception e) {
+            log.info("Comment Controller - 댓글 수정 실패");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<?> deleteComment(@PathVariable long commentId) {
+        try {
+            log.info("Comment Controller - 댓글 삭제");
+            commentService.deleteComment(commentId);
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }catch (Exception e) {
+            log.info("Comment Controller - 댓글 삭제 실패");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/re/{commentId}")
+    public ResponseEntity<?> deleteReComment(@PathVariable long reCommentId) {
+        try {
+            log.info("Comment Controller - 대댓글 삭제");
+            commentService.deleteReComment(reCommentId);
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }catch (Exception e) {
+            log.info("Comment Controller - 대댓글 삭제 실패");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

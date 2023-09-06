@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestWriteCommentDto {
-    private int userId;
-    private int articleId;
+    private long userId;
+    private long articleId;
     private String content;
 }

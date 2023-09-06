@@ -38,6 +38,13 @@ public class Comments {
     private List<ReComments> reComments = new ArrayList<>();
     // getters, setters, etc.
 
+    @Column(name = "cancel")
+    private int cancel;
+
+    @Column(name = "modify")
+    private int modify;
+
+
     public void setArticle(Article article) {
         this.article = article;
         article.getComments().add(this);

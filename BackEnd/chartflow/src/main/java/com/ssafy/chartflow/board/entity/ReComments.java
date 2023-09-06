@@ -30,4 +30,10 @@ public class ReComments{
 
     @Column(name = "registertime")
     private LocalDateTime registerTime;
+
+    @Column(name = "cancel")
+    private int cancel;
+
+    @Column(name = "modify")
+    private int modify;
 }

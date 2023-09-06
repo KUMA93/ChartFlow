@@ -19,5 +19,7 @@ public class ResponseCommentDto {
     private long userId;
     private String content;
     private LocalDateTime registerTime;
+    private int cancel;
+    private int modify;
     private List<ResponseReCommentDto> reComments;
 }
