@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User, Integer> { //JpaRepository<Entity클래스, PK타입>
+public interface UserRepository extends JpaRepository<User, Long> { //JpaRepository<Entity클래스, PK타입>
 
     User findUserByEmailAndCancel(String email, int cancel);
 

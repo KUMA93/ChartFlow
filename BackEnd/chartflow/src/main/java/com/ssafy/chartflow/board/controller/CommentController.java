@@ -40,7 +40,7 @@ public class CommentController {
         try {
             log.info("Comment Controller - 댓글 작성");
             Comments comments = commentService.write(requestWriteCommentDto.getArticleId(), requestWriteCommentDto.getUserId(), requestWriteCommentDto.getContent());
-            return new ResponseEntity<Comments>(comments, HttpStatus.OK);
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }catch (Exception e) {
             log.info("Comment Controller - 댓글 작성 실패");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
