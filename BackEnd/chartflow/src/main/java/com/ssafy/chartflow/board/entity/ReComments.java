@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class ReComments{
     @Id
     @Column(name = "recomment_id")
-    private long recommentId;
+    private long reCommentId;
 
     @ManyToOne
     @JoinColumn(name = "comment_id")

@@ -37,4 +37,14 @@ public class Comments {
     @OneToMany(mappedBy = "comment")
     private List<ReComments> reComments = new ArrayList<>();
     // getters, setters, etc.
+
+    public void setArticle(Article article) {
+        this.article = article;
+        article.getComments().add(this);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getComments().add(this);
+    }
 }

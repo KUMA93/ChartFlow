@@ -29,7 +29,7 @@
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "user_id")
-        private long id;
+        private long userId;
 
         @Column(name = "email")
         private String email;
@@ -63,22 +63,22 @@
         private final List<UserEmblem> emblems = new ArrayList<>();
 
         @OneToMany(mappedBy = "user")
-        private final List<GameHistory> userGameHistories = new ArrayList<>();
+        private final List<GameHistory> gameHistories = new ArrayList<>();
 
         @OneToMany(mappedBy = "user")
-        private final List<Likes> userLikes = new ArrayList<>();
+        private final List<Likes> likes = new ArrayList<>();
 
         @OneToMany(mappedBy = "user")
-        private final List<Comments> userComments = new ArrayList<>();
+        private final List<Comments> comments = new ArrayList<>();
 
         @OneToMany(mappedBy = "user")
-        private final List<Article> userArticle = new ArrayList<>();
+        private final List<Article> articles = new ArrayList<>();
 
         @OneToMany(mappedBy = "user")
-        private final List<ReComments> userRecomments = new ArrayList<>();
+        private final List<ReComments> reComments = new ArrayList<>();
 
         @OneToMany(mappedBy = "user")
-        private final List<UserQuiz> userQuiz = new ArrayList<>();
+        private final List<UserQuiz> Quizs = new ArrayList<>();
 
         @OneToOne
         private RefreshToken refreshToken;
