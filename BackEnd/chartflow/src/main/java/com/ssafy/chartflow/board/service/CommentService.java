@@ -8,6 +8,7 @@ import com.ssafy.chartflow.board.entity.ReComments;
 import com.ssafy.chartflow.board.repository.ArticleRepository;
 import com.ssafy.chartflow.board.repository.CommentRepository;
 import com.ssafy.chartflow.board.repository.ReCommentRepository;
+import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class CommentService {
 
     public List<ResponseCommentDto> searchAll(long articleId) {
 
-        List<Comments> commentList = commentRepository.findByArticleId(articleId);
+        List<Comments> commentList = commentRepository.findAllByArticleId(articleId);
         List<ResponseCommentDto> returnComments = new ArrayList<>();
 
         for (Comments comments : commentList) {
@@ -70,14 +71,19 @@ public class CommentService {
     public void write(long articleId, long userId, String content) {
         log.info("Comment Service - 댓글 작성");
 
+        User user = userRepository.findUserByUserId(userId);
+        Article article = articleRepository.findArticleByArticleId(articleId);
         Comments comments = Comments.builder()
-                .article(articleRepository.findArticleByArticleId(articleId))
-                .user(userRepository.findUserByUserId(userId))
                 .content(content)
                 .registerTime(LocalDateTime.now())
                 .cancel(0)
                 .modify(0)
                 .build();
+        comments.setUser(user);
+        comments.setArticle(article);
+
+        userRepository.save(user);
+        articleRepository.save(article);
         commentRepository.save(comments);
         log.info("등록된 Comment : " + comments.getContent());
         return;
@@ -86,14 +92,20 @@ public class CommentService {
     public void writeReComment(long commentId, long userId, String content) {
         log.info("Comment Service - 대댓글 작성");
 
+        User user = userRepository.findUserByUserId(userId);
+        Comments comment = commentRepository.findCommentByCommentId(commentId);
+
         ReComments reComment = ReComments.builder()
-                .comment(commentRepository.findCommentByCommentId(commentId))
-                .user(userRepository.findUserByUserId(userId))
                 .content(content)
                 .registerTime(LocalDateTime.now())
                 .cancel(0)
                 .modify(0)
                 .build();
+        reComment.setUser(user);
+        reComment.setComment(comment);
+
+        userRepository.save(user);
+        commentRepository.save(comment);
         reCommentRepository.save(reComment);
         log.info("등록된 reComment : " + reComment.getContent());
         return;

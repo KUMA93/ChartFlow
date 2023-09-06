@@ -38,12 +38,20 @@ public class ReComments{
     private int modify;
 
     public void setComment(Comments comment) {
+        if (comment != null) {
+            comment.getReComments().remove(this);
+        }
         this.comment = comment;
+        assert comment != null;
         comment.getReComments().add(this);
     }
 
     public void setUser(User user) {
+        if (user != null) {
+            user.getReComments().remove(this);
+        }
         this.user = user;
+        assert user != null;
         user.getReComments().add(this);
     }
 }

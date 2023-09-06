@@ -46,12 +46,20 @@ public class Comments {
 
 
     public void setArticle(Article article) {
+        if (article != null) {
+            article.getComments().remove(this);
+        }
         this.article = article;
+        assert article != null;
         article.getComments().add(this);
     }
 
     public void setUser(User user) {
+        if (user != null) {
+            user.getComments().remove(this);
+        }
         this.user = user;
+        assert user != null;
         user.getComments().add(this);
     }
 }
