@@ -36,4 +36,14 @@ public class ReComments{
 
     @Column(name = "modify")
     private int modify;
+
+    public void setComment(Comments comment) {
+        this.comment = comment;
+        comment.getReComments().add(this);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getReComments().add(this);
+    }
 }

@@ -23,4 +23,14 @@ public class Likes {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public void setArticle(Article article) {
+        this.article = article;
+        article.getLikes().add(this);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getLikes().add(this);
+    }
 }
