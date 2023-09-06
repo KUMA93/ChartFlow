@@ -9,6 +9,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import java.util.function.Function;
 @Service
 @PropertySource("classpath:jwt.yml")
 @Slf4j
+@NoArgsConstructor(force = true)
 public class JwtService {
 
     @Autowired

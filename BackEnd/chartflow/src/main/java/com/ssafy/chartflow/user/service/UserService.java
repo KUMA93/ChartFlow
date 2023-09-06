@@ -24,6 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    @Autowired
     private final JwtService jwtService;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저

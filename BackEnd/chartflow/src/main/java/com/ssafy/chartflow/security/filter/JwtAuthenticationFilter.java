@@ -5,8 +5,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 @Component
 @RequiredArgsConstructor
+@NoArgsConstructor(force = true)
 public class JwtAuthenticationFilter extends OncePerRequestFilter {//Request -> filter에서 jwt를 검증하도록
 
     private final JwtService jwtService;
