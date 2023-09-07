@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +21,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 @Component
 @RequiredArgsConstructor
-@NoArgsConstructor(force = true)
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {//Request -> filter에서 jwt를 검증하도록
 
     private final JwtService jwtService;
@@ -47,6 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {//Request -> 
         userEmail = jwtService.extractUserEmail(jwt);
         userId = jwtService.extractUserId(jwt);
 
+        log.info("jwtfilter - jwt: {}, userEmail: {}, userId: {}", jwt, userEmail, userId);
         if (userId != null && userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 

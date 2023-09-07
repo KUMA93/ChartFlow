@@ -22,6 +22,7 @@ public class RefreshToken {
     @Column(name = "token")
     private String token;
 
-    @OneToOne(mappedBy = "refreshToken")
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 }

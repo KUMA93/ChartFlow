@@ -89,18 +89,16 @@ public class JwtService {
     }
 
     public String refreshToken(String expiredToken, String refreshToken) {
-        if (isTokenValid(refreshToken, loadUserByRefreshToken(refreshToken))) {  // Refresh Token 검증
-            UserDetails userDetails = loadUserByRefreshToken(refreshToken);  // DB에서 UserDetails 가져오기
-            return generateToken(userDetails);  // 새 Access Token 발급
-        } else {
-            throw new RuntimeException("Invalid refresh token");
-        }
+        UserDetails userDetails = loadUserByRefreshToken(refreshToken);  // DB에서 UserDetails 가져오기
+        return generateToken(userDetails);  // 새 Access Token 발급
     }
 
     private UserDetails loadUserByRefreshToken(String refreshToken) {
         RefreshToken storedRefreshToken = refreshTokenService.findByToken(refreshToken);
         if (storedRefreshToken != null) {
-            return userRepository.findUserByRefreshToken_token(refreshToken);
+            User user = storedRefreshToken.getUser();
+            log.info(user.getUsername());
+            return user;
         } else {
             throw new RuntimeException("Refresh token does not exist");
         }

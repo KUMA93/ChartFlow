@@ -71,6 +71,11 @@ public class AuthController {
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
 
+        if (accessToken == null || accessToken.isBlank()) {
+            resultMap.put("message", "accessToken is required");
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+
         try {
             String newAccessToken = jwtService.refreshToken(accessToken, refreshToken);
 
@@ -78,7 +83,7 @@ public class AuthController {
             return new ResponseEntity<>(resultMap, HttpStatus.OK);
 
         } catch (Exception e) {
-            resultMap.put("message", "Invalid refresh token");
+            resultMap.put("message", e.getMessage());
             return new ResponseEntity<>(resultMap, HttpStatus.UNAUTHORIZED);
         }
     }

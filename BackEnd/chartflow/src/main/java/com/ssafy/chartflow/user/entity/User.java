@@ -80,7 +80,7 @@
         @OneToMany(mappedBy = "user")
         private final List<UserQuiz> Quizs = new ArrayList<>();
 
-        @OneToOne
+        @OneToOne(mappedBy = "user")
         private RefreshToken refreshToken;
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
