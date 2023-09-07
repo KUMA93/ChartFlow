@@ -1,18 +1,16 @@
 package com.ssafy.chartflow.board.controller;
 
+import com.ssafy.chartflow.board.dto.request.RequestLikeDto;
 import com.ssafy.chartflow.board.dto.request.RequestWriteArticleDto;
-import com.ssafy.chartflow.board.entity.Article;
 import com.ssafy.chartflow.board.service.ArticleService;
-import com.ssafy.chartflow.user.repository.UserRepository;
-import com.ssafy.chartflow.user.service.UserService;
+import com.ssafy.chartflow.exception.LikeDuplicateException;
+import com.ssafy.chartflow.exception.NoSuchLikeException;
+import com.ssafy.chartflow.security.service.JwtService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +21,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class BoardController {
     private final ArticleService articleService;
-
+    private final JwtService jwtService;
     //글 작성
     @PostMapping
     public ResponseEntity<Map<String,Object>> writeArticle(
@@ -51,7 +49,39 @@ public class BoardController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    //글 수정
-    //글 삭제
 
+    @PostMapping
+    public ResponseEntity<Map<String,Object>> likeArticle(
+            @RequestHeader("Authorization") String token,
+            Long articleId
+    ){
+        Map<String,Object> response = new HashMap<>();
+        token = token.split(" ")[1];
+        try {
+            Long userId = jwtService.extractUserId(token);
+            articleService.likeArticle(userId, articleId);
+            response.put("message", "success");
+        } catch (LikeDuplicateException e) {
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Map<String,Object>> withdrawLike(
+            long likeId
+    ){
+        Map<String,Object> response = new HashMap<>();
+        try {
+            articleService.withdrawLike(likeId);
+            response.put("message", "success");
+        } catch (Exception e) {
+            response.put("message", "좋아요 취소 오류");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
