@@ -116,7 +116,7 @@ public class JwtService {
             (Map<String, Object> extraClaims, UserDetails userDetails,
              String secretKey, long expirationHours) {
         User user = (User) userDetails;
-        extraClaims.put("userId", user.getId());
+        extraClaims.put("userId", user.getUserId());
         extraClaims.put("username", user.getName());
 
         return Jwts
