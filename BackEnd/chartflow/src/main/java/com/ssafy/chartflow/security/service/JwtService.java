@@ -28,34 +28,28 @@ import java.util.function.Function;
 @Service
 @PropertySource("classpath:jwt.yml")
 @Slf4j
-@NoArgsConstructor(force = true)
+@RequiredArgsConstructor
 public class JwtService {
 
-    @Autowired
-    private RefreshTokenService refreshTokenService;
+    private final RefreshTokenService refreshTokenService;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-    private final String accessTokenSecretKey;
-    private final String refreshTokenSecretKey;
-    private final long accessTokenExpirationHours;
-    private final long refreshTokenExpirationHours;
-    private final String issuer;
+    @Value("${access-token-secret-key}")
+    private String accessTokenSecretKey;
+
+    @Value("${refresh-token-secret-key}")
+    private String refreshTokenSecretKey;
+
+    @Value("${access-token-expiration-hours}")
+    private long accessTokenExpirationHours;
+
+    @Value("${refresh-token-expiration-hours}")
+    private long refreshTokenExpirationHours;
+
+    @Value("${issuer}")
+    private String issuer;
+
     private final long hour = 60 * 60 * 1000;
-
-    public JwtService(
-            @Value("${access-token-secret-key}") String accessTokenSecretKey,
-            @Value("${refresh-token-secret-key}") String refreshTokenSecretKey,
-            @Value("${access-token-expiration-hours}") long accessTokenExpirationHours,
-            @Value("${refresh-token-expiration-hours}") long refreshTokenExpirationHours,
-            @Value("${issuer}") String issuer
-    ){
-        this.accessTokenSecretKey = accessTokenSecretKey;
-        this.refreshTokenSecretKey = refreshTokenSecretKey;
-        this.accessTokenExpirationHours = accessTokenExpirationHours;
-        this.refreshTokenExpirationHours = refreshTokenExpirationHours;
-        this.issuer = issuer;
-    }
     public String extractUserEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }

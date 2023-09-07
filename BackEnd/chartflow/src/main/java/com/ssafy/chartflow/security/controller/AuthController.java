@@ -32,7 +32,7 @@ public class AuthController {
 
     @Operation(summary = "로그인", description = "email과 password 기반 로그인 기능")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "로그인 성공"),
+            @ApiResponse(responseCode = "202", description = "로그인 성공"),
             @ApiResponse(responseCode = "401", description = "로그인 실패 - 로그인 권한 없음"),
             @ApiResponse(responseCode = "500", description = "로그인 실패 - 내부 서버 오류")
     })
