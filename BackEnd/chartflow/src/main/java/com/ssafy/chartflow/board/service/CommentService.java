@@ -33,7 +33,8 @@ public class CommentService {
 
     public List<ResponseCommentDto> searchAll(long articleId) {
 
-        List<Comments> commentList = commentRepository.findAllByArticleId(articleId);
+        Article article = articleRepository.findArticleByArticleId(articleId);
+        List<Comments> commentList = article.getComments();
         List<ResponseCommentDto> returnComments = new ArrayList<>();
 
         for (Comments comments : commentList) {
