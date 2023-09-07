@@ -2,7 +2,6 @@
 
 주식 모의투자 게임
 
-
 # Git Rule
 
 # Git Convention
@@ -35,8 +34,8 @@ master
 
 - 메인: `[Front] (feature name)`
 - 세부 내용: `~~기능 추가 / - ~~ 부분 추가` 등
-    - git commit –amend ➡ i 누르면 수정모드 ➡ 세부 내용 수정 후 `esc` >> `shift+ ;` >> `wq`
-    - git log –oneline –gragh : 로그 한눈에 보기 쉬움
+  - git commit –amend ➡ i 누르면 수정모드 ➡ 세부 내용 수정 후 `esc` >> `shift+ ;` >> `wq`
+  - git log –oneline –gragh : 로그 한눈에 보기 쉬움
 
 (예시)
 
@@ -52,7 +51,6 @@ master
 
 [우린 Git-flow를 사용하고 있어요 | 우아한형제들 기술블로그](https://techblog.woowahan.com/2553/)
 
-
 Frontend
 
 - components 이름은 pascal case 적용(첫 글자 대문자)
@@ -62,45 +60,34 @@ Frontend
 - inline 스타일은 Camel case로 작성
 - 컨벤션 관련 링크
 
-[[react] react 코딩 컨벤션](https://phrygia.github.io/react/2022-04-05-react/)
+[[react] react 코딩 컨벤션](https://phrygia.github.io/2022-04-05-react/)
 
 Backend
 
 - 기본 변수는 Camel case 적용
-    
-    ex) int addNum;
-    
+  ex) int addNum;
 - const, final 사용 시 모두 대문자로 적용
-    
-    ex) final int NUMBER;
-    
+  ex) final int NUMBER;
 - public, private은 구분하지 않는다
 - 클래스 이름의 첫글자는 대문자로
-    
-    ex) class Car; class StudentManager;
-    
+  ex) class Car; class StudentManager;
 - 메소드 이름 Camel case 적용
-    
-    ex) void printName();
-
-
+  ex) void printName();
 
 # 팀원 소개
 
 - Frontend Team
 
-|이름|직책|담당 업무|
-|------|---|---|
-|이연주|||
-|류나연|||
+| 이름   | 직책 | 담당 업무 |
+| ------ | ---- | --------- |
+| 이연주 |      |           |
+| 류나연 |      |           |
 
 - Backend Team
 
- |이름|직책|담당 업무|
-|------|---|---|
-|김태현|팀장||
-|최우석|||
-|최규헌|||
-|김현식|||
-
-
+| 이름   | 직책 | 담당 업무 |
+| ------ | ---- | --------- |
+| 김태현 | 팀장 |           |
+| 최우석 |      |           |
+| 최규헌 |      |           |
+| 김현식 |      |           |
