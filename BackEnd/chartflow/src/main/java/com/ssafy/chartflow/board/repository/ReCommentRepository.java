@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ReCommentRepository extends JpaRepository<ReComments, Long> {
 
-    public List<ReComments> findByCommentId(long commentId);
+    //FIXME: N+1 문제 발생 및 JpaRepository가 인식 못함
+    //public List<ReComments> findByCommentId(long commentId);
 }

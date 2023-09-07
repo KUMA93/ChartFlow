@@ -38,7 +38,7 @@ public class CommentService {
         List<ResponseCommentDto> returnComments = new ArrayList<>();
 
         for (Comments comments : commentList) {
-            List<ReComments> reCommentList = reCommentRepository.findByCommentId(comments.getCommentId());
+            List<ReComments> reCommentList = comments.getReComments();
             List<ResponseReCommentDto> responseCommentDtos = new ArrayList<>();
             for (ReComments reComments : reCommentList) {
                 ResponseReCommentDto responseReCommentDto = ResponseReCommentDto.builder()
