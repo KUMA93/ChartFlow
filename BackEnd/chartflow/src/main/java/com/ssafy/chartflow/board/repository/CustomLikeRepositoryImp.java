@@ -23,7 +23,7 @@ public class CustomLikeRepositoryImp implements CustomLikeRepository {
 
         return queryFactory
                 .selectFrom(like)
-                .where(like.user.userId.eq(userId), like.article.articleId.eq(articleId))
+                .where(like.user.id.eq(userId), like.article.id.eq(articleId))
                 .fetchOne();
     }
 }
