@@ -1,7 +1,9 @@
 package com.ssafy.chartflow.board.controller;
 
 import com.ssafy.chartflow.board.dto.request.RequestLikeDto;
+import com.ssafy.chartflow.board.dto.request.RequestModifyArticleDto;
 import com.ssafy.chartflow.board.dto.request.RequestWriteArticleDto;
+import com.ssafy.chartflow.board.entity.Article;
 import com.ssafy.chartflow.board.service.ArticleService;
 import com.ssafy.chartflow.exception.LikeDuplicateException;
 import com.ssafy.chartflow.exception.NoSuchLikeException;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,15 +28,15 @@ public class BoardController {
     //글 작성
     @PostMapping
     public ResponseEntity<Map<String,Object>> writeArticle(
+            @RequestHeader("Authorization") String jwtToken,
             @RequestBody RequestWriteArticleDto requestWriteArticleDto
-            ){
+    ){
         Map<String,Object> response = new HashMap<>();
 
         try {
             String email = requestWriteArticleDto.getEmail();
             String title = requestWriteArticleDto.getTitle();
             String content = requestWriteArticleDto.getContent();
-
             articleService.writeArticle(email, title, content);
 
             response.put("status", "success");
@@ -41,11 +44,61 @@ public class BoardController {
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (Exception e) {
-            // 로깅은 좀 더 상세하게 하시면 좋습니다.
-            // logger.error("Error occurred while creating article", e);
-
             response.put("status", "error");
-            response.put("message", e.getMessage()); // 실제 프로덕션에서는 이렇게 바로 예외 메시지를 반환하지 마세요.
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //글 수정
+    @PatchMapping
+    public ResponseEntity<Map<String,Object>> modifyArticle(
+            @RequestHeader("Authorization") String jwtToken,
+            @RequestBody RequestModifyArticleDto requestModifyArticleDto
+    ){
+        Map<String,Object> response = new HashMap<>();
+
+        try {
+            long articleId = requestModifyArticleDto.getArticleId();
+            String content = requestModifyArticleDto.getContent();
+            String title = requestModifyArticleDto.getTitle();
+            articleService.modifyArticle(articleId, title, content);
+
+            response.put("status", "success");
+            response.put("message", "Article successfully modified.");
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //글 삭제
+    @DeleteMapping
+    public ResponseEntity<Map<String,Object>> deleteArticle(
+            @RequestHeader("Authorization") String jwtToken,
+            @RequestBody RequestModifyArticleDto requestModifyArticleDto
+    ){
+        Map<String,Object> response = new HashMap<>();
+        try {
+            long userId = jwtService.extractUserId(jwtToken);
+            List<Article> userArticles = articleService.findAllArticleByUserId(userId);
+
+            for(Article userArticle : userArticles){
+                if(userArticle.getUser().getUserId() == userId){
+                    articleService.deleteArticle(requestModifyArticleDto.getArticleId());
+                    response.put("status", "success");
+                    response.put("message", "Article successfully deleted.");
+                    break;
+                }
+            }
+
+
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
