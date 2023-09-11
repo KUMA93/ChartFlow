@@ -93,7 +93,6 @@ public class BoardController {
                 }
             }
 
-
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (Exception e) {
