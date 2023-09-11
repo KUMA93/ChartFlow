@@ -12,11 +12,8 @@ import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.xml.stream.events.Comment;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +30,7 @@ public class CommentService {
 
     public List<ResponseCommentDto> searchAll(long articleId) {
 
-        Article article = articleRepository.findArticleByArticleId(articleId);
+        Article article = articleRepository.findArticleById(articleId);
         List<Comments> commentList = article.getComments();
         List<ResponseCommentDto> returnComments = new ArrayList<>();
 
@@ -42,9 +39,9 @@ public class CommentService {
             List<ResponseReCommentDto> responseCommentDtos = new ArrayList<>();
             for (ReComments reComments : reCommentList) {
                 ResponseReCommentDto responseReCommentDto = ResponseReCommentDto.builder()
-                        .reCommentId(reComments.getReCommentId())
-                        .commentId(reComments.getReCommentId())
-                        .userId(reComments.getUser().getUserId())
+                        .reCommentId(reComments.getId())
+                        .commentId(reComments.getId())
+                        .userId(reComments.getUser().getId())
                         .content(reComments.getContent())
                         .registerTime(reComments.getRegisterTime())
                         .cancel(reComments.getCancel())
@@ -54,8 +51,8 @@ public class CommentService {
                 responseCommentDtos.add(responseReCommentDto);
             }
             ResponseCommentDto responseCommentDto = ResponseCommentDto.builder()
-                    .commentId(comments.getCommentId())
-                    .userId(comments.getUser().getUserId())
+                    .commentId(comments.getId())
+                    .userId(comments.getUser().getId())
                     .content(comments.getContent())
                     .registerTime(comments.getRegisterTime())
                     .cancel(comments.getCancel())
@@ -72,8 +69,8 @@ public class CommentService {
     public void write(long articleId, long userId, String content) {
         log.info("Comment Service - 댓글 작성");
 
-        User user = userRepository.findUserByUserId(userId);
-        Article article = articleRepository.findArticleByArticleId(articleId);
+        User user = userRepository.findUserById(userId);
+        Article article = articleRepository.findArticleById(articleId);
         Comments comments = Comments.builder()
                 .content(content)
                 .registerTime(LocalDateTime.now())
@@ -93,8 +90,8 @@ public class CommentService {
     public void writeReComment(long commentId, long userId, String content) {
         log.info("Comment Service - 대댓글 작성");
 
-        User user = userRepository.findUserByUserId(userId);
-        Comments comment = commentRepository.findCommentByCommentId(commentId);
+        User user = userRepository.findUserById(userId);
+        Comments comment = commentRepository.findCommentById(commentId);
 
         ReComments reComment = ReComments.builder()
                 .content(content)
@@ -149,7 +146,7 @@ public class CommentService {
                 .build();
 
         commentRepository.save(comment);
-        log.info(comment.getCommentId() + " 삭제");
+        log.info(comment.getId() + " 삭제");
         return;
     }
 
@@ -161,7 +158,7 @@ public class CommentService {
                 .build();
 
         reCommentRepository.save(reComment);
-        log.info(reComment.getReCommentId() + " 삭제");
+        log.info(reComment.getId() + " 삭제");
         return;
     }
 

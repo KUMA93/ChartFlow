@@ -18,7 +18,7 @@ public class GameHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "game_history_id")
-    private long gameHistoryId;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

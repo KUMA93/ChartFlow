@@ -1,11 +1,8 @@
 package com.ssafy.chartflow.emblem.entity;
 
-import com.ssafy.chartflow.board.entity.Article;
 import com.ssafy.chartflow.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -18,7 +15,7 @@ import java.util.List;
 public class UserEmblem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userEmblemId;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "userId")
