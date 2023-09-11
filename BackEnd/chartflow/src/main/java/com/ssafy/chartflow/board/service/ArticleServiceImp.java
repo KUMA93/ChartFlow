@@ -44,7 +44,7 @@ public class ArticleServiceImp implements ArticleService {
     @Override
     public void modifyArticle(long articleId,String title,String content) {
 
-        Article article = articleRepository.findArticleByArticleId(articleId);
+        Article article = articleRepository.findArticleById(articleId);
         article.setContent(content);
         article.setTitle(title);
         articleRepository.save(article);
@@ -53,14 +53,14 @@ public class ArticleServiceImp implements ArticleService {
 
     @Override
     public void deleteArticle(long articleId) {
-        Article article = articleRepository.findArticleByArticleId(articleId);
+        Article article = articleRepository.findArticleById(articleId);
         article.setDeleted(true);
         articleRepository.save(article);
     }
 
     @Override
     public List<Article> findAllArticleByUserId(long userId) {
-        return articleRepository.findAllByUserUserId(userId);
+        return articleRepository.findAllByUserId(userId);
     }
 
     @Override
@@ -71,8 +71,8 @@ public class ArticleServiceImp implements ArticleService {
             throw new LikeDuplicateException();
         }
 
-        User user = userRepository.findUserByUserId(userId);
-        Article article = articleRepository.findArticleByArticleId(articleId);
+        User user = userRepository.findUserById(userId);
+        Article article = articleRepository.findArticleById(articleId);
 
         Likes likes = new Likes();
         likes.setArticle(article);

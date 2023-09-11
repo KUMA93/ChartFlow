@@ -85,7 +85,7 @@ public class BoardController {
             List<Article> userArticles = articleService.findAllArticleByUserId(userId);
 
             for(Article userArticle : userArticles){
-                if(userArticle.getUser().getUserId() == userId){
+                if(userArticle.getUser().getId() == userId){
                     articleService.deleteArticle(requestModifyArticleDto.getArticleId());
                     response.put("status", "success");
                     response.put("message", "Article successfully deleted.");
@@ -103,7 +103,7 @@ public class BoardController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/like")
     public ResponseEntity<Map<String,Object>> likeArticle(
             @RequestHeader("Authorization") String token,
             Long articleId
@@ -122,7 +122,7 @@ public class BoardController {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/like")
     public ResponseEntity<Map<String,Object>> withdrawLike(
             long likeId
     ){
