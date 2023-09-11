@@ -18,14 +18,18 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_id")
-    private long id;
+    private Long quizId;
+
+    @Column(name = "question")
+    private String question;
+
+    @Column(name = "answer")
+    private String answer;
 
     @OneToMany(mappedBy = "quiz")
     private final List<QuizChoices> quizChoices = new ArrayList<>();
 
-    @OneToMany(mappedBy = "quiz")
-    private final List<UserQuiz> userQuiz = new ArrayList<>();
+//    @OneToMany(mappedBy = "quiz")
+//    private final List<UserQuiz> userQuiz = new ArrayList<>();
 
-    @Column(name = "answer")
-    private String answer;
 }
