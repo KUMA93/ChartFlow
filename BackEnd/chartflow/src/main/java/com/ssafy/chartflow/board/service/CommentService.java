@@ -113,7 +113,7 @@ public class CommentService {
         log.info("Comment Service - 댓글 수정");
 
         Comments comment = Comments.builder()
-                .commentId(commentId)
+                .id(commentId)
                 .content(content)
                 .modify(1)
                 .build();
@@ -128,7 +128,7 @@ public class CommentService {
         log.info("Comment Service - 대댓글 수정");
 
         ReComments reComment = ReComments.builder()
-                .reCommentId(reCommentId)
+                .id(reCommentId)
                 .content(content)
                 .modify(1)
                 .build();
