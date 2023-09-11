@@ -1,6 +1,5 @@
 package com.ssafy.chartflow.emblem.entity;
 
-import com.ssafy.chartflow.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +18,7 @@ public class Emblem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long emblemId;
+    private long id;
 
     @Column(name = "name")
     private String name;

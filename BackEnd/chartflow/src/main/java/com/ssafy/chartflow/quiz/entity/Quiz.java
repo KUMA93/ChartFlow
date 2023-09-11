@@ -18,7 +18,7 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_id")
-    private long quizId;
+    private long id;
 
     @OneToMany(mappedBy = "quiz")
     private final List<QuizChoices> quizChoices = new ArrayList<>();

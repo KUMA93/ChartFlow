@@ -3,23 +3,18 @@ package com.ssafy.chartflow.security.service;
 import com.ssafy.chartflow.security.entity.RefreshToken;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
-import com.ssafy.chartflow.user.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -108,7 +103,7 @@ public class JwtService {
             (Map<String, Object> extraClaims, UserDetails userDetails,
              String secretKey, long expirationHours) {
         User user = (User) userDetails;
-        extraClaims.put("userId", user.getUserId());
+        extraClaims.put("userId", user.getId());
         extraClaims.put("username", user.getName());
 
         return Jwts
