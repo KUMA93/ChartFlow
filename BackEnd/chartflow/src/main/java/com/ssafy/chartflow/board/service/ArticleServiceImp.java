@@ -4,8 +4,10 @@ import com.ssafy.chartflow.board.dto.response.ArticleResponseDto;
 import com.ssafy.chartflow.board.entity.Article;
 import com.ssafy.chartflow.board.entity.Likes;
 import com.ssafy.chartflow.board.repository.ArticleRepository;
+import com.ssafy.chartflow.board.repository.CustomLikeRepository;
 import com.ssafy.chartflow.board.repository.LikeRepository;
 import com.ssafy.chartflow.exception.LikeDuplicateException;
+import com.ssafy.chartflow.exception.NoSuchLikeException;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -22,8 +25,9 @@ public class ArticleServiceImp implements ArticleService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
+
     @Override
-    public ArticleResponseDto writeArticle(String email,String title, String content) {
+    public void writeArticle(String email,String title, String content) {
         User user = userRepository.findByEmail(email);
         Article article = new Article();
         article.setUser(user);
@@ -33,28 +37,18 @@ public class ArticleServiceImp implements ArticleService {
         userRepository.save(user);
         articleRepository.save(article);
 
-        ArticleResponseDto articleResponseDto = new ArticleResponseDto();
-        articleResponseDto.setArticleNo(article.getId());
-        articleResponseDto.setContent(article.getContent());
-        articleResponseDto.setNickName(article.getUser().getNickname());
 
-        return articleResponseDto;
+
     }
 
     @Override
-    public ArticleResponseDto modifyArticle(long articleId, long userId,String title,String content) {
-        User user = userRepository.findUserById(userId);
+    public void modifyArticle(long articleId,String title,String content) {
+
         Article article = articleRepository.findArticleById(articleId);
         article.setContent(content);
         article.setTitle(title);
         articleRepository.save(article);
 
-        ArticleResponseDto articleResponseDto = new ArticleResponseDto();
-        articleResponseDto.setNickName(user.getNickname());
-        articleResponseDto.setArticleNo(articleId);
-        articleResponseDto.setContent(content);
-
-        return articleResponseDto;
     }
 
     @Override
@@ -62,6 +56,11 @@ public class ArticleServiceImp implements ArticleService {
         Article article = articleRepository.findArticleById(articleId);
         article.setDeleted(true);
         articleRepository.save(article);
+    }
+
+    @Override
+    public List<Article> findAllArticleByUserId(long userId) {
+        return articleRepository.findAllByUserId(userId);
     }
 
     @Override
