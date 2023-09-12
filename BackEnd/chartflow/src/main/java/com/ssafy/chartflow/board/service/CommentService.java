@@ -112,9 +112,11 @@ public class CommentService {
     public void modifyComment(long commentId, String content) {
         log.info("Comment Service - 댓글 수정");
 
-        Comments comment = commentRepository.findCommentById(commentId);
-        comment.setContent(content);
-        comment.setModify(1);
+        Comments comment = Comments.builder()
+                .id(commentId)
+                .content(content)
+                .modify(1)
+                .build();
 
         commentRepository.save(comment);
         log.info("수정된 comment : " + comment.getContent());
@@ -125,10 +127,11 @@ public class CommentService {
     public void modifyReComment(long reCommentId, String content) {
         log.info("Comment Service - 대댓글 수정");
 
-        ReComments reComment = reCommentRepository.findReCommentById(reCommentId);
-
-        reComment.setModify(1);
-        reComment.setContent(content);
+        ReComments reComment = ReComments.builder()
+                .id(reCommentId)
+                .content(content)
+                .modify(1)
+                .build();
 
         reCommentRepository.save(reComment);
         log.info("수정된 reComment : " + reComment.getContent());
@@ -138,8 +141,9 @@ public class CommentService {
     public void deleteComment(long commentId) {
         log.info("Comment Service - 댓글 삭제");
 
-        Comments comment = commentRepository.findCommentById(commentId);
-        comment.setCancel(1);
+        Comments comment = Comments.builder()
+                .cancel(1)
+                .build();
 
         commentRepository.save(comment);
         log.info(comment.getId() + " 삭제");
@@ -149,8 +153,9 @@ public class CommentService {
     public void deleteReComment(long reCommentId) {
         log.info("Comment Service - 대댓글 삭제");
 
-        ReComments reComment = reCommentRepository.findReCommentById(reCommentId);
-        reComment.setCancel(1);
+        ReComments reComment = ReComments.builder()
+                .cancel(1)
+                .build();
 
         reCommentRepository.save(reComment);
         log.info(reComment.getId() + " 삭제");

@@ -27,8 +27,8 @@ public class ArticleServiceImp implements ArticleService {
     private final LikeRepository likeRepository;
 
     @Override
-    public void writeArticle(long userId, String title, String content) {
-        User user = userRepository.findUserById(userId);
+    public void writeArticle(String email,String title, String content) {
+        User user = userRepository.findByEmail(email);
         Article article = new Article();
         article.setUser(user);
         article.setRegisterTime(LocalDateTime.now());
