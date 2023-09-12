@@ -15,7 +15,6 @@ const MainPage = () => {
       <Header classname="header" />
       <Main classname="header" />
       <Toggle classname="header" />
-
       {/* <Login show={modalShow} handleClose={handleClose} /> */}
     </div>
   );
