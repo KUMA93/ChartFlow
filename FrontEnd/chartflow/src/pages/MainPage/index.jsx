@@ -11,11 +11,19 @@ const MainPage = () => {
     <>
       <Header />
       <div className={styles.container}>
-        <div className={styles.carousel}>캐러셀</div>
-        <div className={styles.hotUpdate}>실시간 인기글</div>
+        <div className={styles.carousel}>
+          <Carousel />
+        </div>
+        <div className={styles.hotUpdate}>
+          <HotUpdate />
+        </div>
         <div className={styles.gotoGame}>차트게임 하러가기</div>
-        <div className={styles.rankWeekly}>Ranking Top 5</div>
-        <div className={styles.footer}>Ranking Top 5</div>
+        <div className={styles.rankWeekly}>
+          <RankWeekly />
+        </div>
+        <div className={styles.footer}>
+          <Footer />
+        </div>
       </div>
       <Toggle />
     </>

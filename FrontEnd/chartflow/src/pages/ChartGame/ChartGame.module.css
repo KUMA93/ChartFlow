@@ -1,0 +1,41 @@
+.container {
+  display: grid;
+  grid-gap: 20px;
+  height: 100vh;
+  grid-template-areas:
+    "chart buysell"
+    "chart status"
+    "chart hint"
+    "chart settings"
+    "chart end";
+  grid-template-rows: 200px 1fr 50px 50px 50px;
+  grid-template-columns: 1fr 300px;
+}
+
+.container div {
+  border: 0.1em solid black;
+  background-color: #fff;
+}
+.chart {
+  grid-area: chart;
+}
+
+.buysell {
+  grid-area: buysell;
+}
+
+.status {
+  grid-area: status;
+}
+
+.hint {
+  grid-area: hint;
+}
+
+.settings {
+  grid-area: settings;
+}
+
+.end {
+  grid-area: end;
+}

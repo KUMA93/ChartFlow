@@ -1,21 +1,22 @@
 .container {
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 20px;
+  height: 100vh;
   grid-template-areas:
+    /* "header header" */
     "carousel carousel"
     "hotUpdate gotoGame"
     "hotUpdate rankWeekly"
     "footer footer";
+  grid-template-rows: 300px 90px 200px 100px;
 }
 
-.container div {
-  background-color: skyblue;
-  padding: 20px;
-  border: 1px solid black;
+.header {
+  grid-area: header;
 }
 
 .carousel {
-  margin-top: 10px;
+  margin-top: 20px;
   grid-area: carousel;
 }
 
@@ -25,6 +26,14 @@
 
 .gotoGame {
   grid-area: gotoGame;
+  border-radius: 30px;
+  background: #6c00ff;
+  padding: 22px 0px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 25px;
+  text-align: center;
+  line-height: 6vh;
 }
 
 .rankWeekly {
