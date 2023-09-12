@@ -6,6 +6,7 @@ import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
 import com.ssafy.chartflow.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -62,8 +63,13 @@ public class AuthController {
     })
     @PostMapping("/refresh")
     public ResponseEntity<Map<String, Object>> refreshToken(
-            @RequestHeader("Authorization") String accessToken,
-            @RequestHeader("Refresh-token") String refreshToken
+            @RequestHeader("Authorization")
+            @Parameter(hidden = true)
+            String accessToken,
+
+            @RequestHeader("Refresh-token")
+            @Parameter(hidden = true)
+            String refreshToken
     ) {
         Map<String, Object> resultMap = new HashMap<>();
         if (refreshToken == null || refreshToken.isBlank()) {
