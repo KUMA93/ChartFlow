@@ -7,6 +7,9 @@ import Footer from "../../components/Footer";
 import styles from "./MainPage.module.css";
 
 const MainPage = () => {
+  const handleGame = () => {
+    window.location.href = "/game";
+  }
   return (
     <>
       <Header />
@@ -17,7 +20,7 @@ const MainPage = () => {
         <div className={styles.hotUpdate}>
           <HotUpdate />
         </div>
-        <div className={styles.gotoGame}>차트게임 하러가기</div>
+        <div className={styles.gotoGame} onClick={handleGame}>차트게임 하러가기</div>
         <div className={styles.rankWeekly}>
           <RankWeekly />
         </div>
