@@ -9,4 +9,6 @@ public interface ReCommentRepository extends JpaRepository<ReComments, Long> {
 
     //FIXME: N+1 문제 발생 및 JpaRepository가 인식 못함
     //public List<ReComments> findByCommentId(long commentId);
+
+    public ReComments findReCommentById(long reCommentId);
 }
