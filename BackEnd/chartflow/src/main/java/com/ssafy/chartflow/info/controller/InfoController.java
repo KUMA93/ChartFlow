@@ -1,4 +1,4 @@
-package com.ssafy.chartflow.info;
+package com.ssafy.chartflow.info.controller;
 
 import com.ssafy.chartflow.chatbot.service.ChatBotService;
 import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
