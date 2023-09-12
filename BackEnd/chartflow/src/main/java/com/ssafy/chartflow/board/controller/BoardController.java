@@ -28,16 +28,17 @@ public class BoardController {
     //글 작성
     @PostMapping
     public ResponseEntity<Map<String,Object>> writeArticle(
-            @RequestHeader("Authorization") String jwtToken,
+            @RequestHeader("Authorization") String token,
             @RequestBody RequestWriteArticleDto requestWriteArticleDto
     ){
         Map<String,Object> response = new HashMap<>();
+        token = token.split(" ")[1];
 
         try {
-            String email = requestWriteArticleDto.getEmail();
+            Long userId = jwtService.extractUserId(token);
             String title = requestWriteArticleDto.getTitle();
             String content = requestWriteArticleDto.getContent();
-            articleService.writeArticle(email, title, content);
+            articleService.writeArticle(userId, title, content);
 
             response.put("status", "success");
             response.put("message", "Article successfully created.");
@@ -92,7 +93,6 @@ public class BoardController {
                     break;
                 }
             }
-
 
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
