@@ -1,0 +1,36 @@
+.container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-areas:
+    "carousel carousel"
+    "hotUpdate gotoGame"
+    "hotUpdate rankWeekly"
+    "footer footer";
+}
+
+.container div {
+  background-color: skyblue;
+  padding: 20px;
+  border: 1px solid black;
+}
+
+.carousel {
+  margin-top: 10px;
+  grid-area: carousel;
+}
+
+.hotUpdate {
+  grid-area: hotUpdate;
+}
+
+.gotoGame {
+  grid-area: gotoGame;
+}
+
+.rankWeekly {
+  grid-area: rankWeekly;
+}
+
+.footer {
+  grid-area: footer;
+}

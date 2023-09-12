@@ -116,29 +116,24 @@ function Header() {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.section1}>
-          <a href="/">
-            <img
-              src={main_logo}
-              alt="main_logo"
-              width={200}
-              style={{ alignSelf: "center" }}
-            />
-          </a>
-        </div>
-        <div className={styles.section2}>
-          <MenuItems />
-        </div>
-        <div className={styles.section3}>
-          <button
-            className={styles.btn}
-            onClick={() => {
-              handleModal();
-            }}
-          >
-            지금 시작
-          </button>
-        </div>
+        <a href="/">
+          <img
+            src={main_logo}
+            alt="main_logo"
+            width={200}
+            style={{ alignSelf: "center" }}
+          />
+        </a>
+
+        <MenuItems />
+        <button
+          className={styles.btn}
+          onClick={() => {
+            handleModal();
+          }}
+        >
+          지금 시작
+        </button>
       </div>
       <div className={styles.line}></div>
       {modalShow && <Login />}
