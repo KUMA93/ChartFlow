@@ -97,7 +97,7 @@ function Header() {
             <div
               className={styles.signup}
               onClick={() => {
-                navigate("/signup");
+                window.location.href = "/signup";
               }}
             >
               회원가입
