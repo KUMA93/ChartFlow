@@ -8,6 +8,7 @@ import com.ssafy.chartflow.board.service.ArticleService;
 import com.ssafy.chartflow.exception.LikeDuplicateException;
 import com.ssafy.chartflow.exception.NoSuchLikeException;
 import com.ssafy.chartflow.security.service.JwtService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ public class BoardController {
     //글 작성
     @PostMapping
     public ResponseEntity<Map<String,Object>> writeArticle(
+            @Parameter(hidden = true)
             @RequestHeader("Authorization") String token,
             @RequestBody RequestWriteArticleDto requestWriteArticleDto
     ){
@@ -53,6 +55,7 @@ public class BoardController {
     //글 수정
     @PatchMapping
     public ResponseEntity<Map<String,Object>> modifyArticle(
+            @Parameter(hidden = true)
             @RequestHeader("Authorization") String jwtToken,
             @RequestBody RequestModifyArticleDto requestModifyArticleDto
     ){
@@ -77,6 +80,7 @@ public class BoardController {
     //글 삭제
     @DeleteMapping
     public ResponseEntity<Map<String,Object>> deleteArticle(
+            @Parameter(hidden = true)
             @RequestHeader("Authorization") String jwtToken,
             @RequestBody RequestModifyArticleDto requestModifyArticleDto
     ){
@@ -105,8 +109,9 @@ public class BoardController {
 
     @PostMapping("/like")
     public ResponseEntity<Map<String,Object>> likeArticle(
+            @Parameter(hidden = true)
             @RequestHeader("Authorization") String token,
-            Long articleId
+            @RequestBody Long articleId
     ){
         Map<String,Object> response = new HashMap<>();
         token = token.split(" ")[1];
@@ -124,7 +129,7 @@ public class BoardController {
 
     @DeleteMapping("/like")
     public ResponseEntity<Map<String,Object>> withdrawLike(
-            long likeId
+            @RequestBody long likeId
     ){
         Map<String,Object> response = new HashMap<>();
         try {
