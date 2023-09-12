@@ -1,5 +1,6 @@
 package com.ssafy.chartflow;
 
+import com.ssafy.chartflow.info.service.RankingService;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
