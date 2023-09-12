@@ -13,7 +13,7 @@ public class QuizChoices {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_choice_id")
-    private long quizChoiceId;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")
