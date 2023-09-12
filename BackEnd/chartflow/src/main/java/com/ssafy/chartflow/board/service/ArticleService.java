@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ArticleService {
     //글 작성
-    public void writeArticle(long userId,String title, String content);
+    public void writeArticle(String email,String title, String content);
     //글 수정
     public void modifyArticle(long articleId, String title,String content);
     //글 삭제
