@@ -140,6 +140,7 @@ function Header() {
           </button>
         </div>
       </div>
+      <div className={styles.line}></div>
       {modalShow && <Login />}
     </>
   );
