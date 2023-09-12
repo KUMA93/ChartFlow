@@ -149,7 +149,7 @@ public class CommentController {
             @ApiResponse(responseCode = "200", description = "대댓글 삭제 성공"),
             @ApiResponse(responseCode = "500", description = "대댓글 삭제 실패 - 내부 서버 오류"),
     })
-    @DeleteMapping("/re/{commentId}")
+    @DeleteMapping("/re/{reCommentId}")
     public ResponseEntity<?> deleteReComment(@PathVariable long reCommentId) {
         try {
             log.info("Comment Controller - 대댓글 삭제");
