@@ -1,5 +1,6 @@
 package com.ssafy.chartflow.user.service;
 
+import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
 import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
@@ -68,5 +69,10 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(newPass);
         user.setPassword(encodedPassword);
         userRepository.save(user);
+    }
+
+    public ResponseAssetsDto getAssets(Long userId) {
+        User user = userRepository.findUserById(userId);
+        return new ResponseAssetsDto(user.getCoin(), user.getBudget());
     }
 }
