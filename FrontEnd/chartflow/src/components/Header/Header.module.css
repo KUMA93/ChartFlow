@@ -83,6 +83,11 @@
   height: 80px;
 }
 
+.mainLogo {
+  width: 250px;
+  margin-left: 2vw;
+}
+
 .text {
   display: flex;
   color: #000;
@@ -201,6 +206,5 @@ input:valid ~ span {
 .line {
   width: 100%;
   height: 10px;
-  margin-left: -1vw;
   border-bottom: 2px solid #6c00ff;
 }

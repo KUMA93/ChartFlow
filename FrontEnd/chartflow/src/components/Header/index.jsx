@@ -117,12 +117,7 @@ function Header() {
     <>
       <div className={styles.container}>
         <a href="/">
-          <img
-            src={main_logo}
-            alt="main_logo"
-            width={200}
-            style={{ alignSelf: "center" }}
-          />
+          <img src={main_logo} alt="main_logo" className={styles.mainLogo} />
         </a>
 
         <MenuItems />
