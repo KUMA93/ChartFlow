@@ -45,19 +45,19 @@
 
 .shade {
   position: fixed;
-  margin: -15%;
-  width: 1000%;
-  height: 1000%;
+  margin: -50%;
+  width: 200%;
+  height: 200%;
   flex-shrink: 0;
   background-color: rgba(43, 40, 38, 0.6);
 }
 
 .login {
   position: absolute;
-  margin: 100px 280px;
+  margin: 13vh 20vw;
   padding: 5vh 2vw;
   width: 370px;
-  height: 40vh;
+  height: 35vh;
   flex-shrink: 0;
   border-radius: 30px;
   background-color: #fff;
