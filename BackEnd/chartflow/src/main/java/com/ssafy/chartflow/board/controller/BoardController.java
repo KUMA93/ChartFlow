@@ -106,7 +106,7 @@ public class BoardController {
     @PostMapping("/like")
     public ResponseEntity<Map<String,Object>> likeArticle(
             @RequestHeader("Authorization") String token,
-            Long articleId
+            @RequestBody Long articleId
     ){
         Map<String,Object> response = new HashMap<>();
         token = token.split(" ")[1];
@@ -124,7 +124,7 @@ public class BoardController {
 
     @DeleteMapping("/like")
     public ResponseEntity<Map<String,Object>> withdrawLike(
-            long likeId
+            @RequestBody long likeId
     ){
         Map<String,Object> response = new HashMap<>();
         try {
