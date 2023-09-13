@@ -1,0 +1,42 @@
+.container2 {
+    display: grid;
+    height: 100;
+    width: fit-content;
+    grid-gap: 5px;
+    grid-template-areas:
+      "quantity quantity available availquant"
+      "input input input input"
+      "btn10 btn25 btn50 btn100";
+
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .quantity {
+    grid-area: quantity;
+  }
+  
+  .available {
+    grid-area: available;
+  }
+
+  .availquant {
+    grid-area: availquant;
+  }
+
+  .input {
+    grid-area: input;
+  }
+
+  .btn10 {
+    grid-area: btn10;
+  }
+  .btn25 {
+    grid-area: btn25;
+  }
+  .btn50 {
+    grid-area: btn50;
+  }
+  .btn100 {
+    grid-area: btn100;
+  }

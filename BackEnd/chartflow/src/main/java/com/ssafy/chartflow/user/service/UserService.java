@@ -1,5 +1,6 @@
 package com.ssafy.chartflow.user.service;
 
+import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
 import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
@@ -16,6 +17,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -24,7 +27,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    @Autowired
     private final JwtService jwtService;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
@@ -68,5 +70,14 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(newPass);
         user.setPassword(encodedPassword);
         userRepository.save(user);
+    }
+
+    public ResponseAssetsDto getAssets(Long userId) {
+        User user = userRepository.findUserById(userId);
+        return new ResponseAssetsDto(user.getCoin(), user.getBudget());
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
     }
 }
