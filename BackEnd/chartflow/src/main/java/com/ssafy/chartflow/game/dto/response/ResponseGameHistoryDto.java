@@ -19,6 +19,8 @@ public class ResponseGameHistoryDto {
     private int price;
     private int quantity;
     private long initialBudget;
+    private long cashBudget;
     private double rate;
+
 
 }

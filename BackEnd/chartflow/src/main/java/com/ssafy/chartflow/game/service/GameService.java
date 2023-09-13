@@ -29,6 +29,11 @@ import java.util.Random;
 @AllArgsConstructor
 public class GameService {
 
+    private final int BUY = 0;
+    private final int SELL = 1;
+    private final int SKIP = 2;
+    private final int QUIT = 3;
+
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final GameTurnsRepository gameTurnsRepository;
@@ -50,6 +55,8 @@ public class GameService {
                 responseData.setQuantity(gameHistory.getQuantity());
                 responseData.setChartDate(gameHistory.getChartDate());
                 responseData.setInitialBudget(gameHistory.getInitialBudget());
+                responseData.setCashBudget(gameHistory.getCashBudget());
+
             }
         }
 
@@ -76,7 +83,10 @@ public class GameService {
                 gameHistoryData.setQuantity(gameHistory.getQuantity());
                 gameHistoryData.setChartDate(gameHistory.getChartDate());
                 gameHistoryData.setInitialBudget(gameHistory.getInitialBudget());
+                gameHistoryData.setCashBudget(gameHistory.getCashBudget());
+
                 companyCode = gameHistory.getCompanyCode();
+                break;
             }
         }
 
@@ -105,6 +115,7 @@ public class GameService {
                 .chartDate(stock.getDate())
                 .startTime(LocalDateTime.now())
                 .initialBudget(user.getBudget())
+                .cashBudget(user.getBudget())
                 .turn(0)
                 .rate(0)
                 .price(0)
@@ -136,23 +147,23 @@ public class GameService {
         log.info("등록된 game history : " + gameHistory);
     }
 
-    public void buyStocks(long gameHistoryId, String chartDate, int price, int quantity, long userId) {
+    public void buyStocks(long gameHistoryId, int quantity, long userId) {
         User user = userRepository.findUserById(userId);
         GameHistory gameHistory = gameRepository.findGameHistoryById(gameHistoryId);
+        int turn = gameHistory.getTurn();
 
-        // 내일 차트 정보 받아오기
-//        Stocks today = stocksRepository.findStocksById(gameHistory.)
+        // 금일 가격 -> 최고가 + 최저가 평균
         List<GameHistoryStocks> gameHistoryStocks = gameHistory.getGameHistoryStocks();
-        boolean flag = false;
-        for (GameHistoryStocks cur : gameHistoryStocks) {
-        }
+        GameHistoryStocks today = gameHistoryStocks.get(turn);
+        long todayStockId = today.getStocks().getId();
+        Stocks todayStock = stocksRepository.findStocksById(todayStockId);
 
-        // 날짜 파싱
-        LocalDate date = LocalDate.parse(chartDate, DateTimeFormatter.ISO_DATE);
-        gameHistory.setChartDate(date);
+        int price = (todayStock.getHighestPrice() + todayStock.getLowestPrice()) / 2;
 
-        // 평단가, 수량 설정
-        user.setBudget(gameHistory.getInitialBudget() - (long) price * quantity);
+        // 현금 자산 차감 / 평단가, 수량 설정
+        // cashBudget + price * quantity = 총 자산(user.budget)
+
+        gameHistory.setCashBudget(gameHistory.getCashBudget() - price * quantity);
 
         int quant = gameHistory.getQuantity() + quantity;
         int avg = (gameHistory.getPrice() * gameHistory.getQuantity() + price * quantity) / quant;
@@ -160,50 +171,107 @@ public class GameService {
         gameHistory.setPrice(avg);
         gameHistory.setQuantity(quant);
 
-        int turn = gameHistory.getTurn();
-
-        // 마지막 턴일 때 가지고 있는 주식 모두 매도
-        if (turn == 49) {
-            user.setBudget(user.getBudget() + (long) avg * quant);
-        }
-        // 아니라면 턴 증가
-        else gameHistory.setTurn(turn + 1);
-
         GameTurns gameTurns = GameTurns.builder()
-                .behavior(0)
-                .turn(gameHistory.getTurn())
+                .behavior(BUY)
+                .turn(turn)
                 .price(price)
                 .quantity(quantity)
                 .build();
 
+        gameTurns.setGameHistory(gameHistory);
+
+        gameTurnsRepository.save(gameTurns);
+        gameRepository.save(gameHistory);
+    }
+
+    public void sellStocks(long gameHistoryId, int quantity, long userId) {
+        User user = userRepository.findUserById(userId);
+        GameHistory gameHistory = gameRepository.findGameHistoryById(gameHistoryId);
+        int turn = gameHistory.getTurn();
+
+        // 금일 가격 -> 최고가 + 최저가 평균
+        List<GameHistoryStocks> gameHistoryStocks = gameHistory.getGameHistoryStocks();
+        GameHistoryStocks today = gameHistoryStocks.get(turn);
+        long todayStockId = today.getStocks().getId();
+        Stocks todayStock = stocksRepository.findStocksById(todayStockId);
+
+        int price = (todayStock.getHighestPrice() + todayStock.getLowestPrice()) / 2;
+
+        // 현금 자산 증가 / 평단가, 수량 설정
+        long sum =  (gameHistory.getInitialBudget() - gameHistory.getCashBudget());
+
+        gameHistory.setCashBudget(gameHistory.getCashBudget() + price * quantity);
+
+        int quant = gameHistory.getQuantity() - quantity;
+        int avg = 0;
+        if (quant != 0){
+            avg = (int) ((sum - price * quantity) / quant);
+        }
+
+        gameHistory.setPrice(avg);
+        gameHistory.setQuantity(quant);
+
+        GameTurns gameTurns = GameTurns.builder()
+                .behavior(SELL)
+                .turn(turn)
+                .price(price)
+                .quantity(quantity)
+                .build();
 
         gameTurns.setGameHistory(gameHistory);
+
+        gameTurnsRepository.save(gameTurns);
+        gameRepository.save(gameHistory);
+    }
+
+    public void skipTurn(long gameHistoryId, long userId) {
+        User user = userRepository.findUserById(userId);
+        GameHistory gameHistory = gameRepository.findGameHistoryById(gameHistoryId);
+
+        int turn = gameHistory.getTurn();
+
+        // 금일 가격 -> 최고가 + 최저가 평균
+        List<GameHistoryStocks> gameHistoryStocks = gameHistory.getGameHistoryStocks();
+        GameHistoryStocks today = gameHistoryStocks.get(turn);
+        long todayStockId = today.getStocks().getId();
+        Stocks todayStock = stocksRepository.findStocksById(todayStockId);
+
+        int price = (todayStock.getHighestPrice() + todayStock.getLowestPrice()) / 2;
+
+        // 내일 차트 정보 받아오기
+        GameHistoryStocks tomorrow = gameHistoryStocks.get(turn + 1);
+        long tomorrowStockId = tomorrow.getStocks().getId();
+        Stocks tomorrowStock = stocksRepository.findStocksById(tomorrowStockId);
+        LocalDate date = tomorrowStock.getDate();
+
+        gameHistory.setChartDate(date);
+
+        // 해당 턴 동안의 등락률 계산,
+//        long totalAssets = gameHistory.getCashBudget();
+//
+//        // 전 날 대비 종가가 상승한 경우
+//        if (price <= tomorrowStock.getClosingPrice()) {
+//            totalAssets += (long) tomorrowStock.getHighestPrice() * quant;
+//        }
+//        // 전 날 대비 종가가 하락한 경우
+//        else {
+//            totalAssets -= (long) tomorrowStock.getLowestPrice() * quant;
+//        }
+//
+//        gameHistory.setRate(Math.round((totalAssets - gameHistory.getInitialBudget()) / gameHistory.getInitialBudget() * 100 * 100) / 100.0);
+
+        // 변동 사항 유저 정보에 저장 & 턴 증가
+
+        gameHistory.setTurn(turn + 1);
         gameHistory.setUser(user);
 
         gameRepository.save(gameHistory);
-        gameTurnsRepository.save(gameTurns);
         userRepository.save(user);
-
     }
 
-    public void sellStocks(long gameHistoryId, String chartDate, int price, int quantity, long userId) {
+    public void quitGame(long gameHistoryId, long userId) {
         User user = userRepository.findUserById(userId);
         GameHistory gameHistory = gameRepository.findGameHistoryById(gameHistoryId);
-        LocalDate date = LocalDate.parse(chartDate, DateTimeFormatter.ISO_DATE);
-
-    }
-
-    public void skipTurn(long gameHistoryId, String chartDate, long userId) {
-        User user = userRepository.findUserById(userId);
-        GameHistory gameHistory = gameRepository.findGameHistoryById(gameHistoryId);
-        LocalDate date = LocalDate.parse(chartDate, DateTimeFormatter.ISO_DATE);
-
-    }
-
-    public void quitGame(long gameHistoryId, String chartDate, long userId) {
-        User user = userRepository.findUserById(userId);
-        GameHistory gameHistory = gameRepository.findGameHistoryById(gameHistoryId);
-        LocalDate date = LocalDate.parse(chartDate, DateTimeFormatter.ISO_DATE);
 
     }
 

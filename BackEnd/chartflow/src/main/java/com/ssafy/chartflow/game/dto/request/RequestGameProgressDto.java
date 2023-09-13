@@ -15,7 +15,5 @@ public class RequestGameProgressDto {
 
     private long gameHistoryId;
     private int mode;
-    private String chartDate;
-    private int price;
     private int quantity;
 }

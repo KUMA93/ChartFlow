@@ -51,6 +51,9 @@ public class GameHistory {
     @Column(name = "initial_budget")
     private long initialBudget;
 
+    @Column(name = "cash_budget")
+    private long cashBudget;
+
     @Column(name = "rate")
     private double rate;
 

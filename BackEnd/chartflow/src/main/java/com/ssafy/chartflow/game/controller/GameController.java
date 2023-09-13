@@ -129,25 +129,25 @@ public class GameController {
                 // 매수
                 case 0:
                     log.info("Game Controller - 매수");
-                    gameService.buyStocks(requestGameProgressDto.getGameHistoryId(), requestGameProgressDto.getChartDate(), requestGameProgressDto.getPrice(), requestGameProgressDto.getQuantity(), userId);
+                    gameService.buyStocks(requestGameProgressDto.getGameHistoryId(), requestGameProgressDto.getQuantity(), userId);
                     break;
 
                 // 매도
                 case 1:
                     log.info("Game Controller - 매도");
-                    gameService.sellStocks(requestGameProgressDto.getGameHistoryId(), requestGameProgressDto.getChartDate(), requestGameProgressDto.getPrice(), requestGameProgressDto.getQuantity(), userId);
+                    gameService.sellStocks(requestGameProgressDto.getGameHistoryId(), requestGameProgressDto.getQuantity(), userId);
                     break;
 
                 // 스킵
                 case 2:
                     log.info("Game Controller - 스킵");
-                    gameService.skipTurn(requestGameProgressDto.getGameHistoryId(), requestGameProgressDto.getChartDate(), userId);
+                    gameService.skipTurn(requestGameProgressDto.getGameHistoryId(), userId);
                     break;
 
                 // 종료
                 default:
                     log.info("Game Controller - 종료");
-                    gameService.quitGame(requestGameProgressDto.getGameHistoryId(), requestGameProgressDto.getChartDate(), userId);
+                    gameService.quitGame(requestGameProgressDto.getGameHistoryId(), userId);
                     break;
             }
 
