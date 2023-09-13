@@ -1,9 +1,13 @@
 package com.ssafy.chartflow.stocks.entity;
 
+import com.ssafy.chartflow.game.entity.GameHistory;
+import com.ssafy.chartflow.game.entity.GameHistoryStocks;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -39,5 +43,8 @@ public class Stocks {
     private int volumes;
 
     private float rate;
+
+    @OneToMany(mappedBy = "stocks")
+    private final List<GameHistoryStocks> gameHistoryStocks = new ArrayList<>();
 
 }
