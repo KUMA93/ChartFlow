@@ -1,4 +1,4 @@
-package com.ssafy.chartflow.info.dto;
+package com.ssafy.chartflow.emblem.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,14 +13,7 @@ public class UserGameDto {
     private final int TURN=0;
     private final int GAME=1;
 
-    private Long userId;
+    private long userId;
     private int type;
-
-    private class Turn{
-        
-    }
-
-    private class Game{
-
-    }
+    private double rate;
 }
