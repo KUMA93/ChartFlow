@@ -3,6 +3,7 @@ package com.ssafy.chartflow.board.controller;
 import com.ssafy.chartflow.board.dto.request.RequestLikeDto;
 import com.ssafy.chartflow.board.dto.request.RequestModifyArticleDto;
 import com.ssafy.chartflow.board.dto.request.RequestWriteArticleDto;
+import com.ssafy.chartflow.board.dto.response.ArticleResponseDto;
 import com.ssafy.chartflow.board.entity.Article;
 import com.ssafy.chartflow.board.service.ArticleService;
 import com.ssafy.chartflow.exception.LikeDuplicateException;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +71,43 @@ public class BoardController {
 
             response.put("status", "success");
             response.put("message", "Article successfully modified.");
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //특정 글 조회
+    @GetMapping("/{articleId}")
+    public ResponseEntity<Map<String,Object>> readArticleByArticleId(
+            @Parameter(hidden = true)
+            @RequestHeader("Authorization") String token,
+            @PathVariable long articleId
+    ){
+        Map<String,Object> response = new HashMap<>();
+
+        try {
+            Article article = articleService.findArticleByArticleId(articleId);
+            ArticleResponseDto articleResponseDto = new ArticleResponseDto();
+
+            String title = article.getTitle();
+            String nickname = article.getUser().getNickname();
+            LocalDateTime registerTime = article.getRegisterTime();
+            int views = article.getViews();
+            long id = article.getId();
+            String content = article.getContent();
+
+            articleResponseDto.setTitle(title);
+            articleResponseDto.setNickName(nickname);
+            articleResponseDto.setRegisterTime(registerTime);
+            article.setViews(views);
+            article.setId(id);
+            article.setContent(content);
+
+            response.put("article", articleResponseDto);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (Exception e) {
