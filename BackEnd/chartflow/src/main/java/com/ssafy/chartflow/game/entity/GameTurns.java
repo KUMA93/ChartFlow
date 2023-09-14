@@ -2,6 +2,7 @@ package com.ssafy.chartflow.game.entity;
 
 import com.ssafy.chartflow.user.entity.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Entity
@@ -33,6 +34,21 @@ public class GameTurns {
 
     @Column(name = "quantity")
     private int quantity;
+
+    @Column(name = "current_stocks")
+    private long currentStocks;
+
+    @Column(name = "cash_budget")
+    private long cashBudget;
+
+    @Column(name = "total_assets")
+    private long totalAssets;
+
+    @Column(name = "rate")
+    private double rate;
+
+    @Column(name = "today_price")
+    private int todayPrice;
 
     public void setGameHistory(GameHistory gameHistory) {
         if (gameHistory != null) {

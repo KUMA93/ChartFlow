@@ -31,7 +31,7 @@ public class GameController {
     private final JwtService jwtService;
     private final GameService gameService;
 
-    @Operation(summary = "게임 히스토리 조회", description = "해당 유저가 진행중인 게임 중 endTime이 null인(진행 중인) 게임히스토리 정보를 조회한다.")
+    @Operation(summary = "게임 히스토리 조회", description = "해당 유저가 진행중인 게임 중 매 턴마다 endTime이 null인(진행 중인) 게임히스토리 정보를 조회한다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "게임 히스토리 조회 성공"),
             @ApiResponse(responseCode = "500", description = "게임 히스토리 조회 실패 - 내부 서버 오류"),
@@ -141,8 +141,9 @@ public class GameController {
                 // 스킵
                 case 2:
                     log.info("Game Controller - 스킵");
-                    gameService.skipTurn(requestGameProgressDto.getGameHistoryId(), userId);
-                    break;
+                    int turn = gameService.skipTurn(requestGameProgressDto.getGameHistoryId(), userId);
+
+                    if (turn < 50) break;
 
                 // 종료
                 default:

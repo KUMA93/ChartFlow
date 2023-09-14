@@ -34,6 +34,10 @@ public class GameService {
     private final int SKIP = 2;
     private final int QUIT = 3;
 
+    private final int DRAW = 0;
+    private final int WIN = 1;
+    private final int LOSE = 2;
+
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final GameTurnsRepository gameTurnsRepository;
@@ -117,7 +121,7 @@ public class GameService {
                 .initialBudget(user.getBudget())
                 .cashBudget(user.getBudget())
                 .turn(0)
-                .rate(0)
+                .rate(0.00)
                 .price(0)
                 .quantity(0)
                 .build();
@@ -224,7 +228,7 @@ public class GameService {
         gameRepository.save(gameHistory);
     }
 
-    public void skipTurn(long gameHistoryId, long userId) {
+    public int skipTurn(long gameHistoryId, long userId) {
         User user = userRepository.findUserById(userId);
         GameHistory gameHistory = gameRepository.findGameHistoryById(gameHistoryId);
 
@@ -236,43 +240,110 @@ public class GameService {
         long todayStockId = today.getStocks().getId();
         Stocks todayStock = stocksRepository.findStocksById(todayStockId);
 
-        int price = (todayStock.getHighestPrice() + todayStock.getLowestPrice()) / 2;
-
         // 내일 차트 정보 받아오기
         GameHistoryStocks tomorrow = gameHistoryStocks.get(turn + 1);
         long tomorrowStockId = tomorrow.getStocks().getId();
         Stocks tomorrowStock = stocksRepository.findStocksById(tomorrowStockId);
         LocalDate date = tomorrowStock.getDate();
 
+        int price = (tomorrowStock.getHighestPrice() + tomorrowStock.getLowestPrice()) / 2;
         gameHistory.setChartDate(date);
 
-        // 해당 턴 동안의 등락률 계산,
-//        long totalAssets = gameHistory.getCashBudget();
-//
-//        // 전 날 대비 종가가 상승한 경우
-//        if (price <= tomorrowStock.getClosingPrice()) {
-//            totalAssets += (long) tomorrowStock.getHighestPrice() * quant;
-//        }
-//        // 전 날 대비 종가가 하락한 경우
-//        else {
-//            totalAssets -= (long) tomorrowStock.getLowestPrice() * quant;
-//        }
-//
-//        gameHistory.setRate(Math.round((totalAssets - gameHistory.getInitialBudget()) / gameHistory.getInitialBudget() * 100 * 100) / 100.0);
+        // 해당 턴 동안의 등락률 계산
+        long cashBudget = gameHistory.getCashBudget();
+        long initialBudget = gameHistory.getInitialBudget();
+        long currentStocks = initialBudget - cashBudget;
+        long totalAssets = cashBudget + price * gameHistory.getQuantity();
 
-        // 변동 사항 유저 정보에 저장 & 턴 증가
+        long tomorrowStocks = (long) price * gameHistory.getQuantity();
 
-        gameHistory.setTurn(turn + 1);
+        long gap = tomorrowStocks - currentStocks;
+
+        user.setBudget(totalAssets);
+        gameHistory.setRate(Math.round((float) (totalAssets - initialBudget) / initialBudget * 100 * 100) / 100.0);
+
+        // 유저 자산에 반영
         gameHistory.setUser(user);
+
+        // gameTurns 반영
+        GameTurns gameTurns = GameTurns.builder()
+                .behavior(SKIP)
+                .turn(turn)
+                .price(gameHistory.getPrice())
+                .quantity(gameHistory.getQuantity())
+                .currentStocks(currentStocks)
+                .cashBudget(cashBudget)
+                .totalAssets(totalAssets)
+                .rate(gameHistory.getRate())
+                .todayPrice(price)
+                .build();
+
+        gameTurns.setGameHistory(gameHistory);
+
+        gameTurnsRepository.save(gameTurns);
+
+        // 턴 증가
+        gameHistory.setTurn(turn + 1);
 
         gameRepository.save(gameHistory);
         userRepository.save(user);
+
+        return turn;
     }
 
     public void quitGame(long gameHistoryId, long userId) {
         User user = userRepository.findUserById(userId);
         GameHistory gameHistory = gameRepository.findGameHistoryById(gameHistoryId);
+        int turn = gameHistory.getTurn();
 
+        // 금일 가격 -> 최고가 + 최저가 평균
+        List<GameHistoryStocks> gameHistoryStocks = gameHistory.getGameHistoryStocks();
+        GameHistoryStocks today = gameHistoryStocks.get(turn);
+        long todayStockId = today.getStocks().getId();
+        Stocks todayStock = stocksRepository.findStocksById(todayStockId);
+
+        int price = (todayStock.getHighestPrice() + todayStock.getLowestPrice()) / 2;
+
+        // 가지고 있는 주식 전량 매도
+        long cashBudget = gameHistory.getCashBudget();
+        long initialBudget = gameHistory.getInitialBudget();
+        long totalAssets = cashBudget + price * gameHistory.getQuantity();
+
+        double rate = Math.round((float) (totalAssets - initialBudget) / initialBudget * 100 * 100) / 100.0;
+
+        user.setBudget(totalAssets);
+        gameHistory.setRate(rate);
+
+        if (rate > 0) gameHistory.setResult(WIN);
+        else if (rate == 0) gameHistory.setResult(DRAW);
+        else gameHistory.setResult(LOSE);
+
+        gameHistory.setPrice(0);
+        gameHistory.setQuantity(0);
+        gameHistory.setEndTime(LocalDateTime.now());
+        gameHistory.setCashBudget(totalAssets);
+
+        // 유저 자산에 반영
+        gameHistory.setUser(user);
+
+        // gameTurns 반영
+        GameTurns gameTurns = GameTurns.builder()
+                .behavior(QUIT)
+                .turn(turn)
+                .price(0)
+                .quantity(0)
+                .currentStocks(0)
+                .cashBudget(totalAssets)
+                .totalAssets(totalAssets)
+                .rate(rate)
+                .todayPrice(price)
+                .build();
+
+        gameTurns.setGameHistory(gameHistory);
+
+        gameTurnsRepository.save(gameTurns);
+        gameRepository.save(gameHistory);
+        userRepository.save(user);
     }
 
 }
