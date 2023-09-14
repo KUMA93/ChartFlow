@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     body{
         background: ${({ theme }) => theme.bg};
         color: ${({ theme }) => theme.font.deep};
-        margin: 5vh 15vw; 
+        margin: 3vh 15vw; 
         font-family: 'SUIT-Regular';
         @font-face {
         font-family: 'SUIT-Regular';
