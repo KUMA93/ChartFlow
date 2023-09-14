@@ -46,3 +46,18 @@
   grid-area: skip;
   background-color: rgba(0, 0, 0, 0.69);
 }
+
+.texts {
+  display: flex;
+}
+
+.now {
+  font-size: 20px;
+  color: #f86565;
+  font-weight: 700;
+  margin-top: -5px;
+}
+
+.all {
+  font-size: 13px;
+}

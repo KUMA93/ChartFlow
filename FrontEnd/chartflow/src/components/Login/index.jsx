@@ -1,11 +1,15 @@
 import styles from "./Login.module.css";
 import modal_logo from "./../../assets/images/free-icon-growth-chart.png";
 import closeBtn from "./../../assets/images/icons8-x-50.png";
+import { useInput } from "../../hooks/useInput";
 
 function Login({ modalShow, handleClose }) {
-  const handleLogin = () => {
+  const handleSubmit = () => {
     console.log("로그인 버튼 누름");
   };
+
+  const [inputValue, handleChange] = useInput("", handleSubmit);
+  const [inputValue2, handleChange2] = useInput("", handleSubmit);
 
   return (
     <div style={{ display: modalShow ? "block" : "none" }}>
@@ -28,16 +32,21 @@ function Login({ modalShow, handleClose }) {
         </div>
         <div className={styles.forms}>
           <div className={styles.form}>
-            <input type="text" required></input>
-            <label>이메일 주소</label>
+            <input className={styles.input} value={inputValue} onChange={handleChange} required></input>
+            <div className={styles.label}>이메일 주소</div>
             <span></span>
           </div>
           <div className={styles.form}>
-            <input type="password" required></input>
-            <label>비밀번호</label>
-            <span></span>
+            <div className={styles.input}
+              type="password"
+              value={inputValue2}
+              onChange={handleChange2}
+              required
+            ></div>
+            <div className={styles.label}>비밀번호</div>
+            <div className={styles.span}></div>
           </div>
-          <button className={styles.loginBtn} onClick={handleLogin}>
+          <button className={styles.loginBtn} onClick={handleSubmit}>
             로그인
           </button>
           <div className={styles.end}>

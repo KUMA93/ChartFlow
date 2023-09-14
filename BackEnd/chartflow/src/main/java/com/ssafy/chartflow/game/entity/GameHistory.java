@@ -1,14 +1,17 @@
 package com.ssafy.chartflow.game.entity;
 
+import com.ssafy.chartflow.stocks.entity.Stocks;
 import com.ssafy.chartflow.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "game_history")
 @Builder
 @AllArgsConstructor
@@ -37,6 +40,40 @@ public class GameHistory {
     private String companyCode;
 
     @Column(name = "chart_date")
-    private String chartDate;
+    private LocalDate chartDate;
+
+    @Column(name = "price")
+    private int price;
+
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "initial_budget")
+    private long initialBudget;
+
+    @Column(name = "cash_budget")
+    private long cashBudget;
+
+    @Column(name = "rate")
+    private double rate;
+
+    @Column(name = "result")
+    private int result;
+
+    @OneToMany(mappedBy = "gameHistory")
+    private final List<GameTurns> gameTurns = new ArrayList<>();
+
+    @OneToMany(mappedBy = "gameHistory")
+    private final List<GameHistoryStocks> gameHistoryStocks = new ArrayList<>();
+
+
     // getters, setters, etc.
+    public void setUser(User user) {
+        if (user != null) {
+            user.getGameHistories().remove(this);
+        }
+        this.user = user;
+        assert user != null;
+        user.getGameHistories().add(this);
+    }
 }

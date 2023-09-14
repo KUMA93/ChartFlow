@@ -73,7 +73,7 @@
   width: 300px;
 }
 
-input {
+.input {
   font-size: 1rem;
   color: #222222;
   width: 280px;
@@ -84,14 +84,14 @@ input {
   z-index: 5;
 }
 
-input::placeholder {
+.input::placeholder {
   color: #aaaaaa;
 }
-input:focus {
+.input:focus {
   outline: none;
 }
 
-span {
+.span {
   display: block;
   position: absolute;
   bottom: 0;
@@ -103,7 +103,7 @@ span {
   transition: 0.5s;
 }
 
-label {
+.label {
   position: absolute;
   color: #aaa;
   left: 10px;
@@ -112,16 +112,16 @@ label {
   transition: all 0.2s;
 }
 
-input:focus ~ label,
-input:valid ~ label {
+.input:focus ~ label,
+.input:valid ~ label {
   font-size: 13px;
   bottom: 30px;
   color: #666;
   font-weight: bold;
 }
 
-input:focus ~ span,
-input:valid ~ span {
+.input:focus ~ span,
+.input:valid ~ span {
   width: 285px;
 }
 
