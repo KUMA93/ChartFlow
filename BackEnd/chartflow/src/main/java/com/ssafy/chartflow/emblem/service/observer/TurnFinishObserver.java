@@ -1,9 +1,8 @@
 package com.ssafy.chartflow.emblem.service.observer;
 
-import com.ssafy.chartflow.emblem.service.strategy.TurnStrategy;
+import com.ssafy.chartflow.emblem.service.strategy.turnstrategy.TurnStrategy;
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
 import com.ssafy.chartflow.emblem.service.EmblemService;
-import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
