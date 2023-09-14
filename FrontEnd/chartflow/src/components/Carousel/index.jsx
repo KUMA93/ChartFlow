@@ -3,7 +3,7 @@ import styles from "./Carousel.module.css";
 function Carousel() {
   return (
     <>
-      <div className={styles.box}>Carousel</div>
+      <div className={styles.item}>Carousel</div>
     </>
   );
 }

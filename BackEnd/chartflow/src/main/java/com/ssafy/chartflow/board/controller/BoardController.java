@@ -182,7 +182,7 @@ public class BoardController {
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/like")
