@@ -21,7 +21,12 @@ function Order() {
       <div className={styles.quantity}>주문수량</div>
       <div className={styles.available}>주문가능</div>
       <div className={styles.availquant}>{originStocks}주</div>
-      <input type="number" Value={availstocks} className={styles.input1} />
+      <input
+        type="number"
+        value={availstocks}
+        className={styles.input1}
+        readOnly
+      />
       <button className={styles.btn10} onClick={handleStocks10}>
         10%
       </button>
