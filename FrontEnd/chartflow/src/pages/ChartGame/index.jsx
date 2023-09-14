@@ -1,6 +1,7 @@
 import styles from "./ChartGame.module.css";
 import BuySell from "../../components/BuySell";
 import Status from "../../components/Status";
+import Chart from "../../components/Chart";
 
 const ChartGame = () => {
   const handleFinish = () => {
@@ -9,7 +10,9 @@ const ChartGame = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.chart}>주식 차트</div>
+      <div className={styles.chart}>
+        <Chart />
+      </div>
       <div className={styles.buysell}>
         <BuySell />
       </div>
