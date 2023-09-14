@@ -1,12 +1,19 @@
 import Header from "../../components/Header";
+import styles from './Signup.module.css';
 
-function MyPage() {
+function SignUp() {
   return (
     <>
       <Header />
-      <p>This is Signup page.</p>
+      <div className={styles.title}>회원가입</div>
+      <div className={styles.center}>
+        <div className={styles.font}>이메일 주소
+          <div className={styles.inputForm}>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
 
-export default MyPage;
+export default SignUp;
