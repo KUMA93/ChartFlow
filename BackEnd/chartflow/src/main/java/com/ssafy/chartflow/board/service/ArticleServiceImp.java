@@ -11,6 +11,8 @@ import com.ssafy.chartflow.exception.NoSuchLikeException;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,11 @@ public class ArticleServiceImp implements ArticleService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
+
+    @Override
+    public Page<Article> findArticles(Pageable pageable) {
+        return articleRepository.findAll(pageable);
+    }
 
     @Override
     public void writeArticle(long userId, String title, String content) {
