@@ -8,8 +8,8 @@ function Login({ modalShow, handleClose }) {
     console.log("로그인 버튼 누름");
   };
 
-  const [inputValue, handleChange] = useInput("", handleSubmit);
-  const [inputValue2, handleChange2] = useInput("", handleSubmit);
+  const [inputId, handleChangeId] = useInput("", handleSubmit);
+  const [inputPw, handleChangePw] = useInput("", handleSubmit);
 
   return (
     <div style={{ display: modalShow ? "block" : "none" }}>
@@ -31,21 +31,21 @@ function Login({ modalShow, handleClose }) {
           </div>
         </div>
         <div className={styles.forms}>
-          <div className={styles.form}>
-            <input value={inputValue} onChange={handleChange} required></input>
+          <form className={styles.form}>
+            <input value={inputId} onChange={handleChangeId} required autoComplete="on"></input>
             <label>이메일 주소</label>
             <span></span>
-          </div>
-          <div className={styles.form}>
+          </form>
+          <form className={styles.form}>
             <input
               type="password"
-              value={inputValue2}
-              onChange={handleChange2}
-              required
+              value={inputPw}
+              onChange={handleChangePw}
+              required autoComplete="on"
             ></input>
             <label>비밀번호</label>
             <span></span>
-          </div>
+          </form>
           <button className={styles.loginBtn} onClick={handleSubmit}>
             로그인
           </button>
