@@ -1,5 +1,8 @@
 package com.ssafy.chartflow.emblem.dto;
 
+import com.ssafy.chartflow.emblem.entity.Emblem;
+import com.ssafy.chartflow.emblem.service.EmblemService;
+import com.ssafy.chartflow.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserGameDto {
-    private final int TURN=0;
-    private final int GAME=1;
+public class UserGameDto{
 
     private User user;
     private List<Emblem> emblems;

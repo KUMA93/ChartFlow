@@ -33,12 +33,13 @@ public class EmblemService {
         observers.remove(observer);
     }
 
-    public void notifyObserver(UserGameDto userData) {
-        for (EmblemObserver observer : observers) {
-            if (userData.getType().equals("")&& observer instanceof TurnFinishObserver){
-                observer.update(userData);
-            }else if (userData.getType().equals("")&& observer instanceof GameFinishObserver){
-                observer.update(userData);
+    public void notifyObserver(UserGameDto userGameDto, int flag) {
+
+        for (EmblemObserver observer : observers){
+            if (flag == 0 && observer instanceof TurnFinishObserver){
+                observer.update(userGameDto);
+            }else if (flag == 1 && observer instanceof GameFinishObserver){
+                observer.update(userGameDto);
             }
         }
     }
