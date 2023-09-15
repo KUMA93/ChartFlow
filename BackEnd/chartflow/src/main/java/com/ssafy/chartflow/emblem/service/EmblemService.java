@@ -45,7 +45,7 @@ public class EmblemService {
 
     public void saveEmblem(UserGameDto userGameDto, String title){
         Emblem emblem = emblemRepository.findByName(title);
-        User user = userRepository.findUserById(userGameDto.getUserId());
+        User user = userGameDto.getUser();
 
         UserEmblem userEmblem = new UserEmblem();
         userEmblem.setUser(user);

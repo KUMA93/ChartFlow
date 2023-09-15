@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -13,7 +15,6 @@ public class UserGameDto {
     private final int TURN=0;
     private final int GAME=1;
 
-    private long userId;
-    private int type;
-    private double rate;
+    private User user;
+    private List<Emblem> emblems;
 }

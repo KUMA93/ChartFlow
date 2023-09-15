@@ -13,7 +13,7 @@ public class KillerOfSpoonStrategy implements TurnStrategy {
 
     @Override
     public String getTitle() {
-        return "물가상승은 조상님이 내주냐?";
+        return "숟가락살인마";
     }
 
 }
