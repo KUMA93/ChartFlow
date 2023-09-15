@@ -1,12 +1,12 @@
 import Header from "../../components/Header";
 
-function Board() {
+function Quiz() {
   return (
     <>
       <Header />
-      <p>This is Board page.</p>
+      <p>This is Quiz page.</p>
     </>
   );
 }
 
-export default Board;
+export default Quiz;

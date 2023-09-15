@@ -2,6 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 67vw;
+  overflow: hidden;
 }
 
 .mainLogo {
@@ -24,6 +26,8 @@
   font-feature-settings: "clig" off, "liga" off;
   font-size: 1.1rem;
   font-weight: 600;
+  width: max-content;
+  cursor: pointer;
 }
 .tab:hover {
   font-weight: 700;
@@ -42,6 +46,8 @@
   border: 0;
   text-align: center;
   margin-right: 2vw;
+  min-width: fit-content;
+  cursor: pointer;
 }
 .btn:hover {
   font-weight: 700;

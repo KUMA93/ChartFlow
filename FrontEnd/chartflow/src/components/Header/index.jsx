@@ -28,10 +28,20 @@ function Header() {
         <button
           className={styles.tab}
           onClick={() => {
-            navigate("/boards");
+            navigate("/comm");
           }}
         >
           커뮤니티
+        </button>
+      </li>
+      <li>
+        <button
+          className={styles.tab}
+          onClick={() => {
+            navigate("/quiz");
+          }}
+        >
+          주식퀴즈
         </button>
       </li>
       <li>
@@ -44,22 +54,12 @@ function Header() {
           히스토리
         </button>
       </li>
-      <li>
-        <button
-          className={styles.tab}
-          onClick={() => {
-            navigate("/mypage");
-          }}
-        >
-          마이페이지
-        </button>
-      </li>
     </ul>
   );
 
   const Start = () => (
     <button
-      className={styles.btn}
+    className={styles.btn}
       onClick={() => {
         handleModal();
       }}

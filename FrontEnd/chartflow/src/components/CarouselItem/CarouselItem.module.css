@@ -1,6 +1,7 @@
 .carouselImg {
+  min-height: 45vh;
   width: 100%;
-  /* height: 43vh; */
+  cursor: pointer;
 }
 
 .carouselItem {

@@ -13,7 +13,7 @@ function Login({ modalShow, handleClose }) {
 
   return (
     <div style={{ display: modalShow ? "block" : "none" }}>
-      <div className={styles.shade}>shade</div>
+      <div className={styles.shade} onClick={handleClose}>shade</div>
       <div className={styles.login}>
         <img
           src={closeBtn}

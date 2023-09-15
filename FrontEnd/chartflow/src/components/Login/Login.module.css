@@ -10,6 +10,7 @@
   height: 200%;
   flex-shrink: 0;
   background-color: rgba(43, 40, 38, 0.6);
+  z-index: 1;
 }
 
 .login {
@@ -21,6 +22,7 @@
   flex-shrink: 0;
   border-radius: 30px;
   background-color: #fff;
+  z-index: 2;
 }
 
 .closeBtn {
@@ -29,6 +31,7 @@
   margin-top: -1vh;
   width: 30px;
   height: 30px;
+  cursor: pointer;
 }
 
 .title {
@@ -36,11 +39,6 @@
   margin-top: 3vh;
   margin-left: 2vw;
   align-items: center;
-}
-
-.mainLogo {
-  width: 250px;
-  margin-left: 2vw;
 }
 
 .text {
@@ -82,6 +80,7 @@ input {
   position: relative;
   background: none;
   z-index: 5;
+  cursor: pointer;
 }
 
 input::placeholder {
@@ -137,6 +136,7 @@ input:valid ~ span {
   font-size: 15px;
   font-weight: 800;
   border: 0;
+  cursor: pointer;
 }
 
 .end {
@@ -156,4 +156,5 @@ input:valid ~ span {
   margin-left: 7px;
   color: #6c00ff;
   text-align: center;
+  cursor: pointer;
 }

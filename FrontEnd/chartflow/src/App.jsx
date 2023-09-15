@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainPage from "./pages/MainPage";
-import ChartGame from "./pages/ChartGame";
 import GlobalStyle from "./styles/GlobalStyle";
 import { ThemeProvider } from "./styles/themeProvider";
 import TurnContext from "./context/TurnContext";
 import { useState } from "react";
-import MyPage from "./pages/MyPage";
+import MainPage from "./pages/MainPage";
+import ChartGame from "./pages/ChartGame";
+import Community from "./pages/Community";
+import Quiz from "./pages/Quiz";
 import History from "./pages/History";
-import Board from "./pages/Board";
+import MyPage from "./pages/MyPage";
 import Signup from "./pages/Signup";
 
 function App() {
@@ -20,9 +21,10 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/game" element={<ChartGame />} />
+            <Route path="/comm" element={<Community />} />
+            <Route path="/quiz" element={<Quiz />} />
             <Route path="/hist" element={<History />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/boards" element={<Board />} />
             <Route path="/signup" element={<Signup />} />
           </Routes>
         </TurnContext.Provider>

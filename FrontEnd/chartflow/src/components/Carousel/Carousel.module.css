@@ -21,7 +21,7 @@
 }
 
 .button_arrow {
-  position: relative;
+  /* position: relative; */
   background: none;
   border: none;
   cursor: pointer;
@@ -33,7 +33,6 @@
 
 .right_arrow {
   width: 50%;
-  /* margin-right: 10px; */
 }
 
 .indicators {

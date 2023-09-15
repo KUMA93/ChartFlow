@@ -12,31 +12,31 @@ function Carousel() {
   const items = [
     {
       key: 0,
-      description: "chart",
+      title: "game",
       icon: require("../../assets/images/carousel-chart.png"),
     },
     {
       key: 1,
-      description: "community",
+      title: "comm",
       icon: require("../../assets/images/carousel-community.png"),
     },
     {
       key: 2,
-      description: "history",
-      icon: require("../../assets/images/carousel-history.png"),
+      title: "quiz",
+      icon: require("../../assets/images/carousel-quiz.png"),
     },
     {
-      key: 3,
-      description: "quiz",
-      icon: require("../../assets/images/carousel-quiz.png"),
+      key: 3  ,
+      title: "hist",
+      icon: require("../../assets/images/carousel-history.png"),
     },
   ];
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
-      newIndex = 0;
+      newIndex = 3;
     } else if (newIndex >= items.length) {
-      newIndex = items.length - 1;
+      newIndex = 0;
     }
     setActiveIndex(newIndex);
   };

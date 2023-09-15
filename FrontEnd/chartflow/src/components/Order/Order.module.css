@@ -34,13 +34,17 @@
 
 .btn10 {
   grid-area: btn10;
+  cursor: pointer;
 }
 .btn25 {
   grid-area: btn25;
+  cursor: pointer;
 }
 .btn50 {
   grid-area: btn50;
+  cursor: pointer;
 }
 .btn100 {
   grid-area: btn100;
+  cursor: pointer;
 }

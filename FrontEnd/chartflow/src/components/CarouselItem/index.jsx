@@ -1,8 +1,8 @@
 import styles from "./CarouselItem.module.css";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CarouselItem({ item }) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className={styles.carouselItem}>
@@ -12,8 +12,7 @@ function CarouselItem({ item }) {
         src={item.icon}
         alt={item.icon.default}
         onClick={() => {
-          console.log(item);
-          // navigate("/game");
+          navigate(`/${item.title}`);
         }}
       />
     </div>
