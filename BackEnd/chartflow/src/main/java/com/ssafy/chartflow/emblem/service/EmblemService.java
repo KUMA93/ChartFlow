@@ -21,9 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmblemService {
     private final List<EmblemObserver> observers;
-    private final UserEmblemRepository userEmblemRepository;
-    private final EmblemRepository emblemRepository;
-    private final UserRepository userRepository;
 
     public void addObserver(EmblemObserver observer) {
         observers.add(observer);
@@ -44,15 +41,6 @@ public class EmblemService {
         }
     }
 
-    public void saveEmblem(UserGameDto userGameDto, String title){
-        Emblem emblem = emblemRepository.findByName(title);
-        User user = userGameDto.getUser();
 
-        UserEmblem userEmblem = new UserEmblem();
-        userEmblem.setUser(user);
-        userEmblem.setEmblem(emblem);
-
-        userEmblemRepository.save(userEmblem);
-    }
 
 }
