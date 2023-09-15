@@ -3,12 +3,12 @@
   grid-gap: 20px;
   height: 100vh;
   grid-template-areas:
-    /* "header header" */
     "carousel carousel"
     "hotUpdate gotoGame"
     "hotUpdate rankWeekly"
     "footer footer";
-  grid-template-rows: 300px 90px 1fr 100px;
+  grid-template-rows: 350px 90px 1fr 100px;
+  grid-template-columns: 1fr 1fr;
 }
 
 .header {

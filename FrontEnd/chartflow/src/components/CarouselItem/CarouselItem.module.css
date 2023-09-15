@@ -1,0 +1,10 @@
+.carouselImg {
+  width: 100%;
+  /* height: 43vh; */
+}
+
+.carouselItem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
