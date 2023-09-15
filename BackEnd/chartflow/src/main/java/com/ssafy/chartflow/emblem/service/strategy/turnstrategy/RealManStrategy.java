@@ -1,18 +1,37 @@
 package com.ssafy.chartflow.emblem.service.strategy.turnstrategy;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
+import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.service.strategy.GameStrategy;
+import com.ssafy.chartflow.game.entity.GameHistory;
+import com.ssafy.chartflow.game.entity.GameTurns;
+
+import java.util.List;
 
 public class RealManStrategy implements TurnStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {
-        //1판에 풀매수 3회 이상
-        return false;
+        // 풀매수 3회
+        List<Emblem> emblems = userGameDto.getEmblems();
+        GameHistory gameHistory = userGameDto.getGameHistory();
+        List<GameTurns> gameTurns = gameHistory.getGameTurns();
+
+        boolean hasEmblem = emblems.stream()
+                .anyMatch(emblem -> "상남자".equals(emblem.getName()));
+
+        if (hasEmblem) return false;
+
+        int cnt = 0;
+        for (GameTurns gameturn : gameTurns){
+            if(gameturn.getTotalAssets() - gameturn.getCurrentStocks() < gameturn.getPrice())
+                ++cnt;
+        }
+        return cnt >= 2;
     }
 
     @Override
     public String getTitle() {
-        return "물가상승은 조상님이 내주냐?";
+        return "상남자";
     }
 
 }

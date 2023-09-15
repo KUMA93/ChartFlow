@@ -127,12 +127,11 @@ public class GameService {
                 .build();
 
 
-        // 51개 만큼 주식 데이터 저장
+        // 50개 만큼 주식 데이터 저장
         List<Stocks> stocks = stocksRepository.findAllByTicker(stock.getTicker());
 
         int cnt = 0;
         for (Stocks cur : stocks) {
-            if (cnt >= 51) break;
             if (cur.getDate().isAfter(stock.getDate())) {
                 cnt++;
                 GameHistoryStocks gameHistoryStocks = new GameHistoryStocks();
@@ -141,6 +140,7 @@ public class GameService {
 
                 gameHistoryStocksRepository.save(gameHistoryStocks);
             }
+            if (cnt >= 50) break;
         }
 
         gameHistory.setUser(user);
@@ -325,23 +325,6 @@ public class GameService {
 
         // 유저 자산에 반영
         gameHistory.setUser(user);
-
-        // gameTurns 반영
-        GameTurns gameTurns = GameTurns.builder()
-                .behavior(QUIT)
-                .turn(turn)
-                .price(0)
-                .quantity(0)
-                .currentStocks(0)
-                .cashBudget(totalAssets)
-                .totalAssets(totalAssets)
-                .rate(rate)
-                .todayPrice(price)
-                .build();
-
-        gameTurns.setGameHistory(gameHistory);
-
-        gameTurnsRepository.save(gameTurns);
         gameRepository.save(gameHistory);
         userRepository.save(user);
     }
