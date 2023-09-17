@@ -17,8 +17,14 @@ function Order() {
     setAvailstocks(originStocks * 1);
   };
   function handleChange(e) {
-    console.log("바뀐 주문수량");
     setAvailstocks(e.target.value);
+    if (e.target.value > originStocks) {
+      alert("최대 주문가능수량을 초과하였습니다.");
+      setAvailstocks(originStocks);
+    } else if (e.target.value <= 0) {
+      alert("최소 주문가능수량은 1주입니다.");
+      setAvailstocks(1);
+    }
   }
   return (
     <div className={styles.container2}>
