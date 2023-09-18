@@ -13,7 +13,7 @@
   z-index: 1;
 }
 
-.login {
+.modalLogin {
   position: absolute;
   margin: 13vh 20vw;
   padding: 5vh 2vw;
@@ -71,7 +71,7 @@
   width: 300px;
 }
 
-input {
+.inputLogin {
   font-size: 1rem;
   color: #222222;
   width: 280px;
@@ -83,10 +83,10 @@ input {
   cursor: pointer;
 }
 
-input::placeholder {
+.inputLogin::placeholder {
   color: #aaaaaa;
 }
-input:focus {
+.inputLogin:focus {
   outline: none;
 }
 
@@ -102,7 +102,7 @@ span {
   transition: 0.5s;
 }
 
-label {
+.labelLogin {
   position: absolute;
   color: #aaa;
   left: 10px;
@@ -111,16 +111,16 @@ label {
   transition: all 0.2s;
 }
 
-input:focus ~ label,
-input:valid ~ label {
+.inputLogin:focus ~ label,
+.inputLogin:valid ~ label {
   font-size: 13px;
   bottom: 30px;
   color: #666;
   font-weight: bold;
 }
 
-input:focus ~ span,
-input:valid ~ span {
+.inputLogin:focus ~ span,
+.inputLogin:valid ~ span {
   width: 285px;
 }
 

@@ -1,0 +1,16 @@
+.background {
+  position: absolute;
+  bottom: -5vh;
+  left: 0px;
+  height: 20vh;
+  width: 100%;
+  transform: translateY(150%);
+  background-color: rgba(43, 40, 38, 0.9);
+}
+
+.footerText {
+  color: white;
+  margin-left: 15vw;
+  margin-top: 3vh;
+  font-size: 13px;
+}

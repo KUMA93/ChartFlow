@@ -28,7 +28,7 @@ function Header() {
         <button
           className={styles.tab}
           onClick={() => {
-            navigate("/comm");
+            navigate("/board");
           }}
         >
           커뮤니티
@@ -59,7 +59,7 @@ function Header() {
 
   const Start = () => (
     <button
-    className={styles.btn}
+      className={styles.btn}
       onClick={() => {
         handleModal();
       }}

@@ -1,12 +1,12 @@
 import Header from "../../components/Header";
 
-function Community() {
+function Board() {
   return (
     <>
       <Header />
-      <p>This is Community page.</p>
+      <p>This is Board page.</p>
     </>
   );
 }
 
-export default Community;
+export default Board;

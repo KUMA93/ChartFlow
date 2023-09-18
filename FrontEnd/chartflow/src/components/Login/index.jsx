@@ -13,8 +13,10 @@ function Login({ modalShow, handleClose }) {
 
   return (
     <div style={{ display: modalShow ? "block" : "none" }}>
-      <div className={styles.shade} onClick={handleClose}>shade</div>
-      <div className={styles.login}>
+      <div className={styles.shade} onClick={handleClose}>
+        shade
+      </div>
+      <div className={styles.modalLogin}>
         <img
           src={closeBtn}
           alt="closeBtn"
@@ -32,18 +34,26 @@ function Login({ modalShow, handleClose }) {
         </div>
         <div className={styles.forms}>
           <form className={styles.form}>
-            <input value={inputId} onChange={handleChangeId} required autoComplete="on"></input>
-            <label>이메일 주소</label>
+            <input
+              className={styles.inputLogin}
+              value={inputId}
+              onChange={handleChangeId}
+              required
+              autoComplete="on"
+            ></input>
+            <label className={styles.labelLogin}>이메일 주소</label>
             <span></span>
           </form>
           <form className={styles.form}>
             <input
+              className={styles.inputLogin}
               type="password"
               value={inputPw}
               onChange={handleChangePw}
-              required autoComplete="on"
+              required
+              autoComplete="on"
             ></input>
-            <label>비밀번호</label>
+            <label className={styles.labelLogin}>비밀번호</label>
             <span></span>
           </form>
           <button className={styles.loginBtn} onClick={handleSubmit}>
@@ -54,7 +64,7 @@ function Login({ modalShow, handleClose }) {
             <div
               className={styles.signup}
               onClick={() => {
-                window.location.href = "/signup";
+                window.location.href = "/join";
               }}
             >
               회원가입

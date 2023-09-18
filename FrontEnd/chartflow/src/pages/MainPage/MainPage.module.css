@@ -5,9 +5,8 @@
   grid-template-areas:
     "carousel carousel"
     "hotUpdate gotoGame"
-    "hotUpdate rankWeekly"
-    "footer footer";
-  grid-template-rows: 2fr 90px 1fr 100px;
+    "hotUpdate rankWeekly";
+  grid-template-rows: 1fr 90px 1fr;
   grid-template-columns: 1fr 1fr;
 }
 
@@ -40,8 +39,4 @@
 
 .rankWeekly {
   grid-area: rankWeekly;
-}
-
-.footer {
-  grid-area: footer;
 }
