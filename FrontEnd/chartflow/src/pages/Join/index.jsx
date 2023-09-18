@@ -13,6 +13,26 @@ function Join() {
   const [inputPwCheck, handleChangePwCheck] = useInput("", handleSubmit);
   const [inputName, handleChangeName] = useInput("", handleSubmit);
   const [inputNickname, handleChangeNickname] = useInput("", handleSubmit);
+  // const [alertMessage, setAlertMessage] = useState("")
+  
+  function checkPw(inputPw){
+    let pw = inputPw
+    let num = pw.search(/[0-9]/g);
+    let eng = pw.search(/[a-z]/ig);
+    let spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+ 
+    if(pw.length < 8 || pw.length > 20){
+     return "8자리 ~ 20자리 이내로 입력해주세요.";
+    } 
+    if(pw.search(/\s/) !== -1){
+     return "비밀번호는 공백없이 입력해주세요.";
+    } 
+    if(num < 0 || eng < 0 || spe < 0 ){
+     return "영문,숫자, 특수문자를 혼합하여 입력해주세요.";
+    }
+    return null;
+   }
+   
 
   return (
     <>
@@ -60,11 +80,10 @@ function Join() {
             </div>
           </form>
 
-          {inputPw.length < 6 ? (
+          {checkPw(inputPw) ? (
             <form className={styles.form}>
               <div className={styles.pwAlarm}>
-                비밀번호는 6자리 이상이어야 하며 영문, 숫자, 특수문자를 반드시
-                포함해야 합니다.
+                {checkPw(inputPw)}
               </div>
             </form>
           ) : null}
@@ -84,7 +103,7 @@ function Join() {
             <div className={styles.pwCheck}>
               {inputPw.length !== 0
                 ? inputPw === inputPwCheck
-                  ? "비밀번호가 일치합니다."
+                  ? null
                   : "비밀번호가 일치하지 않습니다."
                 : ""}
             </div>

@@ -26,16 +26,16 @@
 }
 
 .inputGroup {
-  display: inline-flex;
+  display: inline-block;
   width: 100%;
   height: 38px;
 }
 
 .inputForm {
   height: 100%;
-  width: 65%;
+  width: 70%;
   font-size: 17px;
-  padding-left: 15px;
+  text-indent: 5%;
   vertical-align: top;
   border-radius: 30px;
   background: #fff;
@@ -46,8 +46,8 @@
   height: 100%;
   width: 100%;
   font-size: 17px;
-  padding-left: 15px;
   vertical-align: top;
+  text-indent: 5%;
   border-radius: 30px;
   background: #fff;
   border: 0;
@@ -66,8 +66,7 @@
   height: 100%;
   flex-shrink: 0;
   font-size: 15px;
-  margin-left: 20px;
-  color: rgba(0, 0, 0, 0.58);
+  margin-right: 0px;
   float: right;
   border-radius: 30px;
   border: 1px solid #6c00ff;

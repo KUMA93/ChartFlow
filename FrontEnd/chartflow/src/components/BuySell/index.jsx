@@ -22,21 +22,21 @@ function BuySell() {
   );
 
   const handleBuy = () => {
-    const newThisTurn = thisTurn + 1;
-    setThisTurn(newThisTurn);
-    localStorage.setItem("thisTurn", newThisTurn.toString());
+    setThisTurn(thisTurn + 1);
+    localStorage.setItem("thisTurn", thisTurn.toString());
+
+
+
   };
 
   const handleSell = () => {
-    const newThisTurn = thisTurn + 1;
-    setThisTurn(newThisTurn);
-    localStorage.setItem("thisTurn", newThisTurn.toString());
+    setThisTurn(thisTurn + 1);
+    localStorage.setItem("thisTurn", thisTurn.toString());
   };
 
   const handleSkip = () => {
-    const newThisTurn = thisTurn + 1;
-    setThisTurn(newThisTurn);
-    localStorage.setItem("thisTurn", newThisTurn.toString());
+    setThisTurn(thisTurn + 1);
+    localStorage.setItem("thisTurn", thisTurn.toString());
   };
 
   return (
