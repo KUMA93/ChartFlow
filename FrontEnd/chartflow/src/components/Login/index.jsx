@@ -8,13 +8,15 @@ function Login({ modalShow, handleClose }) {
     console.log("로그인 버튼 누름");
   };
 
-  const [inputValue, handleChange] = useInput("", handleSubmit);
-  const [inputValue2, handleChange2] = useInput("", handleSubmit);
+  const [inputId, handleChangeId] = useInput("", handleSubmit);
+  const [inputPw, handleChangePw] = useInput("", handleSubmit);
 
   return (
     <div style={{ display: modalShow ? "block" : "none" }}>
-      <div className={styles.shade}>shade</div>
-      <div className={styles.login}>
+      <div className={styles.shade} onClick={handleClose}>
+        shade
+      </div>
+      <div className={styles.modalLogin}>
         <img
           src={closeBtn}
           alt="closeBtn"
@@ -31,21 +33,29 @@ function Login({ modalShow, handleClose }) {
           </div>
         </div>
         <div className={styles.forms}>
-          <div className={styles.form}>
-            <input value={inputValue} onChange={handleChange} required></input>
-            <label>이메일 주소</label>
-            <span></span>
-          </div>
-          <div className={styles.form}>
+          <form className={styles.form}>
             <input
-              type="password"
-              value={inputValue2}
-              onChange={handleChange2}
+              className={styles.inputLogin}
+              value={inputId}
+              onChange={handleChangeId}
               required
+              autoComplete="on"
             ></input>
-            <label>비밀번호</label>
+            <label className={styles.labelLogin}>이메일 주소</label>
             <span></span>
-          </div>
+          </form>
+          <form className={styles.form}>
+            <input
+              className={styles.inputLogin}
+              type="password"
+              value={inputPw}
+              onChange={handleChangePw}
+              required
+              autoComplete="on"
+            ></input>
+            <label className={styles.labelLogin}>비밀번호</label>
+            <span></span>
+          </form>
           <button className={styles.loginBtn} onClick={handleSubmit}>
             로그인
           </button>
@@ -54,7 +64,7 @@ function Login({ modalShow, handleClose }) {
             <div
               className={styles.signup}
               onClick={() => {
-                window.location.href = "/signup";
+                window.location.href = "/join";
               }}
             >
               회원가입

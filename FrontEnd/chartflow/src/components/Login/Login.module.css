@@ -10,9 +10,10 @@
   height: 200%;
   flex-shrink: 0;
   background-color: rgba(43, 40, 38, 0.6);
+  z-index: 1;
 }
 
-.login {
+.modalLogin {
   position: absolute;
   margin: 13vh 20vw;
   padding: 5vh 2vw;
@@ -21,6 +22,7 @@
   flex-shrink: 0;
   border-radius: 30px;
   background-color: #fff;
+  z-index: 2;
 }
 
 .closeBtn {
@@ -29,6 +31,7 @@
   margin-top: -1vh;
   width: 30px;
   height: 30px;
+  cursor: pointer;
 }
 
 .title {
@@ -36,11 +39,6 @@
   margin-top: 3vh;
   margin-left: 2vw;
   align-items: center;
-}
-
-.mainLogo {
-  width: 250px;
-  margin-left: 2vw;
 }
 
 .text {
@@ -73,7 +71,7 @@
   width: 300px;
 }
 
-input {
+.inputLogin {
   font-size: 1rem;
   color: #222222;
   width: 280px;
@@ -82,12 +80,13 @@ input {
   position: relative;
   background: none;
   z-index: 5;
+  cursor: pointer;
 }
 
-input::placeholder {
+.inputLogin::placeholder {
   color: #aaaaaa;
 }
-input:focus {
+.inputLogin:focus {
   outline: none;
 }
 
@@ -103,7 +102,7 @@ span {
   transition: 0.5s;
 }
 
-label {
+.labelLogin {
   position: absolute;
   color: #aaa;
   left: 10px;
@@ -112,16 +111,16 @@ label {
   transition: all 0.2s;
 }
 
-input:focus ~ label,
-input:valid ~ label {
+.inputLogin:focus ~ label,
+.inputLogin:valid ~ label {
   font-size: 13px;
   bottom: 30px;
   color: #666;
   font-weight: bold;
 }
 
-input:focus ~ span,
-input:valid ~ span {
+.inputLogin:focus ~ span,
+.inputLogin:valid ~ span {
   width: 285px;
 }
 
@@ -137,6 +136,7 @@ input:valid ~ span {
   font-size: 15px;
   font-weight: 800;
   border: 0;
+  cursor: pointer;
 }
 
 .end {
@@ -156,4 +156,5 @@ input:valid ~ span {
   margin-left: 7px;
   color: #6c00ff;
   text-align: center;
+  cursor: pointer;
 }

@@ -3,12 +3,11 @@
   grid-gap: 20px;
   height: 100vh;
   grid-template-areas:
-    /* "header header" */
     "carousel carousel"
     "hotUpdate gotoGame"
-    "hotUpdate rankWeekly"
-    "footer footer";
-  grid-template-rows: 300px 90px 1fr 100px;
+    "hotUpdate rankWeekly";
+  grid-template-rows: 1fr 90px 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 
 .header {
@@ -34,12 +33,10 @@
   font-size: 25px;
   text-align: center;
   line-height: 6vh;
+  min-width: max-content;
+  cursor: pointer;
 }
 
 .rankWeekly {
   grid-area: rankWeekly;
-}
-
-.footer {
-  grid-area: footer;
 }
