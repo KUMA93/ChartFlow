@@ -1,18 +1,27 @@
 import styles from "./BuySell.module.css";
 import Order from "../Order";
+import data from '../Chart/data'
 import TurnContext from "../../context/TurnContext.js";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 function BuySell() {
   const { thisTurn, setThisTurn } = useContext(TurnContext);
+  const time = useRef(-1)
+  const [ lastData, setLastData] = useState(data[time.current])
 
   useEffect(() => {
     const storedThisTurn = localStorage.getItem("thisTurn");
     if (storedThisTurn !== null) {
       const parsedThisTurn = parseInt(storedThisTurn, 10);
       setThisTurn(parsedThisTurn);
+
     }
   }, [setThisTurn]);
+
+  useEffect(() => {
+    time.current = time.current+ 1
+    console.log(data[time.current].Close)
+  }, [thisTurn])
 
   const Turn = () => (
     <div className={styles.texts}>
@@ -22,21 +31,21 @@ function BuySell() {
   );
 
   const handleBuy = () => {
-    setThisTurn(thisTurn + 1);
-    localStorage.setItem("thisTurn", thisTurn.toString());
-
-
-
+    const newThisTurn = thisTurn + 1;
+    setThisTurn(newThisTurn);
+    localStorage.setItem("thisTurn", newThisTurn.toString());
   };
 
   const handleSell = () => {
-    setThisTurn(thisTurn + 1);
-    localStorage.setItem("thisTurn", thisTurn.toString());
+    const newThisTurn = thisTurn + 1;
+    setThisTurn(newThisTurn);
+    localStorage.setItem("thisTurn", newThisTurn.toString());
   };
 
   const handleSkip = () => {
-    setThisTurn(thisTurn + 1);
-    localStorage.setItem("thisTurn", thisTurn.toString());
+    const newThisTurn = thisTurn + 1;
+    setThisTurn(newThisTurn);
+    localStorage.setItem("thisTurn", newThisTurn.toString());
   };
 
   return (
