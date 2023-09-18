@@ -10,7 +10,7 @@ function Join() {
   const [inputEmail, handleChangeEmail] = useInput("", handleSubmit);
   const [inputVerify, handleChangeVerify] = useInput("", handleSubmit);
   const [inputPw, handleChangePw] = useInput("", handleSubmit);
-  const [inputPwAgain, handleChangePwAgain] = useInput("", handleSubmit);
+  const [inputPwCheck, handleChangePwCheck] = useInput("", handleSubmit);
   const [inputName, handleChangeName] = useInput("", handleSubmit);
   const [inputNickname, handleChangeNickname] = useInput("", handleSubmit);
 
@@ -59,23 +59,34 @@ function Join() {
               ></input>
             </div>
           </form>
-          <form className={styles.form}>
-            <div className={styles.pwAlarm}>
-              비밀번호는 6자리 이상이어야 하며 영문, 숫자, 특수문자를 반드시
-              포함해야 합니다.
-            </div>
-          </form>
+
+          {inputPw.length < 6 ? (
+            <form className={styles.form}>
+              <div className={styles.pwAlarm}>
+                비밀번호는 6자리 이상이어야 하며 영문, 숫자, 특수문자를 반드시
+                포함해야 합니다.
+              </div>
+            </form>
+          ) : null}
+
           <form className={styles.form}>
             <label className={styles.labelForm}>비밀번호 확인</label>
             <div className={styles.inputGroup}>
               <input
                 className={styles.inputFormFull}
                 type="password"
-                value={inputPwAgain}
-                onChange={handleChangePwAgain}
+                value={inputPwCheck}
+                onChange={handleChangePwCheck}
                 required
                 autoComplete="on"
               ></input>
+            </div>
+            <div className={styles.pwCheck}>
+              {inputPw.length !== 0
+                ? inputPw === inputPwCheck
+                  ? "비밀번호가 일치합니다."
+                  : "비밀번호가 일치하지 않습니다."
+                : ""}
             </div>
           </form>
           <form className={styles.form}>
