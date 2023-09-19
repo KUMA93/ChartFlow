@@ -10,6 +10,7 @@ import Quiz from "./pages/Quiz";
 import History from "./pages/History";
 import MyPage from "./pages/MyPage";
 import Join from "./pages/Join";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const [thisTurn, setThisTurn] = useState(() => {
@@ -31,6 +32,7 @@ function App() {
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/join" element={<Join />} />
             <Route path="/join" element={<Join />} />
+            <Route path="/notfound" element={<NotFound />} />
           </Routes>
         </TurnContext.Provider>
       </ThemeProvider>
