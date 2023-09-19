@@ -1,27 +1,25 @@
 import styles from "./BuySell.module.css";
 import Order from "../Order";
-import data from '../Chart/data'
-import TurnContext from "../../context/TurnContext.js";
-import { useContext, useEffect, useRef, useState } from "react";
+import data from "../Chart/data";
+import { useEffect, useRef, useState } from "react";
 
 function BuySell() {
-  const { thisTurn, setThisTurn } = useContext(TurnContext);
-  const time = useRef(-1)
-  const [ lastData, setLastData] = useState(data[time.current])
+  const [thisTurn, setThisTurn] = useState(1);
+  const time = useRef(-1);
+  const [lastData, setLastData] = useState(data[time.current]);
 
   useEffect(() => {
     const storedThisTurn = localStorage.getItem("thisTurn");
     if (storedThisTurn !== null) {
       const parsedThisTurn = parseInt(storedThisTurn, 10);
       setThisTurn(parsedThisTurn);
-
     }
   }, [setThisTurn]);
 
   useEffect(() => {
-    time.current = time.current+ 1
-    console.log(data[time.current].Close)
-  }, [thisTurn])
+    time.current = time.current + 1;
+    console.log(data[time.current].Close);
+  }, [thisTurn]);
 
   const Turn = () => (
     <div className={styles.texts}>

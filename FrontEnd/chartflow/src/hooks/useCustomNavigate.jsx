@@ -12,9 +12,9 @@ const useCustomNavigate = () => {
   };
 
   /* User */
-  // const handleLoginNavigate = () => {
-  //   navigate("/login");
-  // };
+  const handleLoginNavigate = () => {
+    navigate("/login");
+  };
 
   const handleJoinNavigate = () => {
     navigate("/join");
