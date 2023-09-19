@@ -3,7 +3,7 @@ import useCustomNavigate from "../../hooks/useCustomNavigate";
 import { useContext } from "react";
 import TurnContext from "../../context/TurnContext";
 
-function Start({ setModalStartShow, handleClose }) {
+function Start({ setModalStartShow, handleStartClose }) {
   const { handleGameNavigate } = useCustomNavigate();
   const { setThisTurn } = useContext(TurnContext);
 
@@ -19,7 +19,7 @@ function Start({ setModalStartShow, handleClose }) {
       <div className={styles.modalLogin}>
         <div className={styles.title}>게임을 시작할까요?</div>
         <div className={styles.buttons}>
-          <button className={styles.goOn} onClick={handleClose}>
+          <button className={styles.goOn} onClick={handleStartClose}>
             이어서 시작
           </button>
           <button className={styles.goNew} onClick={handleStartGame}>

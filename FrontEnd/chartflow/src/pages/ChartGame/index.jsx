@@ -12,7 +12,6 @@ const ChartGame = () => {
   const { thisTurn, setThisTurn } = useContext(TurnContext);
   const [modalQuitShow, setModalQuitShow] = useState(false);
   const [modalStartShow, setModalStartShow] = useState(thisTurn !== 1);
-
   const [modalEndShow, setModalEndShow] = useState(false);
 
   const handleModalQuit = () => {
@@ -35,6 +34,7 @@ const ChartGame = () => {
       setThisTurn(5);
       setModalEndShow(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [thisTurn]);
 
   return (

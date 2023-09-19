@@ -6,7 +6,7 @@ function End() {
 
   const handleEnd = () => {
     localStorage.setItem("thisTurn", "1");
-    handleRecordNavigate();
+    window.location.reload("/game");
   };
 
   return (
@@ -16,9 +16,19 @@ function End() {
         <div className={styles.title}>
           최대 일일 턴수인 5턴을 초과하여 게임이 자동종료됩니다.
         </div>
-        <button className={styles.goResult} onClick={handleEnd}>
-          결과보기
-        </button>
+        <div className={styles.buttons}>
+          <button className={styles.goNew} onClick={handleEnd}>
+            새 게임 시작
+          </button>
+          <button className={styles.goResult} onClick={handleRecordNavigate}>
+            기록 보기
+          </button>
+        </div>
+        <div className={styles.coinLeft}>
+          <div>남은 코인 수: </div>
+          <div className={styles.coinNum}>3</div>
+          <div>개</div>
+        </div>
       </div>
     </div>
   );
