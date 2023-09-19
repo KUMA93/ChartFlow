@@ -17,15 +17,21 @@
   justify-content: center;
   border-radius: 30px;
   background: #FFF;
+  border: 0;
+}
+.inputForm:focus {
+  outline: 2px soild #6C00FF;
 }
 
 .emailBtn {
-  width: 167px;
-  height: 56px;
+  width: 100px;
+  height: 40px;
   flex-shrink: 0;
+  margin-left: 10px;
   border-radius: 30px;
-  border: 1px solid #6C00FF;
+  border: 2px solid #6C00FF;
   background: rgba(108, 0, 255, 0.15);
+  cursor: pointer;
 }
 
 .passwordAlarm {
@@ -60,28 +66,28 @@
 }
 
 .joinBtn {
-  width: 676px;
-  height: 56px;
-  flex-shrink: 0;
+  width: 670px;
+  height: 50px;
   border-radius: 30px;
   background: #6C00FF;
+  margin-top: 30px;
+  color: #FFF;
+  text-align: center;
+  font-family: SUITE;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  cursor: pointer;
+  border: 0;
 }
 
 .font {
+  margin-top: 10px;  
   color: rgba(0, 0, 0, 0.50);
   font-family: SUITE;
   font-size: 17px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-}
-
-.textInput {
-  font-size: 1rem;
-  color: #222222;
-  width: 280px;
-  border: none;
-  position: relative;
-  background: none;
-  z-index: 5;
 }

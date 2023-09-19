@@ -14,12 +14,13 @@ function SignUp() {
       <Header />
       <div className={styles.title}>회원가입</div>
 
-      <div className={styles.center}>
         <div className={styles.font}>이메일 주소</div>
-          <div className={styles.inputForm}>
-            <input className={styles.textInput} value={inputValue} onChange={handleChange} required></input>
-          </div>
-        </div>
+        <input className={styles.inputForm} value={inputValue} onChange={handleChange} required></input>
+        <button className={styles.emailBtn}>인증하기</button>
+
+        <div className={styles.font}>인증번호</div>
+          <input className={styles.inputForm} value={inputValue} onChange={handleChange} required></input>
+
       <div className={styles.center}>
         <button className={styles.joinBtn} onClick={handleSubmit}>
           가입하기

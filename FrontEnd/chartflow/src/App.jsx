@@ -9,6 +9,7 @@ import MyPage from "./pages/MyPage";
 import History from "./pages/History";
 import Board from "./pages/Board";
 import Signup from "./pages/Signup";
+import SignupCompleted from "./pages/SignupCompleted";
 
 function App() {
   const [thisTurn, setThisTurn] = useState(1);
@@ -24,6 +25,7 @@ function App() {
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/boards" element={<Board />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/signupcompleted" element={<SignupCompleted />} />
           </Routes>
         </TurnContext.Provider>
       </ThemeProvider>
