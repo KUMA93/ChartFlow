@@ -85,4 +85,9 @@ public class ArticleServiceImp implements ArticleService {
         likeRepository.deleteById(likeId);
     }
 
+    @Override
+    public Article findArticleByArticleId(long articleId) {
+        return articleRepository.findArticleById(articleId);
+    }
+
 }

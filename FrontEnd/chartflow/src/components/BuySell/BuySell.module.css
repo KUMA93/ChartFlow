@@ -1,0 +1,63 @@
+.container1 {
+  display: grid;
+  width: min-content;
+  height: 100px;
+  margin: 3vh 1.5vw;
+  grid-gap: 10px;
+  grid-template-areas:
+    "turn turn"
+    "order buybtn"
+    "order sellbtn"
+    "skip skip";
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 150px;
+}
+
+.turn {
+  grid-area: turn;
+}
+
+.order {
+  grid-area: order;
+  width: fit-content;
+}
+
+.container1 > button {
+  border-radius: 100px;
+  height: 40px;
+  flex-shrink: 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  border: 0;
+}
+
+.buybtn {
+  grid-area: buybtn;
+  background: #f86565;
+}
+
+.sellbtn {
+  grid-area: sellbtn;
+  background-color: #5258e6;
+}
+
+.skip {
+  grid-area: skip;
+  background-color: rgba(0, 0, 0, 0.69);
+}
+
+.texts {
+  display: flex;
+}
+
+.now {
+  font-size: 20px;
+  color: #f86565;
+  font-weight: 700;
+  margin-top: -5px;
+}
+
+.all {
+  font-size: 13px;
+}

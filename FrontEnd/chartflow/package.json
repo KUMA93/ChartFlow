@@ -43,5 +43,8 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/node": "^20.5.9"
+  },
+  "chartiq": {
+    "file": "chartiq-x.x.x.tgz"
   }
 }
