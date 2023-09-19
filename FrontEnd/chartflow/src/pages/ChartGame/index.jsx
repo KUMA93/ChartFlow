@@ -57,7 +57,7 @@ const ChartGame = () => {
       {modalQuitShow && <Quit handleClose={handleQuitClose} />}
       {modalStartShow && (
         <Start
-          handleClose={handleStartClose}
+          handleStartClose={handleStartClose}
           setModalStartShow={setModalStartShow}
         />
       )}
