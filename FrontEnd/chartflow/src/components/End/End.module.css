@@ -1,0 +1,48 @@
+.shade {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  flex-shrink: 0;
+  background-color: rgba(43, 40, 38, 0.6);
+  z-index: 1;
+}
+
+.modalLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 30vh;
+  left: 30vw;
+  padding: 5vh 2vw;
+  width: 20vw;
+  overflow: hidden;
+  height: 20vh;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.title {
+  font-size: 17px;
+  text-align: center;
+  width: 230px;
+  margin-top: 30px;
+  margin-bottom: 10%;
+}
+
+.goResult {
+  background-color: #6c00ff;
+  color: #8effa7;
+  font-size: 16px;
+  width: 80%;
+  height: 48px;
+  border: 0;
+  flex-shrink: 0;
+  border-radius: 30px;
+  margin-left: 5px;
+}
