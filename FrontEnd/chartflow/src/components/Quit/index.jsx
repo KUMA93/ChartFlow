@@ -7,7 +7,6 @@ function Quit({ handleClose }) {
   const { handleMainNavigate, handleRecordNavigate } = useCustomNavigate();
   const { thisTurn } = useContext(TurnContext);
   const [goSave, setGoSave] = useState(false);
-
   function handleSave() {
     localStorage.setItem("thisTurn", thisTurn.toString());
     setGoSave(true);

@@ -6,12 +6,18 @@ import Quit from "../../components/Quit";
 import Start from "../../components/Start";
 import End from "../../components/End";
 import TurnContext from "../../context/TurnContext";
+import CoinContext from "../../context/CoinContext";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
 import { useState, useEffect, useContext } from "react";
 
 const ChartGame = () => {
+  const { coinNum } = useContext(CoinContext);
+  const { handleMainNavigate } = useCustomNavigate();
   const { thisTurn, setThisTurn } = useContext(TurnContext);
   const [modalQuitShow, setModalQuitShow] = useState(false);
-  const [modalStartShow, setModalStartShow] = useState(thisTurn !== 1);
+  const [modalStartShow, setModalStartShow] = useState(
+    thisTurn !== 1 || coinNum < 0
+  );
   const [modalEndShow, setModalEndShow] = useState(false);
 
   const handleModalQuit = () => {
@@ -54,7 +60,11 @@ const ChartGame = () => {
           게임 종료
         </button>
       </div>
-      {modalQuitShow && <Quit handleClose={handleQuitClose} />}
+      {modalQuitShow && thisTurn === 1 ? (
+        handleMainNavigate()
+      ) : modalQuitShow ? (
+        <Quit handleClose={handleQuitClose} />
+      ) : null}
       {modalStartShow && (
         <Start
           handleStartClose={handleStartClose}
