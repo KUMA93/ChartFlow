@@ -39,7 +39,7 @@ function App() {
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/join" element={<Join />} />
               <Route path="/join" element={<Join />} />
-              <Route path="/notfound" element={<NotFound />} />
+              <Route path="/*" element={<NotFound />} />
             </Routes>
           </TurnContext.Provider>
         </CoinContext.Provider>

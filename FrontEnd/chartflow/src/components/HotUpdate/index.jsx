@@ -3,7 +3,7 @@ import styles from "./HotUpdate.module.css";
 function HotUpdate() {
   return (
     <>
-      <div className={styles.item}>HotUpdate</div>
+      <div className={styles.bg}>HotUpdate</div>
     </>
   );
 }

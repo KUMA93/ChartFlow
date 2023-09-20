@@ -1,6 +1,7 @@
 import Header from "../../components/Header";
 import styles from "./Join.module.css";
 import { useInput } from "../../hooks/useInput";
+import { verify } from "crypto";
 
 function Join() {
   const handleSubmit = () => {
@@ -14,25 +15,24 @@ function Join() {
   const [inputName, handleChangeName] = useInput("", handleSubmit);
   const [inputNickname, handleChangeNickname] = useInput("", handleSubmit);
   // const [alertMessage, setAlertMessage] = useState("")
-  
-  function checkPw(inputPw){
-    let pw = inputPw
+
+  function checkPw(inputPw) {
+    let pw = inputPw;
     let num = pw.search(/[0-9]/g);
-    let eng = pw.search(/[a-z]/ig);
+    let eng = pw.search(/[a-z]/gi);
     let spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
- 
-    if(pw.length < 8 || pw.length > 20){
-     return "8자리 ~ 20자리 이내로 입력해주세요.";
-    } 
-    if(pw.search(/\s/) !== -1){
-     return "비밀번호는 공백없이 입력해주세요.";
-    } 
-    if(num < 0 || eng < 0 || spe < 0 ){
-     return "영문,숫자, 특수문자를 혼합하여 입력해주세요.";
+
+    if (pw.length < 8 || pw.length > 20) {
+      return "8자리 ~ 20자리 이내로 입력해주세요.";
+    }
+    if (pw.search(/\s/) !== -1) {
+      return "비밀번호는 공백없이 입력해주세요.";
+    }
+    if (num < 0 || eng < 0 || spe < 0) {
+      return "영문,숫자, 특수문자를 혼합하여 입력해주세요.";
     }
     return null;
-   }
-   
+  }
 
   return (
     <>
@@ -50,7 +50,9 @@ function Join() {
                 required
                 autoComplete="on"
               ></input>
-              <button className={styles.btnForm}>이메일 인증</button>
+              <button className={styles.btnForm} onClick={handleVerify}>
+                이메일 인증
+              </button>
             </div>
           </form>
           <form className={styles.form}>
@@ -82,9 +84,7 @@ function Join() {
 
           {checkPw(inputPw) ? (
             <form className={styles.form}>
-              <div className={styles.pwAlarm}>
-                {checkPw(inputPw)}
-              </div>
+              <div className={styles.pwAlarm}>{checkPw(inputPw)}</div>
             </form>
           ) : null}
 

@@ -65,7 +65,12 @@ const ChartGame = () => {
       ) : modalQuitShow ? (
         <Quit handleClose={handleQuitClose} />
       ) : null}
-      {modalStartShow && (
+      {modalStartShow && coinNum <= 0 ? (
+        <Start
+          handleStartClose={handleStartClose}
+          setModalStartShow={setModalStartShow}
+        />
+      ) : (
         <Start
           handleStartClose={handleStartClose}
           setModalStartShow={setModalStartShow}
