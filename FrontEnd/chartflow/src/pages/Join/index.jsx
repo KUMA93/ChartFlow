@@ -1,7 +1,6 @@
 import Header from "../../components/Header";
 import styles from "./Join.module.css";
 import { useInput } from "../../hooks/useInput";
-import { verify } from "crypto";
 
 function Join() {
   const handleSubmit = () => {
@@ -33,6 +32,8 @@ function Join() {
     }
     return null;
   }
+
+  function handleVerify() {}
 
   return (
     <>
