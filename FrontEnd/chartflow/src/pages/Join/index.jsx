@@ -1,12 +1,13 @@
 import Header from "../../components/Header";
 import styles from "./Join.module.css";
 import { useInput } from "../../hooks/useInput";
+import { useState } from "react";
+import emailVerify from "../../services/authService";
 
 function Join() {
   const handleSubmit = () => {
     console.log("회원가입 완료");
   };
-
   const [inputEmail, handleChangeEmail] = useInput("", handleSubmit);
   const [inputVerify, handleChangeVerify] = useInput("", handleSubmit);
   const [inputPw, handleChangePw] = useInput("", handleSubmit);
@@ -14,6 +15,8 @@ function Join() {
   const [inputName, handleChangeName] = useInput("", handleSubmit);
   const [inputNickname, handleChangeNickname] = useInput("", handleSubmit);
   // const [alertMessage, setAlertMessage] = useState("")
+  const [isChecking, setIsChecking] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
 
   function checkPw(inputPw) {
     let pw = inputPw;
@@ -33,8 +36,18 @@ function Join() {
     return null;
   }
 
-  function handleVerify() {}
+  const handleEmailVerify = async (inputEmail) => {
+    setIsChecking(true);
+    try {
+      const result = await emailVerify(inputEmail);
+      console.log("result:", result);
+      // setIsVerified(true);
+    } catch (error) {
+      console.error("이메일 인증 에러:", error);
+    }
+  };
 
+  // const handleEmailVerify = () => {};
   return (
     <>
       <Header />
@@ -51,24 +64,29 @@ function Join() {
                 required
                 autoComplete="on"
               ></input>
-              <button className={styles.btnForm} onClick={handleVerify}>
+              <button className={styles.btnForm} onClick={handleEmailVerify}>
                 이메일 인증
               </button>
             </div>
           </form>
-          <form className={styles.form}>
-            <label className={styles.labelForm}>인증번호 확인</label>
-            <div className={styles.inputGroup}>
-              <input
-                className={styles.inputForm}
-                value={inputVerify}
-                onChange={handleChangeVerify}
-                required
-                autoComplete="on"
-              ></input>
-              <button className={styles.btnForm}>인증 완료</button>
-            </div>
-          </form>
+          {isChecking ? (
+            <form className={styles.form}>
+              <label className={styles.labelForm}>인증번호 확인</label>
+              <div className={styles.inputGroup}>
+                <input
+                  className={styles.inputForm}
+                  value={inputVerify}
+                  onChange={handleChangeVerify}
+                  required
+                  autoComplete="on"
+                ></input>
+                <button className={styles.btnForm} disabled={isVerified}>
+                  인증 완료
+                </button>
+              </div>
+            </form>
+          ) : null}
+
           <form className={styles.form}>
             <label className={styles.labelForm}>비밀번호</label>
             <div className={styles.inputGroup}>
