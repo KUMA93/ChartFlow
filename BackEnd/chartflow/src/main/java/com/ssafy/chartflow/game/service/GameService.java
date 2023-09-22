@@ -136,7 +136,6 @@ public class GameService {
         userRepository.save(user);
         gameRepository.save(gameHistory);
 
-        log.info("등록된 game history : " + gameHistory);
 
         int cnt = 0;
         for (Stocks cur : stocks) {
