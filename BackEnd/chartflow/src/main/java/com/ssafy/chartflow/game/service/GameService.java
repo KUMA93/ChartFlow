@@ -91,6 +91,7 @@ public class GameService {
                 gameHistoryData.setCashBudget(gameHistory.getCashBudget());
 
                 companyCode = gameHistory.getCompanyCode();
+                log.info("=========== companyCode : " + companyCode);
                 break;
             }
         }
