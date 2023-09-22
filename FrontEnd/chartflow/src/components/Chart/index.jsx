@@ -390,9 +390,13 @@ class Chart extends Component {
     makeEvent(1634212800000, "D", am5.color(0x00ff00), "Dividends paid");
 
     // set data to all series
-    valueSeries.data.setAll(data);
-    volumeSeries.data.setAll(data);
-    sbSeries.data.setAll(data);
+    // valueSeries.data.setAll(data);
+    // volumeSeries.data.setAll(data);
+    // sbSeries.data.setAll(data);
+    const chartData = this.props.data || data;  // props로 전달받은 데이터가 없으면 기존 data 사용
+    valueSeries.data.setAll(chartData);
+    volumeSeries.data.setAll(chartData);
+    sbSeries.data.setAll(chartData);
   }
 
   componentWillUnmount() {
