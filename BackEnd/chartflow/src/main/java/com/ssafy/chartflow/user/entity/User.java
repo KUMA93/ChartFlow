@@ -1,5 +1,6 @@
     package com.ssafy.chartflow.user.entity;
 
+    import com.fasterxml.jackson.annotation.JsonIgnore;
     import com.ssafy.chartflow.board.entity.Article;
     import com.ssafy.chartflow.board.entity.Comments;
     import com.ssafy.chartflow.board.entity.Likes;
@@ -62,6 +63,7 @@
         private final List<UserEmblem> emblems = new ArrayList<>();
 
         @OneToMany(mappedBy = "user")
+        @JsonIgnore
         private final List<GameHistory> gameHistories = new ArrayList<>();
 
         @OneToMany(mappedBy = "user")
