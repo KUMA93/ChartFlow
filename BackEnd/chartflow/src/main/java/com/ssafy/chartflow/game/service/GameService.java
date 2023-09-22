@@ -79,7 +79,7 @@ public class GameService {
 
         // 현재 진행중인 game history 조회
         for (GameHistory gameHistory : gameHistories) {
-            log.info("gameHistory : " + gameHistory.toString());
+            log.info("======== search gameHistory ========");
             if (gameHistory.getEndTime() == null) {
                 gameHistoryData.setGameHistoryId(gameHistory.getId());
                 gameHistoryData.setRate(gameHistory.getRate());
