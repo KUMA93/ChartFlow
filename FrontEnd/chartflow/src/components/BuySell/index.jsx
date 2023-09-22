@@ -3,6 +3,7 @@ import Order from "../Order";
 import data from "../Chart/data";
 import { useRef, useState, useContext } from "react";
 import TurnContext from "../../context/TurnContext";
+import { buyStocks, sellStocks, progressGame, loadGameHistory } from "../../services/apis/chartgame";
 
 function BuySell() {
   const { thisTurn, setThisTurn } = useContext(TurnContext);
@@ -17,7 +18,14 @@ function BuySell() {
   );
 
   const handleBuy = () => {
-    setThisTurn(thisTurn + 1);
+    buyStocks()
+      .then((res) => {
+        loadGameHistory()
+          .then((res) => {
+            setThisTurn(res.turn);
+            set
+          })
+      })
   };
 
   const handleSell = () => {
