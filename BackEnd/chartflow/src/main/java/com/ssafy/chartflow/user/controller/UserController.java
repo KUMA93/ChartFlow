@@ -85,12 +85,12 @@ public class UserController {
 
     @PostMapping("/pass")
     @Operation(summary = "임시 비밀번호 이메일 전송", description = "비밀번호를 잊은 상황에서 임시 비밀번호가 담긴 이메일 보내기")
-    public ResponseEntity<?> sendTemporaryPassword(@RequestBody String email) throws Exception {
-        log.info("emailController 호출 - 임시 비밀번호 발급: " + email);
+    public ResponseEntity<?> sendTemporaryPassword(@RequestBody RequestEmailDto requestEmailDto) throws Exception {
+        log.info("emailController 호출 - 임시 비밀번호 발급: " + requestEmailDto.getEmail());
 
         try{
             // email로 임시 비밀번호 발송 후 temporaryPassword에 저장
-            Map<String, Object> returnData = emailService.sendTemporaryPassword(email);
+            Map<String, Object> returnData = emailService.sendTemporaryPassword(requestEmailDto.getEmail());
             log.info("임시 비밀번호 생성/발송 성공");
             User user = (User) returnData.get("user");
             String temporaryPassword = (String) returnData.get("temporaryPassword");
