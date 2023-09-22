@@ -1,18 +1,18 @@
 import axiosInstance from "./axiosInstance";
 
-const authService = axiosInstance();
+// const authService = axiosInstance();
 
-const emailVerify = async (email) => {
-  try {
-    const response = await authService.post("api/user/auth", {
-      email: email.toString(), // email을 문자열(string)로 변환
-    });
-    console.log(response);
-    return response;
-  } catch (error) {
-    throw error;
-  }
-};
+// const emailVerify = async (email) => {
+//   try {
+//     const response = await authService.post("api/user/auth", {
+//       email: email.toString(), // email을 문자열(string)로 변환
+//     });
+//     console.log(response);
+//     return response;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 // const checkNicknameAvailability = async (nickname) => {
 //   try {
