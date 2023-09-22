@@ -8,7 +8,7 @@ import End from "../../components/End";
 import TurnContext from "../../context/TurnContext";
 import CoinContext from "../../context/CoinContext";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
-import { startGame } from "../../services/apis/chartgame";
+import { loadGame, startGame } from "../../services/apis/chartgame";
 import { useState, useEffect, useContext } from "react";
 
 const ChartGame = () => {
@@ -20,6 +20,7 @@ const ChartGame = () => {
     thisTurn !== 1 || coinNum <= 0
   );
   const [modalEndShow, setModalEndShow] = useState(false);
+  const [data, setData] = useState();
 
   const handleModalQuit = () => {
     modalQuitShow ? setModalQuitShow(false) : setModalQuitShow(true);
@@ -42,19 +43,26 @@ const ChartGame = () => {
     //   setModalEndShow(true);
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const fetchGameStart = async () => {
-      const data = await startGame();
-      console.log("Game started:", data);
-    };
+    startGame()
+      .then((res) => {
+        console.log(res);
+        loadGame()
+        .then((res)=>{
+          setData(res);
+          console.log(res);
+        })
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
 
-    fetchGameStart();
   }, []);
 
   return (
     <>
       <div className={styles.container}>
         <div className={styles.chart}>
-          <Chart />
+          <Chart data={data} />
         </div>
         <div className={styles.buysell}>
           <BuySell />
