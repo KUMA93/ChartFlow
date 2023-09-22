@@ -12,11 +12,18 @@ function Login({ modalShow, handleClose }) {
       password: inputPw,
     };
 
-    login(requestLogin)
-      .then((res) => {})
+    console.log(
+      requestLogin.email + ", " + requestLogin.password + "로 로그인ㄱㄱ"
+    );
+    login(requestLogin.email, requestLogin.password)
+      .then((res) => {
+        console.log("로그인 성공 res : " + res);
+      })
       .catch((err) => {
-        console.err(err);
+        console.log("로그인 에러발생");
+        console.log(err);
       });
+    console.log("로그인 끝");
   };
 
   const [inputId, handleChangeId] = useInput("", handleSubmit);
