@@ -85,7 +85,7 @@ public class GameService {
                 gameHistoryData.setPrice(gameHistory.getPrice());
                 gameHistoryData.setTurn(gameHistory.getTurn());
                 gameHistoryData.setQuantity(gameHistory.getQuantity());
-//                gameHistoryData.setChartDate(gameHistory.getChartDate());
+                gameHistoryData.setChartDate(gameHistory.getChartDate());
                 gameHistoryData.setInitialBudget(gameHistory.getInitialBudget());
                 gameHistoryData.setCashBudget(gameHistory.getCashBudget());
 
@@ -107,10 +107,10 @@ public class GameService {
 
         User user = userRepository.findUserById(userId);
 
-        // 랜덤 주식 정보에 access, PK는 1 ~ 390094 범위
+        // 랜덤 주식 정보에 access, PK는 1 ~ 3000000 범위
         Random random = new Random();
-        // 13만 ~ 26만 범위 난수 생성
-        long stockId = random.nextInt(130000) + 130000;
+        // 100만 ~ 200만 범위 난수 생성
+        long stockId = random.nextInt(1000000) + 1000000;
 
         Stocks stock = stocksRepository.findStocksById(stockId);
         log.info("주식 PK: " + stockId);
@@ -130,6 +130,14 @@ public class GameService {
         // 51개 만큼 주식 데이터 저장
         List<Stocks> stocks = stocksRepository.findAllByTicker(stock.getTicker());
 
+
+        gameHistory.setUser(user);
+
+        userRepository.save(user);
+        gameRepository.save(gameHistory);
+
+        log.info("등록된 game history : " + gameHistory);
+
         int cnt = 0;
         for (Stocks cur : stocks) {
             if (cnt >= 51) break;
@@ -143,12 +151,6 @@ public class GameService {
             }
         }
 
-        gameHistory.setUser(user);
-
-        userRepository.save(user);
-        gameRepository.save(gameHistory);
-
-        log.info("등록된 game history : " + gameHistory);
     }
 
 
