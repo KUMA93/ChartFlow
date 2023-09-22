@@ -113,7 +113,7 @@ public class GameService {
         long stockId = random.nextInt(130000) + 130000;
 
         Stocks stock = stocksRepository.findStocksById(stockId);
-
+        log.info("주식 PK: " + stockId);
         GameHistory gameHistory = GameHistory.builder()
                 .companyCode(stock.getTicker())
                 .chartDate(stock.getDate())
@@ -125,7 +125,7 @@ public class GameService {
                 .price(0)
                 .quantity(0)
                 .build();
-
+        log.info("게임 히스토리 생성 완료 - " + gameHistory.toString());
 
         // 51개 만큼 주식 데이터 저장
         List<Stocks> stocks = stocksRepository.findAllByTicker(stock.getTicker());
@@ -150,6 +150,8 @@ public class GameService {
 
         log.info("등록된 game history : " + gameHistory);
     }
+
+
 
     public void buyStocks(long gameHistoryId, int quantity, long userId) {
         User user = userRepository.findUserById(userId);

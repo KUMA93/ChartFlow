@@ -40,7 +40,7 @@ public class CommentService {
             for (ReComments reComments : reCommentList) {
                 ResponseReCommentDto responseReCommentDto = ResponseReCommentDto.builder()
                         .reCommentId(reComments.getId())
-                        .commentId(reComments.getId())
+                        .commentId(comments.getId())
                         .userId(reComments.getUser().getId())
                         .content(reComments.getContent())
                         .registerTime(reComments.getRegisterTime())

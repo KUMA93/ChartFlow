@@ -33,7 +33,7 @@ public class EmailService {
         to = to.replace("\"","");
 
         // 중복 메일 체크
-        User existed = userRepository.findUserByEmailAndCancel(to, IS_NOT_CANCELED);
+        User existed = userRepository.findUserByEmail(to);
         if(existed != null){
             throw new EmailExistedException(to);
         }
