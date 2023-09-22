@@ -2,10 +2,21 @@ import styles from "./Login.module.css";
 import modal_logo from "./../../assets/images/free-icon-growth-chart.png";
 import closeBtn from "./../../assets/images/icons8-x-50.png";
 import { useInput } from "../../hooks/useInput";
+import { login } from "../../services/apis/user";
 
 function Login({ modalShow, handleClose }) {
   const handleSubmit = () => {
     console.log("로그인 버튼 누름");
+    const requestLogin = {
+      email: inputId,
+      password: inputPw,
+    };
+
+    login(requestLogin)
+      .then((res) => {})
+      .catch((err) => {
+        console.err(err);
+      });
   };
 
   const [inputId, handleChangeId] = useInput("", handleSubmit);
