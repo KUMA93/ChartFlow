@@ -57,7 +57,7 @@ public class GameService {
                 responseData.setPrice(gameHistory.getPrice());
                 responseData.setTurn(gameHistory.getTurn());
                 responseData.setQuantity(gameHistory.getQuantity());
-                responseData.setChartDate(gameHistory.getChartDate());
+//                responseData.setChartDate(gameHistory.getChartDate());
                 responseData.setInitialBudget(gameHistory.getInitialBudget());
                 responseData.setCashBudget(gameHistory.getCashBudget());
 
@@ -85,7 +85,7 @@ public class GameService {
                 gameHistoryData.setPrice(gameHistory.getPrice());
                 gameHistoryData.setTurn(gameHistory.getTurn());
                 gameHistoryData.setQuantity(gameHistory.getQuantity());
-                gameHistoryData.setChartDate(gameHistory.getChartDate());
+//                gameHistoryData.setChartDate(gameHistory.getChartDate());
                 gameHistoryData.setInitialBudget(gameHistory.getInitialBudget());
                 gameHistoryData.setCashBudget(gameHistory.getCashBudget());
 
