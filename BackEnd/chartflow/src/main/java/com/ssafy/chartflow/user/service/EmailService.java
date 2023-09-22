@@ -75,8 +75,8 @@ public class EmailService {
         log.info("emailService 호출 - 임시 비밀번호 발급 :" + to);
         to = to.replace("\"","");
         // 중복 메일 체크
-        User existed = userRepository.findUserByEmail(to);
-
+        User existed = userRepository.findByEmail(to);
+        log.info("유저 정보 : " + existed);
         if(existed == null){
             throw new NotRegisteredException();
         }
