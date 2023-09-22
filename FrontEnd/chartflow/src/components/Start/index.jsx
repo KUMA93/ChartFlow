@@ -37,7 +37,7 @@ function Start({ setModalStartShow, handleStartClose }) {
           </>
         ) : (
           <>
-            <div className={styles.title}>게임을 시작할까요?</div>
+            {/* <div className={styles.title}>게임을 시작할까요?</div>
             <div className={styles.buttons}>
               <button className={styles.goOn} onClick={handleStartClose}>
                 이어서 시작
@@ -45,7 +45,7 @@ function Start({ setModalStartShow, handleStartClose }) {
               <button className={styles.goNew} onClick={handleStartGame}>
                 새로 시작
               </button>
-            </div>
+            </div> */}
           </>
         )}
       </div>
