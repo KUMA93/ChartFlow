@@ -122,7 +122,7 @@ public class GameService {
                 .startTime(LocalDateTime.now())
                 .initialBudget(user.getBudget())
                 .cashBudget(user.getBudget())
-                .turn(0)
+                .turn(1)
                 .rate(0.00)
                 .price(0)
                 .quantity(0)
