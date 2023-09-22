@@ -16,7 +16,7 @@ public class ResponseChartDataDto {
     private long id;
     private String name;
     private String ticker;
-    private LocalDate date;
+    private String date;
     private int openPrice;
     private int closingPrice;
     private int highestPrice;
