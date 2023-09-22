@@ -57,7 +57,7 @@ public class GameService {
                 responseData.setPrice(gameHistory.getPrice());
                 responseData.setTurn(gameHistory.getTurn());
                 responseData.setQuantity(gameHistory.getQuantity());
-//                responseData.setChartDate(gameHistory.getChartDate());
+                responseData.setChartDate(gameHistory.getChartDate());
                 responseData.setInitialBudget(gameHistory.getInitialBudget());
                 responseData.setCashBudget(gameHistory.getCashBudget());
 
@@ -133,7 +133,7 @@ public class GameService {
         int cnt = 0;
         for (Stocks cur : stocks) {
             if (cnt >= 51) break;
-            if (cur.getDate().isAfter(stock.getDate())) {
+            if (Integer.parseInt(cur.getDate()) >= Integer.parseInt(stock.getDate())) {
                 cnt++;
                 GameHistoryStocks gameHistoryStocks = new GameHistoryStocks();
                 gameHistoryStocks.setGameHistory(gameHistory);
@@ -246,7 +246,7 @@ public class GameService {
         GameHistoryStocks tomorrow = gameHistoryStocks.get(turn + 1);
         long tomorrowStockId = tomorrow.getStocks().getId();
         Stocks tomorrowStock = stocksRepository.findStocksById(tomorrowStockId);
-        LocalDate date = tomorrowStock.getDate();
+        String date = tomorrowStock.getDate();
 
         int price = (tomorrowStock.getHighestPrice() + tomorrowStock.getLowestPrice()) / 2;
         gameHistory.setChartDate(date);

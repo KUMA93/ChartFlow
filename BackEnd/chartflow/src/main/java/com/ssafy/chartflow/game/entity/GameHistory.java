@@ -40,7 +40,7 @@ public class GameHistory {
     private String companyCode;
 
     @Column(name = "chart_date")
-    private LocalDate chartDate;
+    private String chartDate;
 
     @Column(name = "price")
     private int price;

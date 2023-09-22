@@ -24,7 +24,7 @@ public class Stocks {
 
     private String name;
 
-    private LocalDate date;
+    private String date;
 
     private String ticker;
 
