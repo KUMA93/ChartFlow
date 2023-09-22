@@ -71,6 +71,8 @@ public class UserController {
         log.info("emailController 호출 - 회원가입 인증코드 발급");
         try {
             // email로 인증 코드 발송 후 authenticationCode에 저장
+
+            log.info("요청 이메일: " + email);
             String authenticationCode = emailService.sendAuthenticationCode(email);
             log.info("인증 코드 생성/발송 성공: " + authenticationCode);
             // 인증 코드 리턴
