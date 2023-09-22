@@ -2,6 +2,7 @@ package com.ssafy.chartflow.user.controller;
 
 import com.ssafy.chartflow.exception.NotRegisteredException;
 import com.ssafy.chartflow.exception.PasswordWrongException;
+import com.ssafy.chartflow.user.dto.RequestEmailDto;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.RequestRegistDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
@@ -67,13 +68,12 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "메일 전송 성공"),
             @ApiResponse(responseCode = "500", description = "메일 전송 실패 - 호스트 연결 실패")
     })
-    public ResponseEntity<?> emailAuthenticationCodeSend(@RequestBody String email) throws Exception {
+    public ResponseEntity<?> emailAuthenticationCodeSend(@RequestBody RequestEmailDto requestEmailDto) throws Exception {
         log.info("emailController 호출 - 회원가입 인증코드 발급");
         try {
             // email로 인증 코드 발송 후 authenticationCode에 저장
 
-            log.info("요청 이메일: " + email);
-            String authenticationCode = emailService.sendAuthenticationCode(email);
+            String authenticationCode = emailService.sendAuthenticationCode(requestEmailDto.getEmail());
             log.info("인증 코드 생성/발송 성공: " + authenticationCode);
             // 인증 코드 리턴
             return new ResponseEntity<String>(authenticationCode, HttpStatus.OK);
