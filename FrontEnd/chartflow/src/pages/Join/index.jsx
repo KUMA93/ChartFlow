@@ -2,7 +2,7 @@ import Header from "../../components/Header";
 import styles from "./Join.module.css";
 import { useInput } from "../../hooks/useInput";
 import { useState } from "react";
-import emailVerify from "../../services/authService";
+// import emailVerify from "../../services/authService";
 
 function Join() {
   const handleSubmit = () => {
@@ -36,16 +36,16 @@ function Join() {
     return null;
   }
 
-  const handleEmailVerify = async (inputEmail) => {
-    setIsChecking(true);
-    try {
-      const result = await emailVerify(inputEmail);
-      console.log("result:", result);
-      // setIsVerified(true);
-    } catch (error) {
-      console.error("이메일 인증 에러:", error);
-    }
-  };
+  // const handleEmailVerify = async (inputEmail) => {
+  //   setIsChecking(true);
+  //   try {
+  //     const result = await emailVerify(inputEmail);
+  //     console.log("result:", result);
+  //     // setIsVerified(true);
+  //   } catch (error) {
+  //     console.error("이메일 인증 에러:", error);
+  //   }
+  // };
 
   // const handleEmailVerify = () => {};
   return (
@@ -64,9 +64,9 @@ function Join() {
                 required
                 autoComplete="on"
               ></input>
-              <button className={styles.btnForm} onClick={handleEmailVerify}>
+              {/* <button className={styles.btnForm} onClick={handleEmailVerify}>
                 이메일 인증
-              </button>
+              </button> */}
             </div>
           </form>
           {isChecking ? (
