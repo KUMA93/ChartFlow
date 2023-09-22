@@ -8,6 +8,7 @@ import End from "../../components/End";
 import TurnContext from "../../context/TurnContext";
 import CoinContext from "../../context/CoinContext";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
+import { startGame } from "../../services/apis/chartgame";
 import { useState, useEffect, useContext } from "react";
 
 const ChartGame = () => {
@@ -41,7 +42,13 @@ const ChartGame = () => {
     //   setModalEndShow(true);
     // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [thisTurn]);
+    const fetchGameStart = async () => {
+      const data = await startGame();
+      console.log("Game started:", data);
+    };
+
+    fetchGameStart();
+  }, []);
 
   return (
     <>
