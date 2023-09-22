@@ -122,7 +122,7 @@ public class GameService {
                 .startTime(LocalDateTime.now())
                 .initialBudget(user.getBudget())
                 .cashBudget(user.getBudget())
-                .turn(0)
+                .turn(1)
                 .rate(0.00)
                 .price(0)
                 .quantity(0)
@@ -141,7 +141,7 @@ public class GameService {
 
         int cnt = 0;
         for (Stocks cur : stocks) {
-            if (cnt >= 51) break;
+            if (cnt > 51) break;
             if (Integer.parseInt(cur.getDate()) >= Integer.parseInt(stock.getDate())) {
                 cnt++;
                 GameHistoryStocks gameHistoryStocks = new GameHistoryStocks();

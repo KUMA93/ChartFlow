@@ -390,9 +390,23 @@ class Chart extends Component {
     makeEvent(1634212800000, "D", am5.color(0x00ff00), "Dividends paid");
 
     // set data to all series
-    valueSeries.data.setAll(data);
-    volumeSeries.data.setAll(data);
-    sbSeries.data.setAll(data);
+    // valueSeries.data.setAll(data);
+    // volumeSeries.data.setAll(data);
+    // sbSeries.data.setAll(data);
+    const rawData = this.props.data || [];
+    const formattedData = rawData.map(item => ({
+      Date: item.date,
+      Open: item.openPrice,
+      High: item.highestPrice,
+      Low: item.lowestPrice,
+      Close: item.closingPrice,
+      Volume: item.volumes
+    }));
+
+    // 변환된 데이터로 차트 설정
+    valueSeries.data.setAll(formattedData);
+    volumeSeries.data.setAll(formattedData);
+    sbSeries.data.setAll(formattedData);
   }
 
   componentWillUnmount() {

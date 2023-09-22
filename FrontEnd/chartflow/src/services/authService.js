@@ -14,24 +14,24 @@ const emailVerify = async (email) => {
   }
 };
 
-// const checkNicknameAvailability = async (nickname) => {
-//   try {
-//     const response = await authService.get(`/api/user/auth`);
-//     console.log(response);
-//     return response.data.body.result;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+const checkNicknameAvailability = async (nickname) => {
+  try {
+    const response = await authService.get(`/api/user/auth`);
+    console.log(response);
+    return response.data.body.result;
+  } catch (error) {
+    throw error;
+  }
+};
 
-// const updateUserInfo = async (userInfo) => {
-//   try {
-//     const response = await authService.put(`/api/v1/users`, userInfo);
-//     return response.data;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+const updateUserInfo = async (userInfo) => {
+  try {
+    const response = await authService.put(`/api/v1/users`, userInfo);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export { emailVerify };
 
