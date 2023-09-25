@@ -2,11 +2,27 @@ import Header from "../../components/Header";
 import styles from "./Join.module.css";
 import { useInput } from "../../hooks/useInput";
 import { useState } from "react";
-// import emailVerify from "../../services/authService";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
+import { join } from "../../services/apis/user";
 
 function Join() {
-  const handleSubmit = () => {
-    console.log("회원가입 완료");
+  const { handleMainNavigate } = useCustomNavigate();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const requestJoin = {
+      email: inputEmail,
+      password: inputPw,
+      name: inputName,
+      nickname: inputNickname,
+    };
+    join(requestJoin)
+      .then((res) => {
+        handleMainNavigate();
+      })
+      .catch((err) => {
+        console.log("회원가입 에러 발생");
+        console.log(err);
+      });
   };
   const [inputEmail, handleChangeEmail] = useInput("", handleSubmit);
   const [inputVerify, handleChangeVerify] = useInput("", handleSubmit);
@@ -47,7 +63,7 @@ function Join() {
   //   }
   // };
 
-  // const handleEmailVerify = () => {};
+  const handleEmailVerify = () => {};
   return (
     <>
       <Header />
@@ -64,9 +80,9 @@ function Join() {
                 required
                 autoComplete="on"
               ></input>
-              {/* <button className={styles.btnForm} onClick={handleEmailVerify}>
+              <button className={styles.btnForm} onClick={handleEmailVerify}>
                 이메일 인증
-              </button> */}
+              </button>
             </div>
           </form>
           {isChecking ? (
