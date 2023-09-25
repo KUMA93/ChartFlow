@@ -1,14 +1,15 @@
 import styles from "./Login.module.css";
 import modal_logo from "./../../assets/images/free-icon-growth-chart.png";
 import closeBtn from "./../../assets/images/icons8-x-50.png";
-import { useInput } from "../../hoogks/useInput";
+import { useInput } from "../../hooks/useInput";
 import { login } from "../../services/apis/user";
 import UserContext from "../../context/UserContext";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
 import { useContext } from "react";
 
 function Login({ modalShow, handleClose }) {
-  const { handleMainNavigate } = useCustomNavigate();
+  const { handleMainNavigate, handleJoinNavigate, handleForgetNavigate } =
+    useCustomNavigate();
   const { accessToken, setAccessToken, setRefreshToken } =
     useContext(UserContext);
 
@@ -26,7 +27,6 @@ function Login({ modalShow, handleClose }) {
           localStorage.setItem("refresh-token", res["refresh-token"]);
           setRefreshToken(res["refresh-token"]);
           handleMainNavigate();
-          console.log(accessToken);
         })
         .catch((err) => {
           console.log(err);
@@ -87,11 +87,22 @@ function Login({ modalShow, handleClose }) {
             로그인
           </button>
           <div className={styles.end}>
+            <div className={styles.text2}>비밀번호를 잊으셨나요?</div>
+            <div
+              className={styles.signup}
+              onClick={() => {
+                handleForgetNavigate();
+              }}
+            >
+              여기
+            </div>
+          </div>
+          <div className={styles.end}>
             <div className={styles.text2}>차트플로우가 처음이신가요?</div>
             <div
               className={styles.signup}
               onClick={() => {
-                window.location.href = "/join";
+                handleJoinNavigate();
               }}
             >
               회원가입
