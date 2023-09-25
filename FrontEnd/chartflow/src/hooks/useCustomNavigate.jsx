@@ -20,6 +20,10 @@ const useCustomNavigate = () => {
     navigate("/join");
   };
 
+  const handleJoinCompleteNavigate = () => {
+    navigate("/complete");
+  };
+
   const handleMyPageNavigate = () => {
     navigate("/mypage");
   };
@@ -94,6 +98,7 @@ const useCustomNavigate = () => {
     // handleBoardMyPostNavigate,
     // handleBoardMyCommentedPostNavigate,
     // handleBoardMyScrapNavigate,
+    handleJoinCompleteNavigate,
     handleBoardWriteNavigate,
     handleBoardViewNavigate,
     handleBoardEditNavigate,

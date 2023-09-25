@@ -1,31 +1,37 @@
 import axios from "axios"; // AxiosInstance 타입 추가
-import Cookies from "js-cookie";
 
 export const axiosServer = () => {
-  const refreshToken = sessionStorage.get("refreshToken");
-  const accessToken = sessionStorage.get("accessToken");
-  // console.log(accessToken);
+  const accessToken = localStorage.getItem("access-token");
 
   return axios.create({
     baseURL: "http://localhost:8080/api",
     timeout: 10000,
     withCredentials: true,
     headers: {
-      "Content-Type" : 'application/json',
-      "Authorization": `Bearer ${accessToken}`,
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${accessToken}`,
     },
   });
-
 };
 
 // refreshToken을 authorization으로 하는 axios 요청
 export const axiosServerWithRefresh = () => {
-
+  const refreshToken = localStorage.getItem("refresh-token");
   return axios.create({
     baseURL: "http://localhost:8080/api",
     headers: {
-      "Content-Type": 'application/json',
-      "Authorization": `Bearer ${refreshToken}`,
-    }
+      "Content-Type": "application/json; charset=utf-8",
+      Authorization: `Bearer ${refreshToken}`,
+    },
   });
-}
+};
+
+// Token 없이 axios 요청
+export const axiosServerWithoutToken = () => {
+  return axios.create({
+    baseURL: "http://localhost:8080/api",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  });
+};

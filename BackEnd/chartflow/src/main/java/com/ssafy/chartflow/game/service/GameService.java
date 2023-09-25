@@ -141,7 +141,7 @@ public class GameService {
 
         int cnt = 0;
         for (Stocks cur : stocks) {
-            if (cnt >= 51) break;
+            if (cnt > 51) break;
             if (Integer.parseInt(cur.getDate()) >= Integer.parseInt(stock.getDate())) {
                 cnt++;
                 GameHistoryStocks gameHistoryStocks = new GameHistoryStocks();

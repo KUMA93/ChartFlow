@@ -3,12 +3,13 @@ import Order from "../Order";
 import data from "../Chart/data";
 import { useRef, useState, useContext } from "react";
 import TurnContext from "../../context/TurnContext";
-import { buyStocks, sellStocks, progressGame, loadGameHistory } from "../../services/apis/chartgame";
+import { progressGame, loadGameHistory } from "../../services/apis/chartgame";
 
 function BuySell() {
   const { thisTurn, setThisTurn } = useContext(TurnContext);
   const time = useRef(-1);
-  const [lastData, setLastData] = useState(data[time.current]);
+  // const [lastData, setLastData] = useState(data[time.current]);
+  const [lastData, setLastData] = useState()
 
   const Turn = () => (
     <div className={styles.texts}>
@@ -16,24 +17,55 @@ function BuySell() {
       <div className={styles.all}>/50턴</div>
     </div>
   );
+  
+  
 
   const handleBuy = () => {
-    buyStocks()
+    progressGame()
       .then((res) => {
         loadGameHistory()
           .then((res) => {
             setThisTurn(res.turn);
-            set
           })
+          .catch((err) => {
+            console.err(err);
+          })
+      })
+      .catch((err) => {
+        console.err(err);
       })
   };
 
   const handleSell = () => {
-    setThisTurn(thisTurn + 1);
+    progressGame()
+      .then((res) => {
+        loadGameHistory()
+          .then((res) => {
+            setThisTurn(res.turn);
+          })
+          .catch((err) => {
+            console.err(err);
+          })
+      })
+      .catch((err) => {
+        console.err(err);
+      })
   };
 
   const handleSkip = () => {
-    setThisTurn(thisTurn + 1);
+    progressGame()
+      .then((res) => {
+        loadGameHistory()
+          .then((res) => {
+            setThisTurn(res.turn);
+          })
+          .catch((err) => {
+            console.err(err);
+          })
+      })
+      .catch((err) => {
+        console.err(err);
+      })
   };
 
   return (

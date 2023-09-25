@@ -9,6 +9,7 @@ export const startGame = async () => {
 // 최초 게임 불러오기
 export const loadGame = async () => {
     const res = await axiosServer().get(`/game`);
+    console.log("loadgame response: " + res);
     return res.data;
 }
 
