@@ -3,17 +3,20 @@ package com.ssafy.chartflow.board.controller;
 import com.ssafy.chartflow.board.dto.request.RequestLikeDto;
 import com.ssafy.chartflow.board.dto.request.RequestModifyArticleDto;
 import com.ssafy.chartflow.board.dto.request.RequestWriteArticleDto;
+import com.ssafy.chartflow.board.dto.response.ArticleResponseDto;
 import com.ssafy.chartflow.board.entity.Article;
 import com.ssafy.chartflow.board.service.ArticleService;
 import com.ssafy.chartflow.exception.LikeDuplicateException;
 import com.ssafy.chartflow.exception.NoSuchLikeException;
 import com.ssafy.chartflow.security.service.JwtService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +31,7 @@ public class BoardController {
     //글 작성
     @PostMapping
     public ResponseEntity<Map<String,Object>> writeArticle(
+            @Parameter(hidden = true)
             @RequestHeader("Authorization") String token,
             @RequestBody RequestWriteArticleDto requestWriteArticleDto
     ){
@@ -53,6 +57,7 @@ public class BoardController {
     //글 수정
     @PatchMapping
     public ResponseEntity<Map<String,Object>> modifyArticle(
+            @Parameter(hidden = true)
             @RequestHeader("Authorization") String jwtToken,
             @RequestBody RequestModifyArticleDto requestModifyArticleDto
     ){
@@ -74,9 +79,47 @@ public class BoardController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //특정 글 조회
+    @GetMapping("/{articleId}")
+    public ResponseEntity<Map<String,Object>> readArticleByArticleId(
+            @Parameter(hidden = true)
+            @RequestHeader("Authorization") String token,
+            @PathVariable long articleId
+    ){
+        Map<String,Object> response = new HashMap<>();
+
+        try {
+            Article article = articleService.findArticleByArticleId(articleId);
+            ArticleResponseDto articleResponseDto = new ArticleResponseDto();
+
+            String title = article.getTitle();
+            String nickname = article.getUser().getNickname();
+            LocalDateTime registerTime = article.getRegisterTime();
+            int views = article.getViews();
+            long id = article.getId();
+            String content = article.getContent();
+
+            articleResponseDto.setTitle(title);
+            articleResponseDto.setNickName(nickname);
+            articleResponseDto.setRegisterTime(registerTime);
+            article.setViews(views);
+            article.setId(id);
+            article.setContent(content);
+
+            response.put("article", articleResponseDto);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     //글 삭제
     @DeleteMapping
     public ResponseEntity<Map<String,Object>> deleteArticle(
+            @Parameter(hidden = true)
             @RequestHeader("Authorization") String jwtToken,
             @RequestBody RequestModifyArticleDto requestModifyArticleDto
     ){
@@ -105,8 +148,9 @@ public class BoardController {
 
     @PostMapping("/like")
     public ResponseEntity<Map<String,Object>> likeArticle(
+            @Parameter(hidden = true)
             @RequestHeader("Authorization") String token,
-            Long articleId
+            @RequestBody Long articleId
     ){
         Map<String,Object> response = new HashMap<>();
         token = token.split(" ")[1];
@@ -119,12 +163,12 @@ public class BoardController {
             return new ResponseEntity<>(response, HttpStatus.CONFLICT);
         }
 
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/like")
     public ResponseEntity<Map<String,Object>> withdrawLike(
-            long likeId
+            @RequestBody long likeId
     ){
         Map<String,Object> response = new HashMap<>();
         try {

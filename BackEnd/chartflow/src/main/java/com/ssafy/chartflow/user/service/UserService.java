@@ -1,5 +1,6 @@
 package com.ssafy.chartflow.user.service;
 
+import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
 import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
@@ -9,12 +10,12 @@ import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -24,7 +25,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    @Autowired
     private final JwtService jwtService;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
@@ -45,6 +45,13 @@ public class UserService {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
+    }
+
+    public Boolean checkNickname(String Nickname) {
+        log.info("회원 서비스 - 닉네임 중복 체크");
+        User user = userRepository.findUserByNickname(Nickname);
+
+        return user == null;
     }
 
     public User regist(String email, String password, String name, String nickname) {
@@ -68,5 +75,15 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(newPass);
         user.setPassword(encodedPassword);
         userRepository.save(user);
+    }
+
+
+    public ResponseAssetsDto getAssets(Long userId) {
+        User user = userRepository.findUserById(userId);
+        return new ResponseAssetsDto(user.getCoin(), user.getBudget());
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
     }
 }

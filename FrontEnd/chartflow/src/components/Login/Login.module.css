@@ -1,0 +1,162 @@
+.modalLogo {
+  width: 80px;
+  height: 80px;
+}
+
+.shade {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  flex-shrink: 0;
+  background-color: rgba(43, 40, 38, 0.6);
+  z-index: 1;
+}
+
+.modalLogin {
+  position: absolute;
+  margin: 13vh 20vw;
+  padding: 5vh 2vw;
+  width: 370px;
+  height: 40vh;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.closeBtn {
+  position: absolute;
+  margin-left: calc(370px - 2vw);
+  margin-top: -1vh;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.title {
+  display: flex;
+  margin-top: 3vh;
+  margin-left: 2vw;
+  align-items: center;
+}
+
+.text {
+  display: flex;
+  color: #000;
+  text-align: center;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  justify-content: center;
+}
+
+.strong {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.forms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1vh;
+}
+
+.form {
+  margin-top: 30px;
+  justify-content: center;
+  position: relative;
+  width: 300px;
+}
+
+.inputLogin {
+  font-size: 1rem;
+  text-indent: 3%;
+  color: #222222;
+  width: 280px;
+  border: none;
+  border-bottom: solid #aaaaaa 1px;
+  position: relative;
+  background: none;
+  z-index: 5;
+  cursor: text;
+}
+
+.inputLogin::placeholder {
+  color: #aaaaaa;
+}
+.inputLogin:focus {
+  outline: none;
+}
+
+span {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0%;
+  background-color: #666;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  transition: 0.5s;
+}
+
+.labelLogin {
+  position: absolute;
+  color: #aaa;
+  left: 10px;
+  font-size: 1rem;
+  bottom: 8px;
+  transition: all 0.2s;
+}
+
+.inputLogin:focus ~ label,
+.inputLogin:valid ~ label {
+  font-size: 13px;
+  bottom: 30px;
+  color: #666;
+  font-weight: bold;
+}
+
+.inputLogin:focus ~ span,
+.inputLogin:valid ~ span {
+  width: 285px;
+}
+
+.loginBtn {
+  width: 250px;
+  height: 40px;
+  margin-top: 20px;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background: #6c00ff;
+  color: #fff;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+  border: 0;
+  cursor: pointer;
+}
+
+.end {
+  display: flex;
+  margin-top: 15px;
+  align-items: baseline;
+}
+
+.text2 {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.signup {
+  font-size: 15px;
+  font-weight: 800;
+  margin-left: 7px;
+  color: #6c00ff;
+  text-align: center;
+  cursor: pointer;
+}

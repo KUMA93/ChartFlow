@@ -1,9 +1,9 @@
-import Header from "../../components/Header";
+import NavBar from "../../components/Header";
 
 function History() {
   return (
     <>
-      <Header />
+      <NavBar />
       <p>This is History page.</p>
     </>
   );

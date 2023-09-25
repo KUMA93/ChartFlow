@@ -5,11 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> { //JpaRepository<Entity클래스, PK타입>
 
-    User findUserByEmailAndCancel(String email, int cancel);
+    User findUserByEmail(String email);
 
     User findUserById(long userId);
 
-    User findUserByRefreshToken_token(String refreshToken);
+    User findUserByNickname(String nickname);
 
     User findByEmail(String email);
 

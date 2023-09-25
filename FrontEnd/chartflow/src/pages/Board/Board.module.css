@@ -1,0 +1,49 @@
+.container {
+  margin-top: 20px;
+  display: grid;
+  grid-gap: 20px;
+  height: 100vh;
+  grid-template-areas:
+    "hotUpdate"
+    "inner1"
+    "inner2"
+    "articles";
+  grid-template-rows: 20vh 30px 30px 1fr 20px;
+}
+
+.hotUpdate {
+  grid-area: hotUpdate;
+}
+
+.inner1 {
+  grid-area: inner1;
+  display: flex;
+  width: 100%;
+}
+
+.tags {
+  display: flex;
+}
+
+.write {
+  display: flex;
+  background: #6c00ff;
+  color: #8effa7;
+  border: 0;
+  border-radius: 30px;
+  width: 120px;
+  margin-left: auto;
+  height: 50px;
+  font-size: 17px;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner2 {
+  grid-area: inner2;
+}
+
+.articles {
+  grid-area: articles;
+}

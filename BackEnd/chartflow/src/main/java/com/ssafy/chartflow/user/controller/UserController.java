@@ -2,6 +2,7 @@ package com.ssafy.chartflow.user.controller;
 
 import com.ssafy.chartflow.exception.NotRegisteredException;
 import com.ssafy.chartflow.exception.PasswordWrongException;
+import com.ssafy.chartflow.user.dto.RequestEmailDto;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.RequestRegistDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
@@ -67,11 +68,12 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "메일 전송 성공"),
             @ApiResponse(responseCode = "500", description = "메일 전송 실패 - 호스트 연결 실패")
     })
-    public ResponseEntity<?> emailAuthenticationCodeSend(@RequestBody String email) throws Exception {
+    public ResponseEntity<?> emailAuthenticationCodeSend(@RequestBody RequestEmailDto requestEmailDto) throws Exception {
         log.info("emailController 호출 - 회원가입 인증코드 발급");
         try {
             // email로 인증 코드 발송 후 authenticationCode에 저장
-            String authenticationCode = emailService.sendAuthenticationCode(email);
+
+            String authenticationCode = emailService.sendAuthenticationCode(requestEmailDto.getEmail());
             log.info("인증 코드 생성/발송 성공: " + authenticationCode);
             // 인증 코드 리턴
             return new ResponseEntity<String>(authenticationCode, HttpStatus.OK);
@@ -83,12 +85,12 @@ public class UserController {
 
     @PostMapping("/pass")
     @Operation(summary = "임시 비밀번호 이메일 전송", description = "비밀번호를 잊은 상황에서 임시 비밀번호가 담긴 이메일 보내기")
-    public ResponseEntity<?> sendTemporaryPassword(@RequestBody String email) throws Exception {
-        log.info("emailController 호출 - 임시 비밀번호 발급: " + email);
+    public ResponseEntity<?> sendTemporaryPassword(@RequestBody RequestEmailDto requestEmailDto) throws Exception {
+        log.info("emailController 호출 - 임시 비밀번호 발급: " + requestEmailDto.getEmail());
 
         try{
             // email로 임시 비밀번호 발송 후 temporaryPassword에 저장
-            Map<String, Object> returnData = emailService.sendTemporaryPassword(email);
+            Map<String, Object> returnData = emailService.sendTemporaryPassword(requestEmailDto.getEmail());
             log.info("임시 비밀번호 생성/발송 성공");
             User user = (User) returnData.get("user");
             String temporaryPassword = (String) returnData.get("temporaryPassword");
@@ -103,7 +105,25 @@ public class UserController {
             log.info("임시 비밀번호 생성/발송 실패");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
 
+    @GetMapping("/{nickname}")
+    @Operation(summary = "닉네임 중복 체크", description = "해당 닉네임이 DB에 있는지 검사한다. ")
+    public ResponseEntity<?> verifyNickName(@PathVariable String nickname) throws Exception {
+        log.info("emailController 호출 - 닉네임 중복 체크: " + nickname);
+
+        try{
+            Map<String, Object> returnData = new HashMap<>();
+            boolean isValid = userService.checkNickname(nickname);
+            returnData.put("isValid", isValid);
+            log.info("닉네임 중복 체크 결과: " + isValid);
+
+            // 인증 코드 리턴
+            return new ResponseEntity<Map<String, Object>>(returnData, HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("임시 비밀번호 생성/발송 실패");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

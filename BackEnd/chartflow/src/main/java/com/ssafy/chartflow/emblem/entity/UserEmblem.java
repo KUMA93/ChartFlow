@@ -24,4 +24,22 @@ public class UserEmblem {
     @ManyToOne
     @JoinColumn(name = "emblemId")
     private Emblem emblem;
+
+    // UserEmblem 엔터티 클래스 내부에 추가
+    public void setUser(User user) {
+        if (this.user != null) {
+            this.user.getEmblems().remove(this);
+        }
+        this.user = user;
+        user.getEmblems().add(this);
+    }
+
+    public void setEmblem(Emblem emblem) {
+        if (this.emblem != null) {
+            this.emblem.getUserEmblems().remove(this);
+        }
+        this.emblem = emblem;
+        emblem.getUserEmblems().add(this);
+    }
+
 }
