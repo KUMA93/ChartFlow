@@ -1,0 +1,67 @@
+.nickname {
+  margin-top: 2vw;
+  width: 70vw;
+  height: 40px;
+  border-radius: 30px;
+  background: #8EFFA7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #6C00FF;
+  text-align: center;
+  font-family: SUITE;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.inputBox {
+  border-radius: 30px;
+  background: #FFF; 
+  width: 40vw;
+  height: 40px;
+  color: #000;
+  font-family: SUITE;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+
+}
+
+.bottomBox {
+  display: flex;
+  margin-top: 15px;
+  margin-bottom: 20vh;
+  width: 70vw;
+  height: 200px;
+  border-radius: 30px;
+  background: #FFF;
+}
+
+.btn {
+  display: inline-flex;
+  padding: 16px 30px 16px 30px;
+  align-items: center;
+  border-radius: 10px;
+  background: #6C00FF;
+  color: #8EFFA7;
+  text-align: center;
+  font-family: SUITE;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+.profile {
+  border-radius: 50%;
+  background: #FFF;
+  width: 120px;
+  height: 120px;
+}

@@ -55,7 +55,7 @@ public class UserServiceTest {
 
         when(userRepository.findByEmail(anyString())).thenReturn(mockUser);
         when(jwtService.generateToken(any(UserDetails.class))).thenReturn("accessToken");
-        when(jwtService.generateRefreshToken(any(UserDetails.class))).thenReturn("refreshToken");
+
 
         ResponseAuthenticationDto actualResponse = userService.login(loginDto);
 

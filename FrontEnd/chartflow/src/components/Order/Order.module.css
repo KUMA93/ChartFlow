@@ -1,0 +1,50 @@
+.container2 {
+  display: grid;
+  height: 100;
+  width: fit-content;
+  grid-gap: 5px;
+  grid-template-areas:
+    "quantity quantity available availquant"
+    "input input input input"
+    "btn10 btn25 btn50 btn100";
+
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.quantity {
+  grid-area: quantity;
+  font-size: 13px;
+}
+
+.available {
+  grid-area: available;
+  font-size: 13px;
+}
+
+.availquant {
+  grid-area: availquant;
+  font-size: 13px;
+}
+
+.input1 {
+  grid-area: input;
+  width: 195px;
+}
+
+.btn10 {
+  grid-area: btn10;
+  cursor: pointer;
+}
+.btn25 {
+  grid-area: btn25;
+  cursor: pointer;
+}
+.btn50 {
+  grid-area: btn50;
+  cursor: pointer;
+}
+.btn100 {
+  grid-area: btn100;
+  cursor: pointer;
+}
