@@ -1,12 +1,14 @@
 import Header from "../../components/Header";
 import styles from "./Join.module.css";
 import { useInput } from "../../hooks/useInput";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../../context/UserContext";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
 import { join } from "../../services/apis/user";
 
 function Join() {
-  const { handleMainNavigate } = useCustomNavigate();
+  const { handleJoinCompleteNavigate } = useCustomNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const requestJoin = {
@@ -17,10 +19,9 @@ function Join() {
     };
     join(requestJoin)
       .then((res) => {
-        handleMainNavigate();
+        handleJoinCompleteNavigate();
       })
       .catch((err) => {
-        console.log("회원가입 에러 발생");
         console.log(err);
       });
   };

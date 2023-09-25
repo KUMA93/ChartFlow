@@ -1,31 +1,37 @@
 import styles from "./Login.module.css";
 import modal_logo from "./../../assets/images/free-icon-growth-chart.png";
 import closeBtn from "./../../assets/images/icons8-x-50.png";
-import { useInput } from "../../hooks/useInput";
+import { useInput } from "../../hoogks/useInput";
 import { login } from "../../services/apis/user";
+import UserContext from "../../context/UserContext";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
+import { useContext } from "react";
 
 function Login({ modalShow, handleClose }) {
-  const handleSubmit = () => {
-    console.log("로그인 버튼 누름");
-    const requestLogin = {
-      "email": inputId,
-      "password": inputPw,
-    };
+  const { handleMainNavigate } = useCustomNavigate();
+  const { accessToken, setAccessToken, setRefreshToken } =
+    useContext(UserContext);
 
-    console.log(
-      requestLogin.email + ", " + requestLogin.password + "로 로그인ㄱㄱ"
-    );
-    login(requestLogin)
-      .then((res) => {
-        console.log("로그인 성공 res : " + res);
-        localStorage.setItem('access-token', res['access-token']);
-        localStorage.setItem('refresh-token', res['refresh-token']);
-      })
-      .catch((err) => {
-        console.log("로그인 에러발생");
-        console.log(err);
-      });
-    console.log("로그인 끝");
+  const handleSubmit = (event) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      const requestLogin = {
+        email: inputId,
+        password: inputPw,
+      };
+      login(requestLogin)
+        .then((res) => {
+          localStorage.setItem("access-token", res["access-token"]);
+          setAccessToken(res["access-token"]);
+          localStorage.setItem("refresh-token", res["refresh-token"]);
+          setRefreshToken(res["refresh-token"]);
+          handleMainNavigate();
+          console.log(accessToken);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const [inputId, handleChangeId] = useInput("", handleSubmit);
@@ -72,6 +78,7 @@ function Login({ modalShow, handleClose }) {
               onChange={handleChangePw}
               required
               autoComplete="on"
+              onKeyDown={handleSubmit}
             ></input>
             <label className={styles.labelLogin}>비밀번호</label>
             <span></span>

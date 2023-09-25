@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../../context/UserContext";
 import main_logo from "./../../assets/images/main_logo.png";
 import Login from "../Login";
 
 function Header() {
   const navigate = useNavigate();
+  const { accessToken } = useContext(UserContext);
 
   const MainLogo = () => (
     <a href="/">
@@ -18,7 +20,9 @@ function Header() {
         <button
           className={styles.tab}
           onClick={() => {
-            navigate("/game");
+            accessToken
+              ? navigate("/game")
+              : alert("로그인이 필요한 기능입니다.");
           }}
         >
           차트게임
@@ -38,7 +42,9 @@ function Header() {
         <button
           className={styles.tab}
           onClick={() => {
-            navigate("/quiz");
+            accessToken
+              ? navigate("/quiz")
+              : alert("로그인이 필요한 기능입니다.");
           }}
         >
           주식퀴즈

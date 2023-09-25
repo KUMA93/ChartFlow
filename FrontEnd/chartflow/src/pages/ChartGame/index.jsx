@@ -12,6 +12,7 @@ import { loadGame, startGame } from "../../services/apis/chartgame";
 import { useState, useEffect, useContext } from "react";
 
 const ChartGame = () => {
+  
   const { coinNum } = useContext(CoinContext);
   const { handleMainNavigate } = useCustomNavigate();
   const { thisTurn, setThisTurn } = useContext(TurnContext);
