@@ -93,7 +93,7 @@ class Chart extends Component {
     // -------------------------------------------------------------------------------
     // https://www.amcharts.com/docs/v5/charts/stock-chart/#Setting_main_series
     stockChart.set("stockSeries", valueSeries);
-
+    
     // Add a stock legend
     // -------------------------------------------------------------------------------
     // https://www.amcharts.com/docs/v5/charts/stock-chart/stock-legend/
@@ -137,20 +137,21 @@ class Chart extends Component {
       })
     );
 
-    volumeSeries.columns.template.setAll({
-      strokeOpacity: 0,
-      fillOpacity: 0.5,
-    });
 
     // color columns by stock rules
-    volumeSeries.columns.template.adapters.add("fill", function (fill, target) {
-      let dataItem = target.dataItem;
+    valueSeries.columns.template.adapters.add("stroke", function (stroke, target) {
+      const dataItem = target.dataItem;
       if (dataItem) {
-        return stockChart.getVolumeColor(dataItem);
+        if (dataItem.get("valueY") > dataItem.get("openValueY")) {
+          return am5.color("#0000FF");  // 상승 캔들에 대한 파란색
+        } else {
+          return am5.color("#FF0000");  // 하락 캔들에 대한 빨간색
+        }
       }
-      return fill;
+      return stroke;
     });
 
+  
     // Set main series
     // -------------------------------------------------------------------------------
     // https://www.amcharts.com/docs/v5/charts/stock-chart/#Setting_main_series
@@ -385,8 +386,8 @@ class Chart extends Component {
     }
 
     makeEvent(1619006400000, "S", am5.color(0xff0000), "Split 4:1");
-    makeEvent(1619006400000, "D", am5.color(0x00ff00), "Dividends paid");
-    makeEvent(1634212800000, "D", am5.color(0x00ff00), "Dividends paid");
+    makeEvent(1619006400000, "D", am5.color(0x0000ff), "Dividends paid");
+    makeEvent(1634212800000, "D", am5.color(0x0000ff), "Dividends paid");
 
     // set data to all series
     // valueSeries.data.setAll(data);
@@ -414,6 +415,18 @@ class Chart extends Component {
     valueSeries.data.setAll(formattedData);
     volumeSeries.data.setAll(formattedData);
     sbSeries.data.setAll(formattedData);
+
+    valueSeries.columns.template.adapters.add("fill", function(fill, target) {
+      const dataItem = target.dataItem;
+      if (dataItem) {
+        if (dataItem.get("valueY") > dataItem.get("openValueY")) {
+          return am5.color("#0000FF");  // 상승 캔들에 대한 파란색
+        } else {
+          return am5.color("#FF0000");  // 하락 캔들에 대한 빨간색
+        }
+      }
+      return fill;
+    });
   }
   
   componentWillUnmount() {
