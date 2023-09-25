@@ -1,6 +1,7 @@
 package com.ssafy.chartflow.emblem.dto;
 
 import com.ssafy.chartflow.emblem.entity.Emblem;
+import com.ssafy.chartflow.emblem.entity.UserEmblem;
 import com.ssafy.chartflow.emblem.service.EmblemService;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameTurns;
@@ -21,5 +22,5 @@ public class UserGameDto{
     private User user;
     private GameTurns gameTurns;
     private GameHistory gameHistory;
-    private List<Emblem> emblems;
+    private List<UserEmblem> emblems;
 }

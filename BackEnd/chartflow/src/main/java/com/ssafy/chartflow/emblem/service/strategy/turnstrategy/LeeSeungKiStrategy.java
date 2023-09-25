@@ -2,6 +2,7 @@ package com.ssafy.chartflow.emblem.service.strategy.turnstrategy;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
 import com.ssafy.chartflow.emblem.entity.Emblem;
+import com.ssafy.chartflow.emblem.entity.UserEmblem;
 import com.ssafy.chartflow.emblem.service.strategy.GameStrategy;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameTurns;
@@ -15,10 +16,10 @@ public class LeeSeungKiStrategy implements TurnStrategy {
         // 매도 후 연속 5회 주가 하락
         GameHistory gameHistory = userGameDto.getGameHistory();
         List<GameTurns> gameTurns = gameHistory.getGameTurns();
-        List<Emblem> emblems = userGameDto.getEmblems();
+        List<UserEmblem> emblems = userGameDto.getEmblems();
 
         boolean hasEmblem = emblems.stream()
-                .anyMatch(emblem -> "이승기".equals(emblem.getName()));
+                .anyMatch(emblem -> "이승기".equals(emblem.getEmblem().getName()));
 
         if (hasEmblem) return false;
 
