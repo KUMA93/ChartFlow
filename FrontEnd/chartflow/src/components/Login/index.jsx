@@ -1,7 +1,7 @@
 import styles from "./Login.module.css";
 import modal_logo from "./../../assets/images/free-icon-growth-chart.png";
 import closeBtn from "./../../assets/images/icons8-x-50.png";
-import { useInput } from "../../hoogks/useInput";
+import { useInput } from "../../hooks/useInput";
 import { login } from "../../services/apis/user";
 import UserContext from "../../context/UserContext";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
