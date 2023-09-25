@@ -4,7 +4,7 @@ import { useInput } from "../../hooks/useInput";
 import { useState, useContext } from "react";
 import UserContext from "../../context/UserContext";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
-import { join } from "../../services/apis/user";
+import { emailAuthentication, join, verifyNickname } from "../../services/apis/user";
 
 function Join() {
   const { handleJoinCompleteNavigate } = useCustomNavigate();
@@ -17,6 +17,22 @@ function Join() {
       name: inputName,
       nickname: inputNickname,
     };
+    if (!isVerified) {
+      alert("이메일 인증을 진행해주세요!");
+      return;
+    }else if (checkPw(inputPw) != null) {
+      alert("비밀번호를 " + checkPw(inputPw));
+      return;
+    }else if (inputPw !== inputPwCheck) {
+      alert("비밀번호를 다시 확인 해주세요.")
+      return;
+    }else if (inputName.length < 1) {
+      alert("이름을 입력해주세요.");
+      return;
+    }else if (!isNicknameValid) {
+      alert("닉네임 중복확인을 해주세요!");
+      return;
+    }
     join(requestJoin)
       .then((res) => {
         handleJoinCompleteNavigate();
@@ -33,7 +49,10 @@ function Join() {
   const [inputNickname, handleChangeNickname] = useInput("", handleSubmit);
   // const [alertMessage, setAlertMessage] = useState("")
   const [isChecking, setIsChecking] = useState(false);
+  const [authenticationCode, setAuthenticationCode] = useState("");
   const [isVerified, setIsVerified] = useState(false);
+  const [isNicknameValid, setIsNicknameValid] = useState(false);
+  const [msg, setMsg] = useState("");
 
   function checkPw(inputPw) {
     let pw = inputPw;
@@ -53,18 +72,47 @@ function Join() {
     return null;
   }
 
-  // const handleEmailVerify = async (inputEmail) => {
-  //   setIsChecking(true);
-  //   try {
-  //     const result = await emailVerify(inputEmail);
-  //     console.log("result:", result);
-  //     // setIsVerified(true);
-  //   } catch (error) {
-  //     console.error("이메일 인증 에러:", error);
-  //   }
-  // };
+  const handleEmailVerify = (event) => {
+    event.preventDefault()
+    emailAuthentication(inputEmail)
+      .then((res) => {
+        console.log("인증번호: " + res);
+        setAuthenticationCode(res);
+        setIsChecking(true);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  };
 
-  const handleEmailVerify = () => {};
+  const handleAuthentication = (event) => {
+    event.preventDefault();
+    if (authenticationCode === inputVerify) {
+      setIsVerified(true);
+      alert("인증 되었습니다.");
+    }else {
+      alert("인증 번호가 정확하지 않습니다. 다시 확인해주세요.");
+    }
+  }
+
+  const handleVerifyNickname = (event) => {
+    event.preventDefault();
+    verifyNickname(inputNickname)
+      .then((res) => {
+        console.log(res);
+        if (res.isValid == true) {
+          setIsNicknameValid(true);
+          alert("사용해도 좋은 닉네임 입니다.");
+        }else {
+          setIsNicknameValid(false);
+          alert("이미 존재하는 닉네임입니다.");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+  }
+
   return (
     <>
       <Header />
@@ -97,7 +145,7 @@ function Join() {
                   required
                   autoComplete="on"
                 ></input>
-                <button className={styles.btnForm} disabled={isVerified}>
+                <button className={styles.btnForm} disabled={isVerified} onClick={handleAuthentication}>
                   인증 완료
                 </button>
               </div>
@@ -166,7 +214,7 @@ function Join() {
                 required
                 autoComplete="on"
               ></input>
-              <button className={styles.btnForm}>중복 확인</button>
+              <button className={styles.btnForm} onClick={handleVerifyNickname}>중복 확인</button>
             </div>
           </form>
           <form className={styles.form}>

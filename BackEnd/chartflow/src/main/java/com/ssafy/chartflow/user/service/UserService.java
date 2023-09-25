@@ -47,6 +47,13 @@ public class UserService {
                 .build();
     }
 
+    public Boolean checkNickname(String Nickname) {
+        log.info("회원 서비스 - 닉네임 중복 체크");
+        User user = userRepository.findUserByNickname(Nickname);
+
+        return user == null;
+    }
+
     public User regist(String email, String password, String name, String nickname) {
         log.info("회원가입 서비스 호출 - ");
         // **** 해싱하는 부분 ****
@@ -69,6 +76,7 @@ public class UserService {
         user.setPassword(encodedPassword);
         userRepository.save(user);
     }
+
 
     public ResponseAssetsDto getAssets(Long userId) {
         User user = userRepository.findUserById(userId);

@@ -9,6 +9,7 @@ public interface UserRepository extends JpaRepository<User, Long> { //JpaReposit
 
     User findUserById(long userId);
 
+    User findUserByNickname(String nickname);
     User findUserByRefreshToken_token(String refreshToken);
 
     User findByEmail(String email);
