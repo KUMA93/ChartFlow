@@ -1,11 +1,8 @@
 import { axiosServerWithoutToken } from "../axiosInstance";
 
 // 로그인
-export const login = async (RequestLoginDto) => {
-  const res = await axiosServerWithoutToken().post(
-    `auth/login`,
-    RequestLoginDto
-  );
+export const login = async (requestLogin) => {
+  const res = await axiosServerWithoutToken().post(`/auth/login`, requestLogin);
   return res.data;
 };
 
