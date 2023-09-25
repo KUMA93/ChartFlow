@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Component } from "react";
 import "./Chart.css";
-import data from "./data";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
@@ -394,8 +393,9 @@ class Chart extends Component {
     // volumeSeries.data.setAll(data);
     // sbSeries.data.setAll(data);
     const rawData = this.props.data || [];
+    console.log("hi"+this.props.data);
     const formattedData = rawData.map(item => ({
-      Date: item.date,
+      Date: item.date * 1000,
       Open: item.openPrice,
       High: item.highestPrice,
       Low: item.lowestPrice,
@@ -403,12 +403,19 @@ class Chart extends Component {
       Volume: item.volumes
     }));
 
+    console.log(formattedData[0].Date)
+    console.log(formattedData[0].Open)
+    console.log(formattedData[0].High)
+    console.log(formattedData[0].Low)
+    console.log(formattedData[0].Close)
+    console.log(formattedData[0].Volume)
+
     // 변환된 데이터로 차트 설정
     valueSeries.data.setAll(formattedData);
     volumeSeries.data.setAll(formattedData);
     sbSeries.data.setAll(formattedData);
   }
-
+  
   componentWillUnmount() {
     if (this.root) {
       this.root.dispose();

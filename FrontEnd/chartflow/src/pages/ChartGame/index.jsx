@@ -48,8 +48,8 @@ const ChartGame = () => {
         console.log(res);
         loadGame()
         .then((res)=>{
-          setData(res);
-          console.log(res);
+          setData(res.chartData);
+          console.log("startGame response : " + res.chartData[0].date);
         })
       })
       .catch((err)=>{
@@ -62,7 +62,7 @@ const ChartGame = () => {
     <>
       <div className={styles.container}>
         <div className={styles.chart}>
-          <Chart data={data} />
+          {data ? <Chart data={data} /> : 'Loading...'} 
         </div>
         <div className={styles.buysell}>
           <BuySell />
