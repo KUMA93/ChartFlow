@@ -1,5 +1,4 @@
 import axios from "axios"; // AxiosInstance 타입 추가
-import Cookies from "js-cookie";
 
 export const axiosServer = () => {
   const refreshToken = localStorage.getItem("refresh-token");
@@ -28,8 +27,8 @@ export const axiosServerWithRefresh = () => {
   });
 };
 
-// refreshToken을 authorization으로 하는 axios 요청
-export const axiosServerWithoutToekn = () => {
+// Token 없이 axios 요청
+export const axiosServerWithoutToken = () => {
   return axios.create({
     baseURL: "http://localhost:8080/api",
     headers: {
