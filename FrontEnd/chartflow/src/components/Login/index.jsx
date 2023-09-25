@@ -8,16 +8,18 @@ function Login({ modalShow, handleClose }) {
   const handleSubmit = () => {
     console.log("로그인 버튼 누름");
     const requestLogin = {
-      email: inputId,
-      password: inputPw,
+      "email": inputId,
+      "password": inputPw,
     };
 
     console.log(
       requestLogin.email + ", " + requestLogin.password + "로 로그인ㄱㄱ"
     );
-    login(requestLogin.email, requestLogin.password)
+    login(requestLogin)
       .then((res) => {
         console.log("로그인 성공 res : " + res);
+        localStorage.setItem('access-token', res['access-token']);
+        localStorage.setItem('refresh-token', res['refresh-token']);
       })
       .catch((err) => {
         console.log("로그인 에러발생");
