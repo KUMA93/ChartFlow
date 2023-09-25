@@ -15,6 +15,7 @@ import Join from "./pages/Join";
 import NotFound from "./pages/NotFound";
 import QuizCorrect from "./pages/QuizCorrect";
 import JoinComplete from "./pages/JoinComplete";
+import Forget from "./pages/Forget";
 
 function App() {
   const [thisTurn, setThisTurn] = useState(() => {
@@ -58,6 +59,7 @@ function App() {
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/join" element={<Join />} />
                 <Route path="/complete" element={<JoinComplete />} />
+                <Route path="/forget" element={<Forget />} />
                 <Route path="/*" element={<NotFound />} />
                 <Route path="/quizcorrect" element={<QuizCorrect />} />
               </Routes>

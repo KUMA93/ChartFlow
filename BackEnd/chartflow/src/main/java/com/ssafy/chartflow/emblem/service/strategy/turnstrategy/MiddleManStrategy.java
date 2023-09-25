@@ -3,13 +3,12 @@ package com.ssafy.chartflow.emblem.service.strategy.turnstrategy;
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
 import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
-import com.ssafy.chartflow.emblem.service.strategy.GameStrategy;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameTurns;
 
 import java.util.List;
 
-public class RealManStrategy implements TurnStrategy {
+public class MiddleManStrategy implements TurnStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {
         // 풀매수 3회
@@ -18,7 +17,7 @@ public class RealManStrategy implements TurnStrategy {
         List<GameTurns> gameTurns = gameHistory.getGameTurns();
 
         boolean hasEmblem = emblems.stream()
-                .anyMatch(emblem -> "상남자".equals(emblem.getEmblem().getName()));
+                .anyMatch(emblem -> "중남자".equals(emblem.getEmblem().getName()));
 
         if (hasEmblem) return false;
 
@@ -27,12 +26,12 @@ public class RealManStrategy implements TurnStrategy {
             if(gameturn.getTotalAssets() - gameturn.getCurrentStocks() < gameturn.getPrice())
                 ++cnt;
         }
-        return cnt >= 2;
+        return cnt >= 1;
     }
 
     @Override
     public String getTitle() {
-        return "상남자";
+        return "중남자";
     }
 
 }

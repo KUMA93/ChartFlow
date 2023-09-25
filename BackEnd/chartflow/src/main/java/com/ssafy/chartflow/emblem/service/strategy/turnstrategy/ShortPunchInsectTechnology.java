@@ -6,7 +6,8 @@ import com.ssafy.chartflow.emblem.service.strategy.GameStrategy;
 public class ShortPunchInsectTechnology implements TurnStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {
-        //한 판에 매수 - 매도 3일 이하 3회 이상
+        //한 판에 매수 - 매도 3일 이하 3회 이상 , 0일은 노인정
+        //
         return false;
     }
 

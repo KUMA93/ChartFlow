@@ -8,7 +8,8 @@ import useCustomNavigate from "../../hooks/useCustomNavigate";
 import { useContext } from "react";
 
 function Login({ modalShow, handleClose }) {
-  const { handleMainNavigate } = useCustomNavigate();
+  const { handleMainNavigate, handleJoinNavigate, handleForgetNavigate } =
+    useCustomNavigate();
   const { accessToken, setAccessToken, setRefreshToken } =
     useContext(UserContext);
 
@@ -25,8 +26,9 @@ function Login({ modalShow, handleClose }) {
           setAccessToken(res["access-token"]);
           localStorage.setItem("refresh-token", res["refresh-token"]);
           setRefreshToken(res["refresh-token"]);
+          handleClose();
+
           handleMainNavigate();
-          console.log(accessToken);
         })
         .catch((err) => {
           console.log(err);
@@ -87,11 +89,22 @@ function Login({ modalShow, handleClose }) {
             로그인
           </button>
           <div className={styles.end}>
+            <div className={styles.text2}>비밀번호를 잊으셨나요?</div>
+            <div
+              className={styles.signup}
+              onClick={() => {
+                handleForgetNavigate();
+              }}
+            >
+              여기
+            </div>
+          </div>
+          <div className={styles.end}>
             <div className={styles.text2}>차트플로우가 처음이신가요?</div>
             <div
               className={styles.signup}
               onClick={() => {
-                window.location.href = "/join";
+                handleJoinNavigate();
               }}
             >
               회원가입

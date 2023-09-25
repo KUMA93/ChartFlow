@@ -19,6 +19,8 @@ export const axiosServerWithRefresh = () => {
   const refreshToken = localStorage.getItem("refresh-token");
   return axios.create({
     baseURL: "http://localhost:8080/api",
+    timeout: 10000,
+    withCredentials: true,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       Authorization: `Bearer ${refreshToken}`,
@@ -30,6 +32,8 @@ export const axiosServerWithRefresh = () => {
 export const axiosServerWithoutToken = () => {
   return axios.create({
     baseURL: "http://localhost:8080/api",
+    timeout: 10000,
+    withCredentials: true,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },
