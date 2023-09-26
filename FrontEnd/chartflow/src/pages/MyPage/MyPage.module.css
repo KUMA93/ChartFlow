@@ -175,8 +175,40 @@
 }
 
 .container3 {
-  margin: auto;
   display: flex;
   text-align: center;
   justify-content: space-evenly;
+}
+
+.titleFont {
+  margin-top: 20px;
+  color: #000;
+  text-align: center;
+  font-family: SUITE;
+  font-size: 27px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.line {
+  display: flex;
+  width: 25vw;
+  height: 1px;
+  background: #959595;
+  margin-top: 45px;
+}
+
+.font3 {
+  margin-top: 15px;
+  color: #505050;
+  text-align: center;
+  font-family: SUITE;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 200;
+  line-height: normal;
+  display: flex;
+  flex-direction: column;
+  text-indent: 10px;
 }

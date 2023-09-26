@@ -1,7 +1,6 @@
 import Header from "../../components/Header";
 import styles from "./MyPage.module.css"
 import pencil from "../../assets/images/pencil.png"
-import line from "../../assets/images/Line.png"
 import { useState } from 'react'
 
 function MyPage() {
@@ -57,10 +56,30 @@ function MyPage() {
       <div className={styles.back}>
         <div className={styles.container3}>
           <div>
-            <div className={styles.inputFont}>내가 쓴 글</div>
+            <div className={styles.titleFont}>내가 쓴 글</div>
+            <div className={styles.line}><div className={styles.font3}>3천만원 날렸어요.</div></div>
+            <div className={styles.line}><div className={styles.font3}>배고프다. 저녁 먹고싶다.</div></div>            
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
           </div>
           <div>
-            <div className={styles.inputFont}>내가 좋아요한 글</div>
+            <div className={styles.titleFont}>내가 좋아요한 글</div>
+            <div className={styles.line}>
+              <div className={styles.font3}>한 달만에 1억 벌기</div>
+            </div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
+            <div className={styles.line}></div>
           </div>
           
         </div>
