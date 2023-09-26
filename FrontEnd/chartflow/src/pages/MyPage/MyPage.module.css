@@ -16,8 +16,7 @@
   margin-bottom: 11px;
 }
 .tag:hover {
-  outline: 3px solid #ACD4BC;
-  color: #6C00FF;
+  background: #FFF176;
 }
 .box1 {
   display: flex;
