@@ -59,3 +59,28 @@
   height: 10px;
   border-bottom: 2px solid #6c00ff;
 }
+
+.userIcon {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #6c00ff;
+  border: 1px solid #7a3434;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1;
+  min-width: 100px;
+  /* white-space: nowrap; */
+}
+
+.dropdownButton {
+  background-color: #6c00ff;
+  color: #ffffff;
+  font-weight: bolder;
+  border: none;
+  padding: 5px;
+}
