@@ -54,3 +54,10 @@
   background-color: #6c00ff;
   color: #fff;
 }
+
+.loading {
+  background-color: #fff;
+  width: 100px;
+  margin-left: 25vw;
+  margin-top: 35vh;
+}

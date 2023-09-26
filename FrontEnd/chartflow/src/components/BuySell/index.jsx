@@ -1,15 +1,13 @@
 import styles from "./BuySell.module.css";
 import Order from "../Order";
-import data from "../Chart/data";
-import { useRef, useState, useContext } from "react";
-import TurnContext from "../../context/TurnContext";
+import { useState, useContext } from "react";
+import GameContext from "../../context/GameContext";
 import { progressGame, loadGameHistory } from "../../services/apis/chartgame";
 
 function BuySell() {
-  const { thisTurn, setThisTurn } = useContext(TurnContext);
-  const time = useRef(-1);
-  // const [lastData, setLastData] = useState(data[time.current]);
-  const [lastData, setLastData] = useState()
+  const originStocks = 100;
+  const [orderedStocks, setOrderedStocks] = useState(originStocks);
+  const { gameId, setGameId, thisTurn, setThisTurn } = useContext(GameContext);
 
   const Turn = () => (
     <div className={styles.texts}>
@@ -17,55 +15,58 @@ function BuySell() {
       <div className={styles.all}>/50턴</div>
     </div>
   );
-  
-  
+
+  const createRequestData = (mode) => {
+    return {
+      gameHistoryId: gameId,
+      mode: mode,
+      quantity: orderedStocks,
+    };
+  };
 
   const handleBuy = () => {
-    progressGame()
+    const requestData = createRequestData(0);
+    progressGame(requestData, {
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => {
-        loadGameHistory()
-          .then((res) => {
-            setThisTurn(res.turn);
-          })
-          .catch((err) => {
-            console.err(err);
-          })
+        loadGameHistory().catch((err) => {
+          console.log(err);
+        });
       })
       .catch((err) => {
-        console.err(err);
-      })
+        console.log(err);
+      });
   };
 
   const handleSell = () => {
-    progressGame()
+    const requestData = createRequestData(1);
+    progressGame(requestData, {
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => {
-        loadGameHistory()
-          .then((res) => {
-            setThisTurn(res.turn);
-          })
-          .catch((err) => {
-            console.err(err);
-          })
+        loadGameHistory().catch((err) => {
+          console.log(err);
+        });
       })
       .catch((err) => {
-        console.err(err);
-      })
+        console.log(err);
+      });
   };
 
   const handleSkip = () => {
-    progressGame()
+    const requestData = createRequestData(2);
+    progressGame(requestData, {
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => {
-        loadGameHistory()
-          .then((res) => {
-            setThisTurn(res.turn);
-          })
-          .catch((err) => {
-            console.err(err);
-          })
+        loadGameHistory().catch((err) => {
+          console.log(err);
+        });
       })
       .catch((err) => {
-        console.err(err);
-      })
+        console.log(err);
+      });
   };
 
   return (
@@ -75,7 +76,11 @@ function BuySell() {
           <Turn />
         </div>
         <div className={styles.order}>
-          <Order />
+          <Order
+            originStocks={originStocks}
+            orderedStocks={orderedStocks}
+            setOrderedStocks={setOrderedStocks}
+          />
         </div>
         <button className={styles.buybtn} onClick={handleBuy}>
           매수
