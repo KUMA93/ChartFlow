@@ -1,9 +1,7 @@
 package com.ssafy.chartflow.emblem.service.strategy.turnstrategy;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
-import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
-import com.ssafy.chartflow.emblem.service.strategy.GameStrategy;
 import com.ssafy.chartflow.user.entity.User;
 
 import java.util.List;
