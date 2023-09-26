@@ -1,10 +1,13 @@
 import axios from "axios"; // AxiosInstance 타입 추가
+import { API_URL } from "../constants/URL";
 
 export const axiosServer = () => {
   const accessToken = localStorage.getItem("access-token");
 
+// https://cors-anywhere.herokuapp.com/
+
   return axios.create({
-    baseURL: "http://localhost:8080/api",
+    baseURL: `${API_URL}`,
     withCredentials: true,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -17,7 +20,7 @@ export const axiosServer = () => {
 export const axiosServerWithRefresh = () => {
   const refreshToken = localStorage.getItem("refresh-token");
   return axios.create({
-    baseURL: "http://localhost:8080/api",
+    baseURL: `${API_URL}`,
     withCredentials: true,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
@@ -29,7 +32,7 @@ export const axiosServerWithRefresh = () => {
 // Token 없이 axios 요청
 export const axiosServerWithoutToken = () => {
   return axios.create({
-    baseURL: "http://localhost:8080/api",
+    baseURL: `${API_URL}`,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },
