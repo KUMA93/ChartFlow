@@ -30,7 +30,7 @@ import java.util.Map;
 @RestController
 @Tag(name = "user", description = "회원기능 API")
 @RequestMapping("/user")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Slf4j
 public class UserController {
     private static final String SUCCESS = "success";
