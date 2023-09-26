@@ -14,13 +14,18 @@ function Join() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    let emailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
     const requestJoin = {
       email: inputEmail,
       password: inputPw,
       name: inputName,
       nickname: inputNickname,
     };
-    if (!isVerified) {
+    if (!inputEmail.match(emailReg)){
+      alert("올바른 이메일을 입력 해주세요!");
+      return;
+    } else if (!isVerified) {
       alert("이메일 인증을 진행해주세요!");
       return;
     } else if (checkPw(inputPw) != null) {
