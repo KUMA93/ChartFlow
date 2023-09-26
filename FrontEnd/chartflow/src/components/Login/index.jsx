@@ -10,30 +10,27 @@ import { useContext } from "react";
 function Login({ modalShow, handleClose }) {
   const { handleMainNavigate, handleJoinNavigate, handleForgetNavigate } =
     useCustomNavigate();
-  const { accessToken, setAccessToken, setRefreshToken } =
-    useContext(UserContext);
+  const { setAccessToken, setRefreshToken } = useContext(UserContext);
 
   const handleSubmit = (event) => {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      const requestLogin = {
-        email: inputId,
-        password: inputPw,
-      };
-      login(requestLogin)
-        .then((res) => {
-          localStorage.setItem("access-token", res["access-token"]);
-          setAccessToken(res["access-token"]);
-          localStorage.setItem("refresh-token", res["refresh-token"]);
-          setRefreshToken(res["refresh-token"]);
-          handleClose();
+    event.preventDefault();
+    const requestLogin = {
+      email: inputId,
+      password: inputPw,
+    };
+    login(requestLogin)
+      .then((res) => {
+        localStorage.setItem("access-token", res["access-token"]);
+        setAccessToken(res["access-token"]);
+        localStorage.setItem("refresh-token", res["refresh-token"]);
+        setRefreshToken(res["refresh-token"]);
+        handleClose();
 
-          handleMainNavigate();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+        handleMainNavigate();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const [inputId, handleChangeId] = useInput("", handleSubmit);
@@ -61,7 +58,7 @@ function Login({ modalShow, handleClose }) {
           </div>
         </div>
         <div className={styles.forms}>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <input
               className={styles.inputLogin}
               value={inputId}
@@ -72,7 +69,7 @@ function Login({ modalShow, handleClose }) {
             <label className={styles.labelLogin}>이메일 주소</label>
             <span></span>
           </form>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <input
               className={styles.inputLogin}
               type="password"
@@ -80,12 +77,15 @@ function Login({ modalShow, handleClose }) {
               onChange={handleChangePw}
               required
               autoComplete="on"
-              onKeyDown={handleSubmit}
             ></input>
             <label className={styles.labelLogin}>비밀번호</label>
             <span></span>
           </form>
-          <button className={styles.loginBtn} onClick={handleSubmit}>
+          <button
+            className={styles.loginBtn}
+            type="submit"
+            onClick={handleSubmit}
+          >
             로그인
           </button>
           <div className={styles.end}>

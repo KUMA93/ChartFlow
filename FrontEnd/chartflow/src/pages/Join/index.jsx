@@ -100,7 +100,6 @@ function Join() {
     event.preventDefault();
     verifyNickname(inputNickname)
       .then((res) => {
-        console.log(res);
         if (res.isValid === true) {
           setIsNicknameValid(true);
           alert("사용해도 좋은 닉네임 입니다.");
