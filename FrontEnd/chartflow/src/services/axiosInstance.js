@@ -8,7 +8,7 @@ export const axiosServer = () => {
     withCredentials: true,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${accessToken}`,
+      "Authorization": `Bearer ${accessToken}`,
     },
   });
 };
@@ -21,7 +21,7 @@ export const axiosServerWithRefresh = () => {
     withCredentials: true,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${refreshToken}`,
+      "Authorization": `Bearer ${refreshToken}`,
     },
   });
 };
