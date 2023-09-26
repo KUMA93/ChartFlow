@@ -30,7 +30,6 @@ export const axiosServerWithRefresh = () => {
 export const axiosServerWithoutToken = () => {
   return axios.create({
     baseURL: "http://localhost:8080/api",
-    withCredentials: true,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
     },
