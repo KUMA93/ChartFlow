@@ -1,0 +1,44 @@
+.inputGroup {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.innerText {
+  font-size: 20px;
+  margin-top: 25vh;
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.inputForm {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 45px;
+  border: 0;
+  font-size: 18px;
+  text-indent: 13px;
+  border-radius: 20px;
+  background: #fff;
+  width: 30vw;
+}
+
+.inputForm:focus {
+  outline: none;
+}
+
+.sendBtn {
+  height: 50px;
+  border-radius: 20px;
+  border: 0;
+  background: #6c00ff;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  width: 30vw;
+}
+.sendBtn:focus {
+  outline: none;
+}

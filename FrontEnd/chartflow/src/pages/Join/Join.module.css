@@ -71,8 +71,11 @@
   border-radius: 30px;
   border: 1px solid #6c00ff;
   background: rgba(108, 0, 255, 0.15);
+  cursor: pointer;
 }
-
+.btnForm:focus {
+  outline: none;
+}
 .btnJoin {
   width: 100%;
   height: 40px;
