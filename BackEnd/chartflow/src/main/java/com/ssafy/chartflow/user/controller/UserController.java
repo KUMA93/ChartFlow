@@ -121,7 +121,7 @@ public class UserController {
             // 인증 코드 리턴
             return new ResponseEntity<Map<String, Object>>(returnData, HttpStatus.OK);
         } catch (Exception e) {
-            log.info("임시 비밀번호 생성/발송 실패");
+            log.info("닉네임 중복 체크 실패");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -26,6 +26,17 @@ export const emailAuthentication = async (email) => {
   return res.data;
 };
 
+// 임시비밀번호 발급
+export const temporaryPassword = async (email) => {
+  const request = {
+    email: email
+  };
+
+  const res = await axiosServerWithoutToken().post(`/user/pass`, request);
+
+  return res.data;
+}
+
 // 닉네임 중복 확인
 export const verifyNickname = async (nickname) => {
   const res = await axiosServerWithoutToken().get(`/user/${nickname}`);
