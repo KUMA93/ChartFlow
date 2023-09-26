@@ -6,7 +6,7 @@ import jwtDecode from "jwt-decode";
 
 function UserIcon({ isLogin, handleIsLogin }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { handleMyPageNavigate } = useCustomNavigate();
+  const { handleMyPageNavigate, handleMainNavigate } = useCustomNavigate();
   const [nickname, setNickname] = useState("");
 
   const toggleDropdown = () => {
@@ -17,22 +17,33 @@ function UserIcon({ isLogin, handleIsLogin }) {
     localStorage.clear();
     setDropdownVisible(!dropdownVisible);
     handleIsLogin();
+    handleMainNavigate();
   };
 
   useEffect(() => {
     let userinfo = jwtDecode(localStorage.getItem("access-token"));
     setNickname(userinfo.username);
-  }, [])
+  }, []);
 
   return (
     <div className={styles.userIcon}>
       <div className={styles.userIconContainer} onClick={toggleDropdown}>
-        <FaUserCircle size={24} /> {nickname}님 환영합니다.
+        <div className={styles.TextContainer}>
+          <div className={styles.getBold}>{nickname}</div>님 환영합니다!
+        </div>
+        <FaUserCircle size={30} />
       </div>
       {dropdownVisible && (
         <div className={styles.dropdown}>
-          <button className={styles.dropdownButton} onClick={handleMyPageNavigate}>마이페이지</button>
-          <button className={styles.dropdownButton} onClick={handleLogout}>로그아웃</button>
+          <button
+            className={styles.dropdownButton}
+            onClick={handleMyPageNavigate}
+          >
+            마이페이지
+          </button>
+          <button className={styles.dropdownButton} onClick={handleLogout}>
+            로그아웃
+          </button>
         </div>
       )}
     </div>
