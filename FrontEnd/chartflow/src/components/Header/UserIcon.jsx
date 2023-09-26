@@ -11,7 +11,6 @@ function UserIcon({ isLogin, handleIsLogin }) {
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
-    console.log(dropdownVisible);
   };
 
   const handleLogout = () => {
