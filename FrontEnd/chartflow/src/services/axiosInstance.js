@@ -9,7 +9,6 @@ export const axiosServer = () => {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Authorization": `Bearer ${accessToken}`,
-      "Origin": "http://localhost:3000"
     },
   });
 };
@@ -23,7 +22,6 @@ export const axiosServerWithRefresh = () => {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Authorization": `Bearer ${refreshToken}`,
-      "Origin": "http://localhost:3000"
     },
   });
 };
@@ -34,7 +32,6 @@ export const axiosServerWithoutToken = () => {
     baseURL: "http://localhost:8080/api",
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Origin": "http://localhost:3000"
     },
   });
 };
