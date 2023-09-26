@@ -1,5 +1,5 @@
 import axios from "axios"; // AxiosInstance 타입 추가
-import { API_URL } from "../constants/URL";
+import { API_URL } from "../constants/url";
 
 export const axiosServer = () => {
   const accessToken = localStorage.getItem("access-token");
