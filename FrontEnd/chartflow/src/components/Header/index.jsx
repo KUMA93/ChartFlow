@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import UserContext from "../../context/UserContext";
 import main_logo from "./../../assets/images/main_logo.png";
 import Login from "../Login";
+import UserIcon from "./UserIcon";
 
 function Header() {
   const navigate = useNavigate();
@@ -79,17 +80,30 @@ function Header() {
   const handleModal = () => {
     modalShow ? setModalShow(false) : setModalShow(true);
   };
+  const [isLogin, setIsLogin] = useState(false);
 
   const handleClose = () => {
     setModalShow(false);
   };
+
+  const handleIsLogin = () => {
+    setIsLogin(false);
+  };
+
+  useEffect(() => {
+    if(localStorage.getItem("access-token") !== null){
+      setIsLogin(true);
+    }else {
+      setIsLogin(false);
+    }
+  }, [localStorage.getItem("access-token")]);
 
   return (
     <>
       <div className={styles.container}>
         <MainLogo />
         <MenuItems />
-        <Start />
+        {isLogin ? <UserIcon isLogin={isLogin} handleIsLogin={handleIsLogin} /> : <Start />}
       </div>
       <Line />
       {modalShow && <Login modalShow={modalShow} handleClose={handleClose} />}

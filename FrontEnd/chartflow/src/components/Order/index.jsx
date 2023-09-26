@@ -1,39 +1,36 @@
-import { useState } from "react";
 import styles from "./Order.module.css";
 
-function Order() {
-  const originStocks = 100;
-  const [availstocks, setAvailstocks] = useState(originStocks);
+function Order(props) {
   const handleStocks10 = () => {
-    setAvailstocks(originStocks * 0.1);
+    props.setOrderedStocks(props.originStocks * 0.1);
   };
   const handleStocks25 = () => {
-    setAvailstocks(originStocks * 0.25);
+    props.setOrderedStocks(props.originStocks * 0.25);
   };
   const handleStocks50 = () => {
-    setAvailstocks(originStocks * 0.5);
+    props.setOrderedStocks(props.originStocks * 0.5);
   };
   const handleStocks100 = () => {
-    setAvailstocks(originStocks * 1);
+    props.setOrderedStocks(props.originStocks * 1);
   };
   function handleChange(e) {
-    setAvailstocks(e.target.value);
-    if (e.target.value > originStocks) {
+    props.setOrderedStocks(e.target.value);
+    if (e.target.value > props.originStocks) {
       alert("최대 주문가능수량을 초과하였습니다.");
-      setAvailstocks(originStocks);
+      props.setOrderedStocks(props.originStocks);
     } else if (e.target.value <= 0) {
       alert("최소 주문가능수량은 1주입니다.");
-      setAvailstocks(1);
+      props.setOrderedStocks(1);
     }
   }
   return (
     <div className={styles.container2}>
       <div className={styles.quantity}>주문수량</div>
       <div className={styles.available}>주문가능</div>
-      <div className={styles.availquant}>{originStocks}주</div>
+      <div className={styles.availquant}>{props.originStocks}주</div>
       <input
         type="number"
-        value={availstocks}
+        value={props.orderedStocks}
         className={styles.input1}
         onChange={handleChange}
       />

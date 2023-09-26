@@ -1,23 +1,16 @@
 import styles from "./End.module.css";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
-import CoinContext from "../../context/CoinContext";
-import { useContext } from "react";
 
 function End() {
   const { handleRecordNavigate } = useCustomNavigate();
-  const { coinNum, setCoinNum } = useContext(CoinContext);
 
   const handleEnd = () => {
     localStorage.setItem("thisTurn", "1");
-    localStorage.setItem("coinNum", coinNum - 1);
-    setCoinNum(coinNum);
     window.location.reload("/game");
   };
 
   const handleRecord = () => {
     localStorage.setItem("thisTurn", "1");
-    localStorage.setItem("coinNum", coinNum - 1);
-    setCoinNum(coinNum);
     handleRecordNavigate();
   };
 
@@ -25,7 +18,7 @@ function End() {
     <>
       <div className={styles.shade}></div>
       <div className={styles.modalLogin}>
-        <div className={styles.title}>
+        {/* <div className={styles.title}>
           최대 일일 턴수인 5턴을 초과하여 게임이 자동종료됩니다.
         </div>
 
@@ -49,7 +42,7 @@ function End() {
           <div>남은 코인 수: </div>
           <div className={styles.coinNum}>{coinNum}</div>
           <div>개</div>
-        </div>
+        </div> */}
       </div>
     </>
   );
