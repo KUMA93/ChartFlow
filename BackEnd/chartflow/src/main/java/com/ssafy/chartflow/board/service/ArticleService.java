@@ -2,10 +2,14 @@ package com.ssafy.chartflow.board.service;
 
 import com.ssafy.chartflow.board.dto.response.ArticleResponseDto;
 import com.ssafy.chartflow.board.entity.Article;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ArticleService {
+    //글 목록 조회
+    public Page<Article> getAllArticles(Pageable pageable);
     //글 작성
     public void writeArticle(long userId,String title, String content);
     //글 수정
@@ -20,4 +24,5 @@ public interface ArticleService {
     public void withdrawLike(long likeId);
 
     public Article findArticleByArticleId(long articleId);
+
 }
