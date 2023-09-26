@@ -10,7 +10,7 @@ import { useContext } from "react";
 function Login({ modalShow, handleClose }) {
   const { handleMainNavigate, handleJoinNavigate, handleForgetNavigate } =
     useCustomNavigate();
-  const { setAccessToken, setRefreshToken } = useContext(UserContext);
+  const { isLogin, setIsLogin } = useContext(UserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -21,9 +21,8 @@ function Login({ modalShow, handleClose }) {
     login(requestLogin)
       .then((res) => {
         localStorage.setItem("access-token", res["access-token"]);
-        setAccessToken(res["access-token"]);
         localStorage.setItem("refresh-token", res["refresh-token"]);
-        setRefreshToken(res["refresh-token"]);
+        setIsLogin(true);
         handleClose();
 
         handleMainNavigate();

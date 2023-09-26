@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GlobalStyle from "./styles/GlobalStyle";
 import { ThemeProvider } from "./styles/themeProvider";
 import UserContext from "./context/UserContext";
+import GameContext from "./context/GameContext";
 import { useState } from "react";
 import MainPage from "./pages/MainPage";
 import ChartGame from "./pages/ChartGame";
@@ -14,16 +15,11 @@ import NotFound from "./pages/NotFound";
 import QuizCorrect from "./pages/QuizCorrect";
 import JoinComplete from "./pages/JoinComplete";
 import Forget from "./pages/Forget";
-import GameContext from "./context/GameContext";
 
 function App() {
-  const [accessToken, setAccessToken] = useState(() => {
-    return localStorage.getItem("access-token");
-  });
-
-  const [refreshToken, setRefreshToken] = useState(() => {
-    return localStorage.getItem("refresh-token");
-  });
+  const [isLogin, setIsLogin] = useState(
+    () => localStorage.getItem("access-token") !== null
+  );
 
   const [gameId, setGameId] = useState(() => {
     const storedGameId = localStorage.getItem("gameId");
@@ -40,10 +36,8 @@ function App() {
       <ThemeProvider>
         <UserContext.Provider
           value={{
-            accessToken,
-            setAccessToken,
-            refreshToken,
-            setRefreshToken,
+            isLogin,
+            setIsLogin,
           }}
         >
           <GameContext.Provider
