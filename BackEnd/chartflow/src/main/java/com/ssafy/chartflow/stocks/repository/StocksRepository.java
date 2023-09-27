@@ -13,6 +13,6 @@ public interface StocksRepository extends JpaRepository<Stocks, Long> {
 
     List<Stocks> findAllByTicker(String ticker);
 
-    @Query(value = "SELECT * FROM stocks s WHERE s.ticker = :ticker AND s.date < :date LIMIT 365", nativeQuery = true)
+    @Query(value = "SELECT * FROM stocks s WHERE s.ticker = :ticker AND s.date < :date ORDER BY s.date DESC LIMIT 365", nativeQuery = true)
     List<Stocks> findAllPreviousStocks(@Param("ticker") String ticker, @Param("date") String date);
 }

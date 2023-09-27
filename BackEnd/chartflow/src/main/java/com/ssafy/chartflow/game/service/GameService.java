@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -105,11 +102,19 @@ public class GameService {
         // companyCode 전 1년 차트 데이터
         String ticker = gameHistories.get(gameHistories.size()-1).getCompanyCode();
         String date = gameHistories.get(gameHistories.size()-1).getChartDate();
+        log.info("==============검색할 날짜 : " + date);
         List<Stocks> stocksList = stocksRepository.findAllPreviousStocks(ticker,date);
+        Collections.reverse(stocksList);
+        log.info("====================1년 전 주식 정보======================");
+        for (Stocks cur : stocksList) {
+            log.info(cur.getDate());
+        }
 
         // 앞으로 51개 만큼의 차트 데이터 추가
         List<GameHistoryStocks> after = gameHistories.get(gameHistories.size()-1).getGameHistoryStocks();
+        log.info("====================앞으로 붙일 주식 정보=====================");
         for (GameHistoryStocks cur : after) {
+            log.info(cur.getStocks().getDate());
             stocksList.add(cur.getStocks());
         }
         response.put("chartData", stocksList);
