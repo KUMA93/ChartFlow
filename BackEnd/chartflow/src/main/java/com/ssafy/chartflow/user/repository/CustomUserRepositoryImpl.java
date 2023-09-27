@@ -1,7 +1,6 @@
 package com.ssafy.chartflow.user.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.chartflow.board.entity.QLikes;
 import com.ssafy.chartflow.user.entity.QUser;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -9,12 +8,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class CustomUserRepositoryImp implements CustomUserRepository {
+public class CustomUserRepositoryImpl implements CustomUserRepository {
     private final EntityManager em;
-    private final JPAQueryFactory queryFactory = new JPAQueryFactory(em);
-    private final QUser user = QUser.user;
+
     @Override
     public void decreaseCoinByUserId(long userId) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QUser user = QUser.user;
         queryFactory
                 .update(user)
                 .set(user.coin, user.coin.subtract(1))
@@ -24,6 +24,8 @@ public class CustomUserRepositoryImp implements CustomUserRepository {
 
     @Override
     public void increaseCoinByUserId(long userId) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QUser user = QUser.user;
         queryFactory
                 .update(user)
                 .set(user.coin, user.coin.add(1))
@@ -33,6 +35,8 @@ public class CustomUserRepositoryImp implements CustomUserRepository {
 
     @Override
     public void increaseAll() {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QUser user = QUser.user;
         queryFactory
                 .update(user)
                 .set(user.coin, user.coin.add(1))

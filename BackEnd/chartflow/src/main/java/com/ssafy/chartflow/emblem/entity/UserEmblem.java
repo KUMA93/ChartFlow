@@ -17,6 +17,9 @@ public class UserEmblem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "equiped")
+    private boolean equiped;
+
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

@@ -10,6 +10,9 @@ import com.ssafy.chartflow.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -22,6 +25,7 @@ public class UserEmblemService {
         User user = userGameDto.getUser();
 
         UserEmblem userEmblem = new UserEmblem();
+        userEmblem.setEquiped(false);
         userEmblem.setUser(user);
         userEmblem.setEmblem(emblem);
 
@@ -31,5 +35,18 @@ public class UserEmblemService {
                 .description(emblem.getDescription())
                 .build();
         return emblemDto;
+    }
+
+    public List<UserEmblem> getUserEmblems(User user){
+        return userEmblemRepository.findUserEmblemByUser(user);
+    }
+
+    public UserEmblem getUserEquipedEmblem(User user){
+        return userEmblemRepository.findUserEmblemByUserAndEquipedIsTrue(user);
+    }
+
+    @Transactional
+    public void equipEmblem(User user, long userEmblemId){
+        //userEmblemRepository
     }
 }

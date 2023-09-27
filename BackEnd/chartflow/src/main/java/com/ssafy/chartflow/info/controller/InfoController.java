@@ -53,12 +53,12 @@ public class InfoController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @Operation(summary = "유저 자산", description = "유저 코인 및 잔액 조회")
+    @Operation(summary = "유저 랭킹", description = "유저 랭킹 상위 10명 조회")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "자산 조회 성공"),
             @ApiResponse(responseCode = "500", description = "로그인 실패 - 내부 서버 오류")
     })
-    @GetMapping("/assets")
+    @GetMapping("/rankings")
     public ResponseEntity<Map<String, Object>> userRankings(
             @Parameter(hidden = true)
             @RequestHeader("Authorization") String token) {
