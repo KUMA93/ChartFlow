@@ -59,6 +59,12 @@
         @Column(name = "cancel")
         private int cancel;
 
+        @Column(name = "selected_emblem")
+        private Long selected_emblem=0L;
+
+        @Column(name = "ranking")
+        private Long ranking=0L;
+
         @OneToMany(mappedBy = "user")
         private final List<UserEmblem> emblems = new ArrayList<>();
 
@@ -109,5 +115,22 @@
         @Override
         public boolean isEnabled() {
             return true;
+        }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "id=" + id +
+                    ", email='" + email + '\'' +
+                    ", password='" + password + '\'' +
+                    ", name='" + name + '\'' +
+                    ", nickname='" + nickname + '\'' +
+                    ", role=" + role +
+                    ", coin=" + coin +
+                    ", budget=" + budget +
+                    ", social=" + social +
+                    ", cancel=" + cancel +
+                    ", selected_emblem=" + selected_emblem +
+                    '}';
         }
     }

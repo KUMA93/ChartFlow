@@ -1,9 +1,12 @@
 package com.ssafy.chartflow.user.service;
 
 import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
+import com.ssafy.chartflow.info.repository.RedisRankingRepository;
 import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
+import com.ssafy.chartflow.user.dto.ResponseMyPageDto;
+import com.ssafy.chartflow.user.dto.ResponseUserInfoDto;
 import com.ssafy.chartflow.user.entity.Role;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
@@ -15,7 +18,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -26,6 +31,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final RedisRankingRepository rankingRepository;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
     private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
@@ -83,7 +89,21 @@ public class UserService {
         return new ResponseAssetsDto(user.getCoin(), user.getBudget());
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    public Map<String, Object> getMyPage(Long userId) {
+        Map<String, Object> response = new HashMap<>();
+        User user = userRepository.findUserById(userId);
+        user.setRanking(rankingRepository.getUserRank(userId));
+        System.out.println("--------- rank : "+user.getRanking());
+        ResponseUserInfoDto userInfoDto = new ResponseUserInfoDto(userId, user.getName(), user.getNickname(), user.getEmail(), user.getSelected_emblem(), user.getRanking());
+        ResponseAssetsDto userAssetsDto = new ResponseAssetsDto(user.getCoin(), user.getBudget());
+        System.out.println(user);
+        System.out.println(userInfoDto);
+        response.put("data", new ResponseMyPageDto(userInfoDto, userAssetsDto));
+        return response;
+    }
+
 }
