@@ -3,15 +3,13 @@ package com.ssafy.chartflow.user.controller;
 import com.ssafy.chartflow.exception.NotRegisteredException;
 import com.ssafy.chartflow.exception.PasswordWrongException;
 import com.ssafy.chartflow.security.service.JwtService;
-import com.ssafy.chartflow.user.dto.RequestEmailDto;
-import com.ssafy.chartflow.user.dto.RequestLoginDto;
-import com.ssafy.chartflow.user.dto.RequestRegistDto;
-import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
+import com.ssafy.chartflow.user.dto.*;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.service.EmailService;
 import com.ssafy.chartflow.user.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -130,20 +128,22 @@ public class UserController {
 
     @GetMapping("")
     @Operation(summary = "마이페이지에 띄울 정보 불러오기", description = "싹다 불러온다.")
-    public ResponseEntity<?> loadMyPage(@RequestHeader("Authorization") String token) throws Exception {
+    public ResponseEntity<?> loadMyPage(
+            @Parameter(hidden = true)
+            @RequestHeader("Authorization") String token) throws Exception {
         token = token.split(" ")[1];
-        Map<String,Object> response;
+        Map<String,Object> response = new HashMap<>();
 
         try {
             Long userId = jwtService.extractUserId(token);
-            response = userService.getMyPage(userId);
+            ResponseMyPageDto myPageDto = userService.getMyPage(userId);
+            response.put("data", myPageDto);
             response.put("httpStatus", SUCCESS);
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             log.info("마이페이지 불러오기 실패");
-            response = new HashMap<>();
             response.put("httpStatus", FAIL);
-            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

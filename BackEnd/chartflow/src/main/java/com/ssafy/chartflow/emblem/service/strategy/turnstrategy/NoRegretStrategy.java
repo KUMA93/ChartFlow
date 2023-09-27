@@ -16,7 +16,7 @@ public class NoRegretStrategy implements TurnStrategy {
         List<UserEmblem> emblems = userGameDto.getEmblems();
 
         boolean hasEmblem = emblems.stream()
-                .anyMatch(emblem -> "이승기".equals(emblem.getEmblem().getName()));
+                .anyMatch(emblem -> "징크스".equals(emblem.getEmblem().getName()));
 
         if (hasEmblem) return false;
 
@@ -51,7 +51,7 @@ public class NoRegretStrategy implements TurnStrategy {
 
     @Override
     public String getTitle() {
-        return "물가상승은 조상님이 내주냐?";
+        return "징크스";
     }
 
 }
