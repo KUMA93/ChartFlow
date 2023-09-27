@@ -3,6 +3,11 @@ import styles from "./Quiz.module.css"
 import lightimg from "../../assets/images/light.png"
 
 function Quiz() {
+
+  useEffect(() => {
+    
+  })
+
   return (
     <>
       <Header />

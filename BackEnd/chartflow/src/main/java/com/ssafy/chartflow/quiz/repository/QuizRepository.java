@@ -11,5 +11,6 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> { //JpaReposit
 
     Quiz findById(long id);
     List<Quiz> findAll();
-    List<Quiz> findFirst3ByIdGreaterThanOrderByIdAsc(Long id);
+    Quiz findQuizById(Long id);
+    Long countBy();
 }
