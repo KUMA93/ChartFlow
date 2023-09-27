@@ -102,14 +102,16 @@ public class GameService {
 
         response.put("gameHistory", gameHistoryData);
 
-        // companyCode를 통해 전체 차트데이터 조회
-        List<Stocks> stocksList = stocksRepository.findAllByTicker(companyCode);
+        // companyCode 전 1년 차트 데이터
+        String ticker = gameHistories.get(gameHistories.size()-1).getCompanyCode();
+        String date = gameHistories.get(gameHistories.size()-1).getChartDate();
+        List<Stocks> stocksList = stocksRepository.findAllPreviousStocks(ticker,date);
         response.put("chartData", stocksList);
 
         return response;
     }
 
-    public List<Stocks> startGame(long userId) {
+    public void startGame(long userId) {
 
         User user = userRepository.findUserById(userId);
 
@@ -135,11 +137,11 @@ public class GameService {
 
         // 51개 만큼 주식 데이터 저장 게임을 진행해야하는 데이터
         List<Stocks> stocks = stocksRepository.findAllByTicker(stock.getTicker());
-        int dayOfYear = 365;
-        // 앞의 300개 데이터
-        stocks = stocks.subList(dayOfYear + 10 , stocks.size() - dayOfYear );
-        Stocks firstStocks = stocks.get(0);
-        List<Stocks> allPreviousStocks = stocksRepository.findAllPreviousStocks(firstStocks.getTicker(), firstStocks.getDate());
+//        int dayOfYear = 365;
+//        // 앞의 300개 데이터
+//        stocks = stocks.subList(dayOfYear + 10 , stocks.size() - dayOfYear );
+//        Stocks firstStocks = stocks.get(0);
+//        List<Stocks> allPreviousStocks = stocksRepository.findAllPreviousStocks(firstStocks.getTicker(), firstStocks.getDate());
 
         gameHistory.setUser(user);
 
@@ -160,7 +162,7 @@ public class GameService {
             }
         }
 
-        return allPreviousStocks;
+        return;
     }
 
 
