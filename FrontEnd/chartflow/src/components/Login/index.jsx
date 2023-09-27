@@ -3,29 +3,33 @@ import modal_logo from "./../../assets/images/free-icon-growth-chart.png";
 import closeBtn from "./../../assets/images/icons8-x-50.png";
 import { useInput } from "../../hooks/useInput";
 import { login } from "../../services/apis/user";
+import UserContext from "../../context/UserContext";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
+import { useContext } from "react";
 
 function Login({ modalShow, handleClose }) {
-  const handleSubmit = () => {
-    console.log("로그인 버튼 누름");
-    const requestLogin = {
-      "email": inputId,
-      "password": inputPw,
-    };
+  const { handleMainNavigate, handleJoinNavigate, handleForgetNavigate } =
+    useCustomNavigate();
+  const { isLogin, setIsLogin } = useContext(UserContext);
 
-    console.log(
-      requestLogin.email + ", " + requestLogin.password + "로 로그인ㄱㄱ"
-    );
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const requestLogin = {
+      email: inputId,
+      password: inputPw,
+    };
     login(requestLogin)
       .then((res) => {
-        console.log("로그인 성공 res : " + res);
-        localStorage.setItem('access-token', res['access-token']);
-        localStorage.setItem('refresh-token', res['refresh-token']);
+        localStorage.setItem("access-token", res["access-token"]);
+        localStorage.setItem("refresh-token", res["refresh-token"]);
+        setIsLogin(true);
+        handleClose();
+
+        handleMainNavigate();
       })
       .catch((err) => {
-        console.log("로그인 에러발생");
         console.log(err);
       });
-    console.log("로그인 끝");
   };
 
   const [inputId, handleChangeId] = useInput("", handleSubmit);
@@ -53,7 +57,7 @@ function Login({ modalShow, handleClose }) {
           </div>
         </div>
         <div className={styles.forms}>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <input
               className={styles.inputLogin}
               value={inputId}
@@ -64,7 +68,7 @@ function Login({ modalShow, handleClose }) {
             <label className={styles.labelLogin}>이메일 주소</label>
             <span></span>
           </form>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <input
               className={styles.inputLogin}
               type="password"
@@ -76,15 +80,30 @@ function Login({ modalShow, handleClose }) {
             <label className={styles.labelLogin}>비밀번호</label>
             <span></span>
           </form>
-          <button className={styles.loginBtn} onClick={handleSubmit}>
+          <button
+            className={styles.loginBtn}
+            type="submit"
+            onClick={handleSubmit}
+          >
             로그인
           </button>
+          <div className={styles.end}>
+            <div className={styles.text2}>비밀번호를 잊으셨나요?</div>
+            <div
+              className={styles.signup}
+              onClick={() => {
+                handleForgetNavigate();
+              }}
+            >
+              여기
+            </div>
+          </div>
           <div className={styles.end}>
             <div className={styles.text2}>차트플로우가 처음이신가요?</div>
             <div
               className={styles.signup}
               onClick={() => {
-                window.location.href = "/join";
+                handleJoinNavigate();
               }}
             >
               회원가입

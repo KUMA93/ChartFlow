@@ -1,5 +1,8 @@
 package com.ssafy.chartflow.game.service;
 
+import com.ssafy.chartflow.emblem.dto.UserGameDto;
+import com.ssafy.chartflow.emblem.entity.Emblem;
+import com.ssafy.chartflow.emblem.service.EmblemService;
 import com.ssafy.chartflow.game.dto.request.RequestGameProgressDto;
 import com.ssafy.chartflow.game.dto.response.ResponseGameHistoryDto;
 import com.ssafy.chartflow.game.entity.GameHistory;
@@ -43,6 +46,8 @@ public class GameService {
     private final GameTurnsRepository gameTurnsRepository;
     private final GameHistoryStocksRepository gameHistoryStocksRepository;
     private final StocksRepository stocksRepository;
+
+    private final EmblemService emblemService;
 
     public ResponseGameHistoryDto getGameHistory(long userId) {
 
@@ -283,9 +288,18 @@ public class GameService {
                 .todayPrice(price)
                 .build();
 
+
         gameTurns.setGameHistory(gameHistory);
 
         gameTurnsRepository.save(gameTurns);
+        // 매 턴마다 칭호 획득 검사
+        UserGameDto userGameDto = UserGameDto.builder()
+                        .user(user)
+                        .gameTurns(gameTurns)
+                        .gameHistory(gameHistory)
+                        .build();
+
+        emblemService.notifyObserver(userGameDto, 0);
 
         // 턴 증가
         gameHistory.setTurn(turn + 1);

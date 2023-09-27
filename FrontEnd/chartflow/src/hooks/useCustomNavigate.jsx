@@ -16,8 +16,16 @@ const useCustomNavigate = () => {
     navigate("/login");
   };
 
+  const handleForgetNavigate = () => {
+    navigate("/forget");
+  };
+
   const handleJoinNavigate = () => {
     navigate("/join");
+  };
+
+  const handleJoinCompleteNavigate = () => {
+    navigate("/complete");
   };
 
   const handleMyPageNavigate = () => {
@@ -91,9 +99,11 @@ const useCustomNavigate = () => {
     handleBoardNavigate,
     handleBoardHotNavigate,
     handleBoardSearchNavigate,
+    handleForgetNavigate,
     // handleBoardMyPostNavigate,
     // handleBoardMyCommentedPostNavigate,
     // handleBoardMyScrapNavigate,
+    handleJoinCompleteNavigate,
     handleBoardWriteNavigate,
     handleBoardViewNavigate,
     handleBoardEditNavigate,

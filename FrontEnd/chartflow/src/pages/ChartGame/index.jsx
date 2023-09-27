@@ -3,24 +3,26 @@ import BuySell from "../../components/BuySell";
 import Status from "../../components/Status";
 import Chart from "../../components/Chart";
 import Quit from "../../components/Quit";
-import Start from "../../components/Start";
 import End from "../../components/End";
-import TurnContext from "../../context/TurnContext";
-import CoinContext from "../../context/CoinContext";
+import Start from "../../components/Start";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
-import { loadGame, startGame } from "../../services/apis/chartgame";
-import { useState, useEffect, useContext } from "react";
+import {
+  loadGame,
+  startGame,
+  loadGameHistory,
+} from "../../services/apis/chartgame";
+import { useState, useContext } from "react";
+import GameContext from "../../context/GameContext";
+import loading from "../../assets/images/bean-eater.gif";
 
 const ChartGame = () => {
-  const { coinNum } = useContext(CoinContext);
   const { handleMainNavigate } = useCustomNavigate();
-  const { thisTurn, setThisTurn } = useContext(TurnContext);
   const [modalQuitShow, setModalQuitShow] = useState(false);
-  const [modalStartShow, setModalStartShow] = useState(
-    thisTurn !== 1 || coinNum <= 0
-  );
+  const [modalStartShow, setModalStartShow] = useState(true);
   const [modalEndShow, setModalEndShow] = useState(false);
   const [data, setData] = useState();
+  const [amount, setAmount] = useState();
+  const { gameId, setGameId, thisTurn, setThisTurn } = useContext(GameContext);
 
   const handleModalQuit = () => {
     modalQuitShow ? setModalQuitShow(false) : setModalQuitShow(true);
@@ -32,40 +34,42 @@ const ChartGame = () => {
 
   const handleStartClose = () => {
     setModalStartShow(false);
-  };
-
-  useEffect(() => {
-    // time.current = time.current + 1;
-    // console.log(time.current);
-    // console.log(data[time.current].Close);
-    // if (thisTurn > 5) {
-    //   setThisTurn(5);
-    //   setModalEndShow(true);
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     startGame()
       .then((res) => {
-        console.log(res);
         loadGame()
-        .then((res)=>{
-          setData(res.chartData);
-          console.log("startGame response : " + res.chartData[0].date);
-        })
+          .then((res) => {
+            setGameId(res.gameHistory.gameHistoryId);
+            setThisTurn(res.gameHistory.turn);
+            setData(res.chartData);
+            // loadGameHistory().then((res) => {
+            //   setThisTurn(res.gameHistory.turn);
+            //   setGameId(res.gameHistoryId);
+            //   setInitNum(res.gameHistory.initialBudget);
+            //   setCashNum(res.gameHistory.cashBudget);
+            //   setAvgPriceNum(res.gameHistory.price);
+            //   setStocksNum(res.gameHistory.quantity);
+            //   setAssetPer(res.gameHistory.rate);
+            // });
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       })
-      .catch((err)=>{
-        console.error(err);
-      })
-
-  }, []);
+      .catch((err) => console.error(err));
+  };
 
   return (
     <>
       <div className={styles.container}>
         <div className={styles.chart}>
-          {data ? <Chart data={data} /> : 'Loading...'} 
+          {data ? (
+            <Chart data={data} />
+          ) : (
+            <img src={loading} alt="" className={styles.loading} />
+          )}
         </div>
         <div className={styles.buysell}>
-          <BuySell />
+          <BuySell thisTurn={thisTurn} />
         </div>
         <div className={styles.status}>
           <Status />
@@ -75,22 +79,17 @@ const ChartGame = () => {
           게임 종료
         </button>
       </div>
-      {modalQuitShow && thisTurn === 1 ? (
+      {modalQuitShow ? (
         handleMainNavigate()
       ) : modalQuitShow ? (
         <Quit handleClose={handleQuitClose} />
       ) : null}
-      {/* {modalStartShow && coinNum <= 0 ? (
+      {modalStartShow ? (
         <Start
           handleStartClose={handleStartClose}
           setModalStartShow={setModalStartShow}
         />
-      ) : (
-        <Start
-          handleStartClose={handleStartClose}
-          setModalStartShow={setModalStartShow}
-        />
-      )} */}
+      ) : null}
       {modalEndShow && <End />}
     </>
   );

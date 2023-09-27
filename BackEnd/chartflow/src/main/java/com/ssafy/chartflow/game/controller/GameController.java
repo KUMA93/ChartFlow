@@ -88,6 +88,7 @@ public class GameController {
             @ApiResponse(responseCode = "200", description = "게임 시작하기 성공"),
             @ApiResponse(responseCode = "500", description = "게임 시작하기 실패 - 내부 서버 오류"),
     })
+
     @PostMapping()
     public ResponseEntity<Map<String, Object>> startGame(@RequestHeader("Authorization") String token) {
         token = token.split(" ")[1];

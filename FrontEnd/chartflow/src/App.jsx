@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import GlobalStyle from "./styles/GlobalStyle";
 import { ThemeProvider } from "./styles/themeProvider";
-import TurnContext from "./context/TurnContext";
-import CoinContext from "./context/CoinContext";
+import UserContext from "./context/UserContext";
+import GameContext from "./context/GameContext";
 import { useState } from "react";
 import MainPage from "./pages/MainPage";
 import ChartGame from "./pages/ChartGame";
@@ -13,23 +13,36 @@ import MyPage from "./pages/MyPage";
 import Join from "./pages/Join";
 import NotFound from "./pages/NotFound";
 import QuizCorrect from "./pages/QuizCorrect";
+import JoinComplete from "./pages/JoinComplete";
+import Forget from "./pages/Forget";
 
 function App() {
-  const [thisTurn, setThisTurn] = useState(() => {
-    const storedThisTurn = localStorage.getItem("thisTurn");
-    return storedThisTurn !== null ? parseInt(storedThisTurn, 10) : 1;
+  const [isLogin, setIsLogin] = useState(
+    () => localStorage.getItem("access-token") !== null
+  );
+
+  const [gameId, setGameId] = useState(() => {
+    const storedGameId = localStorage.getItem("gameId");
+    return storedGameId;
   });
 
-  const [coinNum, setCoinNum] = useState(() => {
-    const storedCoinNum = localStorage.getItem("coinNum");
-    return storedCoinNum !== null ? parseInt(storedCoinNum, 10) : 3;
+  const [thisTurn, setThisTurn] = useState(() => {
+    const storedThisTurn = localStorage.getItem("thisTurn");
+    return storedThisTurn;
   });
 
   return (
     <Router>
       <ThemeProvider>
-        <CoinContext.Provider value={{ coinNum, setCoinNum }}>
-          <TurnContext.Provider value={{ thisTurn, setThisTurn }}>
+        <UserContext.Provider
+          value={{
+            isLogin,
+            setIsLogin,
+          }}
+        >
+          <GameContext.Provider
+            value={{ gameId, setGameId, thisTurn, setThisTurn }}
+          >
             <GlobalStyle />
             <Routes>
               <Route path="/" element={<MainPage />} />
@@ -39,12 +52,13 @@ function App() {
               <Route path="/hist/*" element={<History />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/join" element={<Join />} />
-              <Route path="/join" element={<Join />} />
+              <Route path="/complete" element={<JoinComplete />} />
+              <Route path="/forget" element={<Forget />} />
               <Route path="/*" element={<NotFound />} />
               <Route path="/quizcorrect" element={<QuizCorrect />} />
             </Routes>
-          </TurnContext.Provider>
-        </CoinContext.Provider>
+          </GameContext.Provider>
+        </UserContext.Provider>
       </ThemeProvider>
     </Router>
   );

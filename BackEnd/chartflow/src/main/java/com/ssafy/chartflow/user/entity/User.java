@@ -87,8 +87,6 @@
         @OneToMany(mappedBy = "user")
         private final List<UserQuiz> Quizs = new ArrayList<>();
 
-        @OneToOne(mappedBy = "user")
-        private RefreshToken refreshToken;
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
             return List.of(new SimpleGrantedAuthority(role.name()));
