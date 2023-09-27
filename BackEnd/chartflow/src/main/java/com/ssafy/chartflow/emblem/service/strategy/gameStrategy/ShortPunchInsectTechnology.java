@@ -1,14 +1,14 @@
-package com.ssafy.chartflow.emblem.service.strategy.turnstrategy;
+package com.ssafy.chartflow.emblem.service.strategy.gameStrategy;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
-import com.ssafy.chartflow.emblem.service.strategy.GameStrategy;
+import com.ssafy.chartflow.emblem.service.strategy.turnstrategy.TurnStrategy;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameTurns;
 
 import java.util.List;
 
-public class ShortPunchInsectTechnology implements TurnStrategy {
+public class ShortPunchInsectTechnology implements GameStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {
         //한 판에 매수 - 매도 3일 이하 3회 이상 , 0일은 노인정

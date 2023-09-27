@@ -1,4 +1,4 @@
-package com.ssafy.chartflow.emblem.service.strategy;
+package com.ssafy.chartflow.emblem.service.strategy.gameStrategy;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;

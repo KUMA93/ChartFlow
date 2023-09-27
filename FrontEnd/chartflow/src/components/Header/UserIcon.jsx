@@ -4,9 +4,9 @@ import { FaUserCircle } from "react-icons/fa";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
 import jwtDecode from "jwt-decode";
 
-function UserIcon({ isLogin, handleIsLogin }) {
+function UserIcon() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const { handleMyPageNavigate, handleMainNavigate } = useCustomNavigate();
+  const { handleMyPageNavigate } = useCustomNavigate();
   const [nickname, setNickname] = useState("");
 
   const toggleDropdown = () => {
@@ -15,9 +15,8 @@ function UserIcon({ isLogin, handleIsLogin }) {
 
   const handleLogout = () => {
     localStorage.clear();
-    setDropdownVisible(!dropdownVisible);
-    handleIsLogin();
-    handleMainNavigate();
+    setDropdownVisible(false);
+    window.location.href = "/";
   };
 
   useEffect(() => {
