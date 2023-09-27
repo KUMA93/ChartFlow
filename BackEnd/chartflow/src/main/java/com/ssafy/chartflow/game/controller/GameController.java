@@ -87,12 +87,12 @@ public class GameController {
         }
     }
 
+
     @Operation(summary = "게임 시작하기", description = "유저가 게임 시작 버튼을 클릭하면 랜덤 기업의 랜덤 시점으로 게임을 생성하고 gameHistory에 해당 데이터를 삽입한다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "게임 시작하기 성공"),
             @ApiResponse(responseCode = "500", description = "게임 시작하기 실패 - 내부 서버 오류"),
     })
-
     @PostMapping()
     public ResponseEntity<Map<String, Object>> startGame(@RequestHeader("Authorization") String token) {
         token = token.split(" ")[1];
@@ -101,26 +101,27 @@ public class GameController {
         try {
             log.info("Game Controller - 게임 시작하기");
             Long userId = jwtService.extractUserId(token);
-            List<Stocks> stocks = gameService.startGame(userId);
-            List<ResponseChartDataDto> responseStocks = new ArrayList<>();
-            for(Stocks stock : stocks){
-                ResponseChartDataDto responseChartDataDto = ResponseChartDataDto.builder()
-                        .id(stock.getId())
-                        .date(stock.getDate())
-                        .rate(stock.getRate())
-                        .highestPrice(stock.getHighestPrice())
-                        .lowestPrice(stock.getLowestPrice())
-                        .ticker(stock.getTicker())
-                        .volumes(stock.getVolumes())
-                        .closingPrice(stock.getClosingPrice())
-                        .openPrice(stock.getOpenPrice())
-                        .name(stock.getName())
-                        .build();
-                responseStocks.add(responseChartDataDto);
-            }
+            gameService.startGame(userId);
+            //List<ResponseChartDataDto> responseStocks = new ArrayList<>();
+
+//            for(Stocks stock : stocks){
+//                ResponseChartDataDto responseChartDataDto = ResponseChartDataDto.builder()
+//                        .id(stock.getId())
+//                        .date(stock.getDate())
+//                        .rate(stock.getRate())
+//                        .highestPrice(stock.getHighestPrice())
+//                        .lowestPrice(stock.getLowestPrice())
+//                        .ticker(stock.getTicker())
+//                        .volumes(stock.getVolumes())
+//                        .closingPrice(stock.getClosingPrice())
+//                        .openPrice(stock.getOpenPrice())
+//                        .name(stock.getName())
+//                        .build();
+//                responseStocks.add(responseChartDataDto);
+//            }
             response.put("httpStatus", SUCCESS);
-            response.put("previousStocks",responseStocks);
-            response.put("currentDate",responseStocks.get(responseStocks.size()-1).getDate());
+//            response.put("previousStocks",responseStocks);
+//            response.put("currentDate",responseStocks.get(responseStocks.size()-1).getDate());
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e) {
             log.info("Game Controller - 게임 시작하기 실패");
