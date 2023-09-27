@@ -1,15 +1,14 @@
-package com.ssafy.chartflow.emblem.service.strategy.turnstrategy;
+package com.ssafy.chartflow.emblem.service.strategy.gameStrategy;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
-import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
-import com.ssafy.chartflow.emblem.service.strategy.GameStrategy;
+import com.ssafy.chartflow.emblem.service.strategy.turnstrategy.TurnStrategy;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.user.entity.User;
 
 import java.util.List;
 
-public class KillerOfSpoonStrategy implements TurnStrategy {
+public class KillerOfSpoonStrategy implements GameStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {
         // 5% 이내 수익률 20회 이상

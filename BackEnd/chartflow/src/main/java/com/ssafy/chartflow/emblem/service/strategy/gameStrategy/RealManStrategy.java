@@ -1,15 +1,14 @@
-package com.ssafy.chartflow.emblem.service.strategy.turnstrategy;
+package com.ssafy.chartflow.emblem.service.strategy.gameStrategy;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
-import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
-import com.ssafy.chartflow.emblem.service.strategy.GameStrategy;
+import com.ssafy.chartflow.emblem.service.strategy.turnstrategy.TurnStrategy;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameTurns;
 
 import java.util.List;
 
-public class RealManStrategy implements TurnStrategy {
+public class RealManStrategy implements GameStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {
         // 풀매수 3회
