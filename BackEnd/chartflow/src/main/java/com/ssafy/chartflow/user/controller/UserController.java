@@ -2,6 +2,7 @@ package com.ssafy.chartflow.user.controller;
 
 import com.ssafy.chartflow.exception.NotRegisteredException;
 import com.ssafy.chartflow.exception.PasswordWrongException;
+import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.user.dto.RequestEmailDto;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.RequestRegistDto;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.models.annotations.OpenAPI30;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,16 +33,15 @@ import java.util.Map;
 @Tag(name = "user", description = "회원기능 API")
 @RequestMapping("/user")
 @CrossOrigin("*")
+@AllArgsConstructor
 @Slf4j
 public class UserController {
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
     private static final String AUTH = "Authorization";
+    private final JwtService jwtService;
 
-    @Autowired
     UserService userService;
-
-    @Autowired
     EmailService emailService;
 
     @Operation(summary = "회원가입", description = "User 객체를 이용해 회원가입을 하는 API")
@@ -50,16 +51,16 @@ public class UserController {
     })
     @PostMapping("/regist")
     public ResponseEntity<?> regist(@RequestBody RequestRegistDto requestRegistDto) {
-        try{
+        try {
             userService.regist(requestRegistDto.getEmail(), requestRegistDto.getPassword(), requestRegistDto.getName(), requestRegistDto.getNickname());
             log.info("회원가입 성공");
 
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.info("회원가입 실패 - 서버(DB) 오류");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
     }
 
     @PostMapping("/auth")
@@ -77,7 +78,7 @@ public class UserController {
             log.info("인증 코드 생성/발송 성공: " + authenticationCode);
             // 인증 코드 리턴
             return new ResponseEntity<String>(authenticationCode, HttpStatus.OK);
-        }catch (Exception e) {
+        } catch (Exception e) {
             log.info("인증 코드 생성/발송 실패");
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -88,7 +89,7 @@ public class UserController {
     public ResponseEntity<?> sendTemporaryPassword(@RequestBody RequestEmailDto requestEmailDto) throws Exception {
         log.info("emailController 호출 - 임시 비밀번호 발급: " + requestEmailDto.getEmail());
 
-        try{
+        try {
             // email로 임시 비밀번호 발송 후 temporaryPassword에 저장
             Map<String, Object> returnData = emailService.sendTemporaryPassword(requestEmailDto.getEmail());
             log.info("임시 비밀번호 생성/발송 성공");
@@ -112,7 +113,7 @@ public class UserController {
     public ResponseEntity<?> verifyNickName(@PathVariable String nickname) throws Exception {
         log.info("emailController 호출 - 닉네임 중복 체크: " + nickname);
 
-        try{
+        try {
             Map<String, Object> returnData = new HashMap<>();
             boolean isValid = userService.checkNickname(nickname);
             returnData.put("isValid", isValid);
@@ -122,6 +123,25 @@ public class UserController {
             return new ResponseEntity<Map<String, Object>>(returnData, HttpStatus.OK);
         } catch (Exception e) {
             log.info("임시 비밀번호 생성/발송 실패");
+            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("")
+    @Operation(summary = "마이페이지에 띄울 정보 불러오기", description = "싹다 불러온다.")
+    public ResponseEntity<?> loadMyPage(@RequestHeader("Authorization") String token) throws Exception {
+        token = token.split(" ")[1];
+        Map<String,Object> response;
+
+        try {
+            Long userId = jwtService.extractUserId(token);
+            response = userService.getMyPage(userId);
+            response.put("httpStatus", SUCCESS);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            log.info("마이페이지 불러오기 실패");
+            response = new HashMap<>();
+            response.put("httpStatus", FAIL);
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
