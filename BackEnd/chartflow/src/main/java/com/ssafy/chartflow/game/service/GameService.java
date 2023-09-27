@@ -106,6 +106,12 @@ public class GameService {
         String ticker = gameHistories.get(gameHistories.size()-1).getCompanyCode();
         String date = gameHistories.get(gameHistories.size()-1).getChartDate();
         List<Stocks> stocksList = stocksRepository.findAllPreviousStocks(ticker,date);
+
+        // 앞으로 51개 만큼의 차트 데이터 추가
+        List<GameHistoryStocks> after = gameHistories.get(gameHistories.size()-1).getGameHistoryStocks();
+        for (GameHistoryStocks cur : after) {
+            stocksList.add(cur.getStocks());
+        }
         response.put("chartData", stocksList);
 
         return response;
