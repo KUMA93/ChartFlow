@@ -2,9 +2,11 @@ package com.ssafy.chartflow.game.controller;
 
 import com.ssafy.chartflow.board.service.CommentService;
 import com.ssafy.chartflow.game.dto.request.RequestGameProgressDto;
+import com.ssafy.chartflow.game.dto.response.ResponseChartDataDto;
 import com.ssafy.chartflow.game.dto.response.ResponseGameHistoryDto;
 import com.ssafy.chartflow.game.service.GameService;
 import com.ssafy.chartflow.security.service.JwtService;
+import com.ssafy.chartflow.stocks.entity.Stocks;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -15,7 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -97,10 +101,26 @@ public class GameController {
         try {
             log.info("Game Controller - 게임 시작하기");
             Long userId = jwtService.extractUserId(token);
-            gameService.startGame(userId);
-
+            List<Stocks> stocks = gameService.startGame(userId);
+            List<ResponseChartDataDto> responseStocks = new ArrayList<>();
+            for(Stocks stock : stocks){
+                ResponseChartDataDto responseChartDataDto = ResponseChartDataDto.builder()
+                        .id(stock.getId())
+                        .date(stock.getDate())
+                        .rate(stock.getRate())
+                        .highestPrice(stock.getHighestPrice())
+                        .lowestPrice(stock.getLowestPrice())
+                        .ticker(stock.getTicker())
+                        .volumes(stock.getVolumes())
+                        .closingPrice(stock.getClosingPrice())
+                        .openPrice(stock.getOpenPrice())
+                        .name(stock.getName())
+                        .build();
+                responseStocks.add(responseChartDataDto);
+            }
             response.put("httpStatus", SUCCESS);
-
+            response.put("previousStocks",responseStocks);
+            response.put("currentDate",responseStocks.get(responseStocks.size()-1).getDate());
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e) {
             log.info("Game Controller - 게임 시작하기 실패");
