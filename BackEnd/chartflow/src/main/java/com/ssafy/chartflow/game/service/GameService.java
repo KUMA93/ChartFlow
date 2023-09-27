@@ -1,9 +1,7 @@
 package com.ssafy.chartflow.game.service;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
-import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.service.EmblemService;
-import com.ssafy.chartflow.game.dto.request.RequestGameProgressDto;
 import com.ssafy.chartflow.game.dto.response.ResponseGameHistoryDto;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameHistoryStocks;
@@ -18,10 +16,9 @@ import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +70,7 @@ public class GameService {
     }
 
 
+    @Transactional(readOnly = true)
     public Map<String, Object> getGameData(long userId) {
         Map<String,Object> response = new HashMap<>();
 
