@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +34,7 @@ import java.util.Map;
 @Tag(name = "user", description = "회원기능 API")
 @RequestMapping("/user")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@AllArgsConstructor
 @Slf4j
 public class UserController {
     private static final String SUCCESS = "success";
