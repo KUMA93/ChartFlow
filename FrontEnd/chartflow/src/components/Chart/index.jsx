@@ -144,9 +144,9 @@ class Chart extends Component {
         const dataItem = target.dataItem;
         if (dataItem) {
           if (dataItem.get("valueY") > dataItem.get("openValueY")) {
-            return am5.color("#0000FF"); // 상승 캔들에 대한 파란색
+            return am5.color("#FF0000"); // 상승 캔들에 대한 빨간색
           } else {
-            return am5.color("#FF0000"); // 하락 캔들에 대한 빨간색
+            return am5.color("#0000FF"); // 하락 캔들에 대한 파란색
           }
         }
         return stroke;
@@ -421,9 +421,9 @@ class Chart extends Component {
       const dataItem = target.dataItem;
       if (dataItem) {
         if (dataItem.get("valueY") > dataItem.get("openValueY")) {
-          return am5.color("#0000FF"); // 상승 캔들에 대한 파란색
+          return am5.color("#FF0000"); // 상승 캔들에 대한 빨간색
         } else {
-          return am5.color("#FF0000"); // 하락 캔들에 대한 빨간색
+          return am5.color("#0000FF"); // 하락 캔들에 대한 파란색
         }
       }
       return fill;

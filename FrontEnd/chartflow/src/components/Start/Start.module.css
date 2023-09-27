@@ -45,6 +45,7 @@
   flex-shrink: 0;
   border-radius: 30px;
   margin-left: 5px;
+  cursor: pointer;
 }
 
 .goOn {
@@ -56,4 +57,5 @@
   flex-shrink: 0;
   border-radius: 30px;
   margin-right: 5px;
+  cursor: pointer;
 }

@@ -31,6 +31,19 @@ function App() {
     return storedThisTurn;
   });
 
+  const [isSaved, setIsSaved] = useState(() => {
+    const storedIsSaved = localStorage.getItem("isSaved");
+    return storedIsSaved;
+  });
+
+  const [assetPer, setAssetPer] = useState("-");
+  const [initNum, setInitNum] = useState("-");
+  const [cashNum, setCashNum] = useState("-");
+  const [stocksNum, setStocksNum] = useState("-");
+  const [avgPriceNum, setAvgPriceNum] = useState("-");
+  const [curPriceNum, setCurPriceNum] = useState("-");
+  const [flag, setFlag] = useState(true);
+
   return (
     <Router>
       <ThemeProvider>
@@ -41,7 +54,28 @@ function App() {
           }}
         >
           <GameContext.Provider
-            value={{ gameId, setGameId, thisTurn, setThisTurn }}
+            value={{
+              gameId,
+              setGameId,
+              thisTurn,
+              setThisTurn,
+              assetPer,
+              setAssetPer,
+              initNum,
+              setInitNum,
+              cashNum,
+              setCashNum,
+              stocksNum,
+              setStocksNum,
+              avgPriceNum,
+              setAvgPriceNum,
+              curPriceNum,
+              setCurPriceNum,
+              flag,
+              setFlag,
+              isSaved,
+              setIsSaved,
+            }}
           >
             <GlobalStyle />
             <Routes>
