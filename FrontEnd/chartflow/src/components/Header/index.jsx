@@ -8,7 +8,7 @@ import UserIcon from "./UserIcon";
 
 function Header() {
   const navigate = useNavigate();
-  const { accessToken } = useContext(UserContext);
+  const { isLogin, setIsLogin } = useContext(UserContext);
 
   const MainLogo = () => (
     <a href="/">
@@ -21,9 +21,7 @@ function Header() {
         <button
           className={styles.tab}
           onClick={() => {
-            accessToken
-              ? navigate("/game")
-              : alert("로그인이 필요한 기능입니다.");
+            isLogin ? navigate("/game") : alert("로그인이 필요한 기능입니다.");
           }}
         >
           차트게임
@@ -43,9 +41,7 @@ function Header() {
         <button
           className={styles.tab}
           onClick={() => {
-            accessToken
-              ? navigate("/quiz")
-              : alert("로그인이 필요한 기능입니다.");
+            isLogin ? navigate("/quiz") : alert("로그인이 필요한 기능입니다.");
           }}
         >
           주식퀴즈
@@ -80,30 +76,17 @@ function Header() {
   const handleModal = () => {
     modalShow ? setModalShow(false) : setModalShow(true);
   };
-  const [isLogin, setIsLogin] = useState(false);
 
   const handleClose = () => {
     setModalShow(false);
   };
-
-  const handleIsLogin = () => {
-    setIsLogin(false);
-  };
-
-  useEffect(() => {
-    if(localStorage.getItem("access-token") !== null){
-      setIsLogin(true);
-    }else {
-      setIsLogin(false);
-    }
-  }, [localStorage.getItem("access-token")]);
 
   return (
     <>
       <div className={styles.container}>
         <MainLogo />
         <MenuItems />
-        {isLogin ? <UserIcon isLogin={isLogin} handleIsLogin={handleIsLogin} /> : <Start />}
+        {isLogin ? <UserIcon /> : <Start />}
       </div>
       <Line />
       {modalShow && <Login modalShow={modalShow} handleClose={handleClose} />}

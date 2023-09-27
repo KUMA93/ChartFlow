@@ -61,8 +61,10 @@
 }
 
 .userIconContainer {
-  white-space: nowrap;
-  
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  margin-bottom: -7px;
 }
 
 .userIcon {
@@ -70,23 +72,37 @@
 }
 
 .dropdown {
-  /* position: absolute; */
-  top: 100%;
-  right: 0;
-  background-color: #6c00ff;
-  border: 1px solid #7a3434;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  margin-left: 140px;
+  top: 65px;
+  background-color: #fff;
+  width: 80px;
+  border: 0;
   border-radius: 4px;
-  padding: 10px;
-  z-index: 1;
-  min-width: 100px;
-  /* white-space: nowrap;*/
+  z-index: 3;
 }
 
 .dropdownButton {
-  background-color: #6c00ff;
-  color: #ffffff;
+  background-color: #fff;
+  color: black;
   font-weight: bolder;
-  border: none;
+  font-size: 14px;
+  height: 35px;
+  border: 1px solid black;
   padding: 5px;
-  white-space: nowrap;
+  cursor: pointer;
+}
+.dropdownButton:hover {
+  color: #6c00ff;
+}
+
+.TextContainer {
+  line-height: 25px;
+  margin-right: 5px;
+}
+.getBold {
+  display: inline;
+  font-weight: 600;
 }

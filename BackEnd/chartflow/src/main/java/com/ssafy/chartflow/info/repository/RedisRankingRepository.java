@@ -28,11 +28,19 @@ public class RedisRankingRepository {
     }
 
     public Long getUserRank(long userId) {
-        // 내림차순으로 정렬된 경우의 랭킹
-        Long rank = redisTemplate.opsForZSet().reverseRank("userRanking", userId);
+        
+        try {
+            // 내림차순으로 정렬된 경우의 랭킹
+            // Redis는 기본적으로 string으로 처리하기에 userId를 String으로 변환하여 조회하기
+            String userIdStr = String.valueOf(userId);
+            Long rank = redisTemplate.opsForZSet().reverseRank("userRanking", userIdStr);
 
-        // 랭킹은 0-based index이므로, 실제 랭킹은 rank + 1이 됩니다.
-        return (rank != null) ? rank + 1 : null;
+            // 랭킹은 0-based index이므로, 실제 랭킹은 rank + 1이 됩니다.
+            return (rank != null) ? rank + 1 : null;
+        }catch (Exception e){
+            log.info("RedisRankingRepository getUserRank오류 발생 : " + e.getMessage());
+        }
+        return null;
     }
 
     public Set<Object> getTopUsers(int topN) {

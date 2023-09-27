@@ -1,25 +1,24 @@
-package com.ssafy.chartflow.emblem.service.strategy.turnstrategy;
+package com.ssafy.chartflow.emblem.service.strategy.gameStrategy;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
 import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
-import com.ssafy.chartflow.emblem.service.strategy.GameStrategy;
+import com.ssafy.chartflow.emblem.service.strategy.turnstrategy.TurnStrategy;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameTurns;
-import com.ssafy.chartflow.user.entity.User;
 
 import java.util.List;
 
-public class HeartOfBeastStrategy implements TurnStrategy {
+public class MiddleManStrategy implements GameStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {
-        // 풀매수 3회
+        // 풀매수 1회
         List<UserEmblem> emblems = userGameDto.getEmblems();
         GameHistory gameHistory = userGameDto.getGameHistory();
         List<GameTurns> gameTurns = gameHistory.getGameTurns();
 
         boolean hasEmblem = emblems.stream()
-                    .anyMatch(emblem -> "야수의심장".equals(emblem.getEmblem().getName()));
+                .anyMatch(emblem -> "중남자".equals(emblem.getEmblem().getName()));
 
         if (hasEmblem) return false;
 
@@ -28,12 +27,12 @@ public class HeartOfBeastStrategy implements TurnStrategy {
             if(gameturn.getTotalAssets() - gameturn.getCurrentStocks() < gameturn.getPrice())
                 ++cnt;
         }
-        return cnt >= 3;
+        return cnt >= 1;
     }
 
     @Override
     public String getTitle() {
-        return "야수의심장";
+        return "중남자";
     }
 
 }
