@@ -18,6 +18,7 @@ import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -72,7 +73,9 @@ public class GameService {
         return responseData;
     }
 
+    //특정 주가 , 주식 날짜 정보
 
+    @Transactional(readOnly = true)
     public Map<String, Object> getGameData(long userId) {
         Map<String,Object> response = new HashMap<>();
 
@@ -110,7 +113,7 @@ public class GameService {
         return response;
     }
 
-    public void startGame(long userId) {
+    public List<Stocks> startGame(long userId) {
 
         User user = userRepository.findUserById(userId);
 
@@ -134,9 +137,13 @@ public class GameService {
                 .build();
         log.info("게임 히스토리 생성 완료 - " + gameHistory.toString());
 
-        // 51개 만큼 주식 데이터 저장
+        // 51개 만큼 주식 데이터 저장 게임을 진행해야하는 데이터
         List<Stocks> stocks = stocksRepository.findAllByTicker(stock.getTicker());
-
+        int dayOfYear = 365;
+        // 앞의 300개 데이터
+        stocks = stocks.subList(dayOfYear + 10 , stocks.size() - dayOfYear );
+        Stocks firstStocks = stocks.get(0);
+        List<Stocks> allPreviousStocks = stocksRepository.findAllPreviousStocks(firstStocks.getTicker(), firstStocks.getDate());
 
         gameHistory.setUser(user);
 
@@ -157,6 +164,7 @@ public class GameService {
             }
         }
 
+        return allPreviousStocks;
     }
 
 
