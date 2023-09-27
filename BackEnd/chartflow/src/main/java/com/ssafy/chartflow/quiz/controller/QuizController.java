@@ -33,7 +33,7 @@ public class QuizController {
     private final QuizService quizService;
     private final JwtService jwtService;
 
-    // 오늘의 퀴즈 목록 3개 불러오기
+    // 오늘의 퀴즈 목록중 진행하지 않은 1개 불러오기
     @GetMapping("")
     public ResponseEntity<Map<String, Object>> getQuiz(@RequestHeader("Authorization") String token) {
         Map<String, Object> response = new HashMap<>();
@@ -41,12 +41,15 @@ public class QuizController {
         token = token.split(" ")[1];
 
         try{
+            log.info("퀴즈 컨트롤러 - 퀴즈 조회");
             Long userId = jwtService.extractUserId(token);
-            Quiz todayQuiz = quizService.getTodayQuizzes(userId);
-            response.put("quiz", todayQuiz);
+            ResponseQuizDto todayQuiz = quizService.getTodayQuizzes(userId);
 
+            response.put("quiz", todayQuiz);
+            log.info("조회한 퀴즈 내용" + todayQuiz.toString());
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e) {
+            log.info("퀴즈 컨트롤러 - 퀴즈 조회 실패");
             response.put("httpStatus", FAIL);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
