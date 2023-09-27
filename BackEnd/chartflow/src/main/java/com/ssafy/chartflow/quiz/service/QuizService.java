@@ -31,7 +31,7 @@ public class QuizService {
     private final int QuizCount = 3;  // 가져올 퀴즈의 개수
 
     // 오늘의 퀴즈 리스트 리턴
-    public List<Quiz> getTodayQuizzes() {
+    public Quiz getTodayQuizzes(Long userId) {
         long id = -1L;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate date1 = LocalDate.parse("20230906", formatter);
@@ -40,10 +40,23 @@ public class QuizService {
         long cnt = quizRepository.countBy();
 
         long[] idList = new long[] { id % cnt, (id+1) % cnt, (id+2) % cnt };
-        List<Quiz> returnData = new ArrayList<>();
+        List<Quiz> todayQuizzes = new ArrayList<>();
 
         for (long cur : idList){
-            returnData.add(quizRepository.findById(cur));
+            todayQuizzes.add(quizRepository.findById(cur));
+        }
+
+        Quiz returnData = Quiz.builder()
+                .id(0L)
+                .build();
+
+        for (Quiz quiz : todayQuizzes) {
+            UserQuiz userQuiz = userQuizRepository.findUserQuizByUserIdAndQuizId(userId, quiz.getId());
+
+            if (userQuiz == null) {
+                returnData = quiz;
+                break;
+            }
         }
 
         return returnData;

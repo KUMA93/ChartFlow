@@ -1,12 +1,13 @@
 import Header from "../../components/Header";
 import styles from "./Quiz.module.css"
 import lightimg from "../../assets/images/light.png"
+import { useEffect } from "react";
 
 function Quiz() {
 
   useEffect(() => {
     
-  })
+  }, [])
 
   return (
     <>
