@@ -1,6 +1,7 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Toggle from "../../components/Toggle";
+import Chatbot from "../../components/Chatbot";
 import Carousel from "../../components/Carousel";
 import HotUpdate from "../../components/HotUpdate";
 import RankWeekly from "../../components/RankWeekly";
@@ -28,6 +29,7 @@ const MainPage = () => {
           <RankWeekly />
         </div>
       </div>
+      <Chatbot />
       <Toggle />
       <Footer />
     </>

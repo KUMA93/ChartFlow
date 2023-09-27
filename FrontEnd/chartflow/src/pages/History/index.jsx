@@ -156,7 +156,6 @@ function History() {
         </div>
       </div>
     }
-    
     </>
   );
 }
