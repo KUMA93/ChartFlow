@@ -102,8 +102,7 @@ public class UserService {
         return userRepository.findUserById(userId);
     }
 
-    public Map<String, Object> getMyPage(Long userId) {
-        Map<String, Object> response = new HashMap<>();
+    public ResponseMyPageDto getMyPage(Long userId) {
         User user = userRepository.findUserById(userId);
         user.setRanking(rankingRepository.getUserRank(userId));
         System.out.println("--------- rank : "+user.getRanking());
@@ -111,8 +110,16 @@ public class UserService {
         ResponseAssetsDto userAssetsDto = new ResponseAssetsDto(user.getCoin(), user.getBudget());
         System.out.println(user);
         System.out.println(userInfoDto);
-        response.put("data", new ResponseMyPageDto(userInfoDto, userAssetsDto));
-        return response;
+        return new ResponseMyPageDto(userInfoDto, userAssetsDto);
     }
+
+//    public Map<String, Object> getMyBoard(Long userId) {
+//        Map<String, Object> response = new HashMap<>();
+//
+//
+//
+//        response.put("data", new ResponseMyPageDto(userInfoDto, userAssetsDto));
+//        return response;
+//    }
 
 }
