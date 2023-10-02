@@ -1,6 +1,9 @@
 package com.ssafy.chartflow.user.service;
 
+import com.ssafy.chartflow.board.entity.Article;
+import com.ssafy.chartflow.board.repository.ArticleRepository;
 import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
+import com.ssafy.chartflow.info.dto.ResponseMyBoardDto;
 import com.ssafy.chartflow.info.repository.RedisRankingRepository;
 import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
@@ -32,6 +35,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final RedisRankingRepository rankingRepository;
+    private final ArticleRepository articleRepository;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
     private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
@@ -113,13 +117,10 @@ public class UserService {
         return new ResponseMyPageDto(userInfoDto, userAssetsDto);
     }
 
-//    public Map<String, Object> getMyBoard(Long userId) {
-//        Map<String, Object> response = new HashMap<>();
-//
-//
-//
-//        response.put("data", new ResponseMyPageDto(userInfoDto, userAssetsDto));
-//        return response;
+//    public ResponseMyBoardDto getMyBoard(Long userId) {
+//        List<Article> myArticles = articleRepository.findAllByUserId(userId);
+//        List<Article> likes = articleRepository.findAllByUserId(userId);
+//        return new ResponseMyBoardDto(myArticles,likes);
 //    }
 
 }

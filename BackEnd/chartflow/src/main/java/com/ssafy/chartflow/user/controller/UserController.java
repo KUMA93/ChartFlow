@@ -144,6 +144,24 @@ public class UserController {
         }
     }
 
+//    @GetMapping("")
+//    @Operation(summary = "내 게시판 활동 불러오기", description = "쓴글과 좋아요 누른글을 불러온다.")
+//    public ResponseEntity<?> getMyBoard(@RequestHeader("Authorization") String token) throws Exception {
+//        token = token.split(" ")[1];
+//        Map<String,Object> response = new HashMap<>();
+//
+//        try {
+//            Long userId = jwtService.extractUserId(token);
+//            response.put("data", userService.getMyBoard(userId));
+//            response.put("httpStatus", SUCCESS);
+//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+//        } catch (Exception e) {
+//            log.info("내 게시판 활동 불러오기 실패");
+//            response.put("httpStatus", FAIL);
+//            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
     @PatchMapping()
     @Operation(summary = "마이페이지에서 유저정보 수정하기", description = "유저 정보를 수정한다.")
     public ResponseEntity<Map<String, Object>> updateUser(@RequestHeader("Authorization") String token,
