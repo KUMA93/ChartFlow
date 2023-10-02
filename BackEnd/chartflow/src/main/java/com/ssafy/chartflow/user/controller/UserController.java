@@ -2,11 +2,9 @@ package com.ssafy.chartflow.user.controller;
 
 import com.ssafy.chartflow.exception.NotRegisteredException;
 import com.ssafy.chartflow.exception.PasswordWrongException;
+import com.ssafy.chartflow.game.dto.request.RequestGameProgressDto;
 import com.ssafy.chartflow.security.service.JwtService;
-import com.ssafy.chartflow.user.dto.RequestEmailDto;
-import com.ssafy.chartflow.user.dto.RequestLoginDto;
-import com.ssafy.chartflow.user.dto.RequestRegistDto;
-import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
+import com.ssafy.chartflow.user.dto.*;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.service.EmailService;
 import com.ssafy.chartflow.user.service.UserService;
@@ -144,6 +142,32 @@ public class UserController {
             response = new HashMap<>();
             response.put("httpStatus", FAIL);
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PatchMapping()
+    @Operation(summary = "마이페이지에서 유저정보 수정하기", description = "유저 정보를 수정한다.")
+    public ResponseEntity<Map<String, Object>> updateUser(@RequestHeader("Authorization") String token,
+                                                            @RequestBody RequestUpdateDto requestUpdateDto) {
+        token = token.split(" ")[1];
+        Map<String,Object> response = new HashMap<>();
+
+        try {
+            log.info("User Controller - 유저 정보 수정");
+            Long userId = jwtService.extractUserId(token);
+
+            User user = userService.getUser(userId);
+            userService.updatePassword(user, requestUpdateDto.getPassword());
+            userService.updateNickname(user, requestUpdateDto.getNickname());
+
+            response.put("httpStatus", SUCCESS);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e) {
+            log.info("User Controller - 유저 정보 수정 실패");
+            response.put("httpStatus", FAIL);
+
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

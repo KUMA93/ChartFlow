@@ -83,6 +83,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void updateNickname(User user, String newNickname) {
+        user.setNickname(newNickname);
+        userRepository.save(user);
+    }
+
 
     public ResponseAssetsDto getAssets(Long userId) {
         User user = userRepository.findUserById(userId);
@@ -91,6 +96,10 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public User getUser(Long userId){
+        return userRepository.findUserById(userId);
     }
 
     public Map<String, Object> getMyPage(Long userId) {
