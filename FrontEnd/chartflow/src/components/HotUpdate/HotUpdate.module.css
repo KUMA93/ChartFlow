@@ -1,5 +1,50 @@
 .bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 30px;
+  width: 100%;
   height: 100%;
   background-color: #fff;
+}
+.innerText {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 95%;
+}
+.title {
+  display: flex;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.fireImg {
+  width: 35px;
+  height: 35px;
+}
+
+.line {
+  margin-top: 9px;
+  border-bottom: 2px solid #959595;
+}
+
+.titleName {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 11px;
+  margin-left: 3px;
+}
+
+.article {
+  display: flex;
+  font-size: 18px;
+  max-width: 100%;
+  margin-top: 16px;
+  margin-left: 10px;
+  overflow: hidden;
+}
+
+.title2 {
+  min-width: max-content;
 }

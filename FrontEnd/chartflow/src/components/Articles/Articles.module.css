@@ -1,9 +1,75 @@
 .bg {
+  display: flex;
   border-radius: 30px;
+  width: 100%;
   height: 100%;
   background-color: #fff;
+  justify-content: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 95%;
+  margin-top: 20px;
+}
+
+.article {
+  display: flex;
+  font-size: 18px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.tag {
+  margin-right: 5px;
+  min-width: max-content;
+}
+
+.title {
+  min-width: max-content;
+}
+
+.date {
+  color: rgba(0, 0, 0, 0.5);
+  min-width: max-content;
+  margin-left: 15vw;
 }
 
 .pagination {
   text-align: center;
+}
+
+.iconGroup {
+  display: flex;
+  align-items: center;
+  margin-left: 10vw;
+}
+.Img {
+  width: 25px;
+  height: 20px;
+}
+
+.eyeImg {
+  width: 27px;
+  height: 15px;
+}
+
+.num {
+  color: #d6b8ff;
+  margin-left: 5px;
+  font-size: 20px;
+}
+
+.dot {
+  color: #d6b8ff;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.line {
+  height: 7px;
+  border-bottom: 2px solid #959595;
+  margin-bottom: 12px;
 }
