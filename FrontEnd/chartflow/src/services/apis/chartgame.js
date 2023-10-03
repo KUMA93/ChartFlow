@@ -24,3 +24,9 @@ export const progressGame = async (requestData) => {
   const res = await axiosServer().put(`/game`, requestData);
   return res.data;
 };
+
+// 코인 조회
+export const getCoin = async () => {
+  const res = await axiosServer().get(`/info/assets`);
+  return res.data;
+};

@@ -5,21 +5,19 @@ import Chart from "../../components/Chart";
 import Quit from "../../components/Quit";
 import End from "../../components/End";
 import Start from "../../components/Start";
-import useCustomNavigate from "../../hooks/useCustomNavigate";
 import {
   loadGame,
   startGame,
   progressGame,
+  getCoin,
 } from "../../services/apis/chartgame";
 import { useState, useContext } from "react";
 import GameContext from "../../context/GameContext";
 import loading from "../../assets/images/bean-eater.gif";
 
 const ChartGame = () => {
-  const { handleMainNavigate } = useCustomNavigate();
   const [modalQuitShow, setModalQuitShow] = useState(false);
   const [modalStartShow, setModalStartShow] = useState(true);
-  const [modalEndShow, setModalEndShow] = useState(false);
   const [data, setData] = useState();
 
   const {
@@ -32,16 +30,19 @@ const ChartGame = () => {
     setCashNum,
     setStocksNum,
     setAvgPriceNum,
+    setCoin,
   } = useContext(GameContext);
 
   const handleModalQuit = () => {
     setModalQuitShow(!modalQuitShow);
   };
+
   const handleQuitClose = () => {
     setModalQuitShow(false);
   };
 
   const handleStartNew = () => {
+    // if (localStorage.getItem("isSaved")) {
     const requestData = JSON.stringify({
       gameHistoryId: gameId,
       mode: 3,
@@ -56,7 +57,6 @@ const ChartGame = () => {
           .then((res) => {
             loadGame()
               .then((res) => {
-                console.log("loadGame:", res.gameHistory.gameHistoryId);
                 setCashNum(res.gameHistory.cashBudget);
                 setGameId(res.gameHistory.gameHistoryId);
                 setInitNum(res.gameHistory.initialBudget);
@@ -65,6 +65,13 @@ const ChartGame = () => {
                 setAssetPer(res.gameHistory.rate);
                 setThisTurn(res.gameHistory.turn);
                 setData(res.chartData);
+                getCoin()
+                  .then((res) => {
+                    setCoin(res.assets.coin);
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                  });
               })
               .catch((err) => {
                 console.error(err);
@@ -80,8 +87,6 @@ const ChartGame = () => {
     setModalStartShow(false);
     loadGame()
       .then((res) => {
-        console.log("loadGame:", res.gameHistory.gameHistoryId);
-        console.log(res.chartData.length);
         setCashNum(res.gameHistory.cashBudget);
         setGameId(res.gameHistory.gameHistoryId);
         setInitNum(res.gameHistory.initialBudget);
@@ -90,17 +95,21 @@ const ChartGame = () => {
         setAssetPer(res.gameHistory.rate);
         setThisTurn(res.gameHistory.turn);
         setData(res.chartData);
+        getCoin().then((res) => {
+          setCoin(res);
+        });
       })
       .catch((err) => {
         console.error(err);
       });
   };
+
   return (
     <>
       <div className={styles.container}>
         <div className={styles.chart}>
           {data ? (
-            <Chart data={data} />
+            <Chart data={data} thisTurn={thisTurn} />
           ) : (
             <>
               <div className={styles.shade}></div>
@@ -119,18 +128,14 @@ const ChartGame = () => {
           게임 종료
         </button>
       </div>
-      {modalQuitShow ? (
-        <Quit handleClose={handleQuitClose} />
-      ) : modalQuitShow ? (
-        <Quit handleClose={handleQuitClose} />
-      ) : null}
-      {modalStartShow ? (
+      {modalQuitShow && <Quit handleClose={handleQuitClose} />}
+      {modalStartShow && (
         <Start
           handleStartNew={handleStartNew}
           handleContinue={handleContinue}
         />
-      ) : null}
-      {modalEndShow && <End />}
+      )}
+      {thisTurn === 51 && <End />}
     </>
   );
 };

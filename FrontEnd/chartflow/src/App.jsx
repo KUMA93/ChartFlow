@@ -36,12 +36,16 @@ function App() {
     return storedIsSaved;
   });
 
+  const [assetNum, setAssetNum] = useState("-");
   const [assetPer, setAssetPer] = useState("-");
+  const [assetGap, setAssetGap] = useState("-");
   const [initNum, setInitNum] = useState("-");
   const [cashNum, setCashNum] = useState("-");
+  const [stocksAmt, setStocksAmt] = useState("-");
   const [stocksNum, setStocksNum] = useState("-");
   const [avgPriceNum, setAvgPriceNum] = useState("-");
   const [curPriceNum, setCurPriceNum] = useState("-");
+  const [coin, setCoin] = useState("-");
   const [flag, setFlag] = useState(true);
 
   return (
@@ -59,12 +63,18 @@ function App() {
               setGameId,
               thisTurn,
               setThisTurn,
+              assetNum,
+              setAssetNum,
               assetPer,
               setAssetPer,
+              assetGap,
+              setAssetGap,
               initNum,
               setInitNum,
               cashNum,
               setCashNum,
+              stocksAmt,
+              setStocksAmt,
               stocksNum,
               setStocksNum,
               avgPriceNum,
@@ -75,6 +85,8 @@ function App() {
               setFlag,
               isSaved,
               setIsSaved,
+              coin,
+              setCoin,
             }}
           >
             <GlobalStyle />

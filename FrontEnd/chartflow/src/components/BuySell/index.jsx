@@ -5,10 +5,20 @@ import GameContext from "../../context/GameContext";
 import { loadGameHistory, progressGame } from "../../services/apis/chartgame";
 
 function BuySell() {
-  const originStocks = 100;
+  const {
+    gameId,
+    cashNum,
+    curPriceNum,
+    stocksAmt,
+    thisTurn,
+    setThisTurn,
+    flag,
+    setFlag,
+  } = useContext(GameContext);
+  const originBuyStocks = Math.floor(cashNum / curPriceNum);
+  const originSellStocks = stocksAmt ? Math.floor(stocksAmt / curPriceNum) : 0;
+  const originStocks = Math.max(originBuyStocks, originSellStocks);
   const [orderedStocks, setOrderedStocks] = useState(originStocks);
-  const { gameId, thisTurn, setThisTurn, flag, setFlag } =
-    useContext(GameContext);
 
   useEffect(() => {
     loadGameHistory().then((res) => {
@@ -18,7 +28,7 @@ function BuySell() {
 
   const Turn = () => (
     <div className={styles.texts}>
-      <div className={styles.now}>{thisTurn}</div>
+      <div className={styles.now}>{thisTurn === 51 ? "-" : thisTurn}</div>
       <div className={styles.all}>/50턴</div>
     </div>
   );
@@ -70,6 +80,28 @@ function BuySell() {
       });
   };
 
+  const [isBuyBtnDisabled, setIsBuyBtnDisabled] = useState(false);
+  const [isSellBtnDisabled, setIsSellBtnDisabled] = useState(false);
+
+  useEffect(() => {
+    setIsBuyBtnDisabled(
+      orderedStocks > originBuyStocks || originBuyStocks <= 0
+    );
+    // setIsBuyBtnDisabled(originBuyStocks <= 0);
+    setIsSellBtnDisabled(
+      orderedStocks > originSellStocks || originSellStocks <= 0
+    );
+    // setIsSellBtnDisabled(originSellStocks <= 0);
+  }, [orderedStocks, handleSell, handleBuy]);
+
+  let buyDisabled;
+  let sellDisabled;
+  if (orderedStocks > originBuyStocks || originBuyStocks <= 0) {
+    buyDisabled = styles.disabled;
+  } else if (orderedStocks > originSellStocks || originSellStocks <= 0) {
+    sellDisabled = styles.disabled;
+  }
+
   return (
     <>
       <div className={styles.container1}>
@@ -78,15 +110,25 @@ function BuySell() {
         </div>
         <div className={styles.order}>
           <Order
+            originBuyStocks={originBuyStocks}
+            originSellStocks={originSellStocks}
             originStocks={originStocks}
             orderedStocks={orderedStocks}
             setOrderedStocks={setOrderedStocks}
           />
         </div>
-        <button className={styles.buybtn} onClick={handleBuy}>
+        <button
+          className={`${styles.buybtn} ${buyDisabled}`}
+          onClick={handleBuy}
+          disabled={isBuyBtnDisabled}
+        >
           매수
         </button>
-        <button className={styles.sellbtn} onClick={handleSell}>
+        <button
+          className={`${styles.sellbtn} ${sellDisabled}`}
+          onClick={handleSell}
+          disabled={isSellBtnDisabled}
+        >
           매도
         </button>
         <button className={styles.skip} onClick={handleSkip}>

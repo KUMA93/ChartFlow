@@ -13,16 +13,22 @@ function Line() {
 
 function GameStatus() {
   const {
+    assetNum,
+    setAssetNum,
     assetPer,
+    setAssetPer,
+    assetGap,
+    setAssetGap,
     initNum,
     cashNum,
     setCashNum,
+    stocksAmt,
+    setStocksAmt,
     stocksNum,
     setStocksNum,
     avgPriceNum,
     setAvgPriceNum,
     curPriceNum,
-    setCurPriceNum,
     flag,
   } = useContext(GameContext);
 
@@ -34,32 +40,55 @@ function GameStatus() {
     });
   }, [flag]);
 
+  setAssetNum(
+    typeof stocksNum == "string" || typeof curPriceNum == "string"
+      ? "-"
+      : cashNum + stocksNum * curPriceNum
+  );
+  setStocksAmt(
+    typeof stocksNum == "string" || typeof avgPriceNum == "string"
+      ? "-"
+      : stocksNum * avgPriceNum
+  );
+
+  setAssetPer(((assetNum / initNum - 1) * 100).toFixed(2));
+
+  setAssetGap(assetNum - initNum);
+
+  let assetColor;
+  if (assetGap > 0) {
+    assetColor = styles.blueText;
+  } else if (assetGap < 0) {
+    assetColor = styles.redText;
+  } else {
+    assetColor = styles.blackText;
+  }
   return (
     <>
       <div className={styles.myAsset}>
         <div className={styles.assetText}>총 평가자산</div>
         <div className={styles.assetNum}>
-          {typeof stocksNum == "string" || typeof curPriceNum == "string"
-            ? "-"
-            : `${(cashNum + stocksNum * curPriceNum).toLocaleString()}원`}
+          {typeof assetNum == "string" ? "-" : `${assetNum.toLocaleString()}원`}
         </div>
-        <div className={styles.assetPer}>
-          {typeof assetPer == "string" ? null : `${assetPer}%`}
+        <div className={`${styles.assetPer} ${assetColor}`}>
+          {isNaN(assetGap) ? "-" : `${assetGap.toLocaleString()}`}(
+          {isNaN(assetPer)
+            ? "-%"
+            : assetPer > 0
+            ? `+${assetPer}%`
+            : `${assetPer}%`}
+          )
         </div>
       </div>
       <div className={styles.container3}>
         <div className={styles.init}>초기자산</div>
         <div className={styles.initNum}>
-          {typeof assetPer == "string" ? "-" : `${initNum.toLocaleString()}원`}
+          {typeof initNum == "string" ? "-" : `${initNum.toLocaleString()}원`}
         </div>
         <div className={styles.cash}>보유현금</div>
         <div className={styles.cashNum}>{cashNum.toLocaleString()}</div>
         <div className={styles.buystock}>주식매입금</div>
-        <div className={styles.buystockNum}>
-          {typeof stocksNum == "string" || typeof avgPriceNum == "string"
-            ? "-"
-            : (stocksNum * avgPriceNum).toLocaleString()}
-        </div>
+        <div className={styles.buystockNum}>{stocksAmt.toLocaleString()}</div>
         <div className={styles.stockValue}>주식평가금</div>
         <div className={styles.stockValueNum}>
           {typeof stocksNum == "string" || typeof curPriceNum == "string"
