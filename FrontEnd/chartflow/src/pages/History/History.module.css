@@ -5,8 +5,13 @@
 }
 
 .head1 {
+  display: flex;
   margin-top: 15px;
+  border: 0;
+  flex-direction: column;
+  justify-content: center;
   width: 19vw;
+  align-items: center;
   height: 46px;
   border-radius: 30px;
   background: #FFF;
@@ -16,14 +21,10 @@
   font-size: 19px;
   font-style: normal;
   font-weight: 600;
-  line-height: normal;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   cursor: pointer;
 }
 
-.head1:hover {
+.head1:focus {
   background: #FFF176;
 }
 
@@ -60,6 +61,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  align-items: center;
   width: 20vw;
   height: 40px;
   border-radius: 20px;
@@ -72,11 +74,11 @@
   font-weight: 400;
   line-height: normal;
   cursor: pointer;
+  border: 0;
 }
 
-.nick1:hover {
+.nick1:focus {
   outline: 4px solid #62BDFF;
-  font-weight: 600;
 }
 
 .nick2 {
@@ -90,16 +92,17 @@
   background: #C9C9C9;
   color: #000;
   text-align: center;
+  align-items: center;
   font-family: Diphylleia;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   cursor: pointer;
+  border: 0;
 }
-.nick2:hover {
+.nick2:focus {
   outline: 4px solid #62BDFF;
-  font-weight: 600;
 }
 
 .rank1 {
@@ -239,14 +242,6 @@
   font-style: normal;
   font-weight: 600;
   margin-right: 10px;
-}
-
-.dash {
-  margin: auto;
-  width: 30vw;
-  height: 150px;
-  border-radius: 30px;
-  border: 3px dashed #CFE8E8;
 }
 
 .con3 {
