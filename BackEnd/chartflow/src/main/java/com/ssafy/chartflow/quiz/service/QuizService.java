@@ -115,6 +115,7 @@ public class QuizService {
 
         if (choice.equals(correct_content)) {
             coinService.increaseCoin(userId);
+            userRepository.save(user);
             return true;
         }
         else return false;
