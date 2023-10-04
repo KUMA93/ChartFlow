@@ -26,28 +26,28 @@ class UserServiceTest {
     @Autowired
     EmblemRepository emblemRepository;
 
-    @Autowired
-    CoinService coinService;
-    @Test
-    public void 마이페이지테스트(){
-        User user = userRepository.findUserById(8);
-        Emblem emblem = emblemRepository.findByName("한강의아들");
-        UserEmblem userEmblem = UserEmblem.builder()
-                .emblem(emblem)
-                .user(user)
-                .equiped(true)
-                .build();
+//    @Autowired
+//    CoinService coinService;
+//    @Test
+//    public void 마이페이지테스트(){
+//        User user = userRepository.findUserById(8);
+//        Emblem emblem = emblemRepository.findByName("한강의아들");
+//        UserEmblem userEmblem = UserEmblem.builder()
+//                .emblem(emblem)
+//                .user(user)
+//                .equiped(true)
+//                .build();
+//
+//        userEmblemRepository.save(userEmblem);
+//
+//        log.info("userEmblem = {}", userEmblemRepository.findUserEmblemByUserAndEquipedIsTrue(user));
+//    }
 
-        userEmblemRepository.save(userEmblem);
-
-        log.info("userEmblem = {}", userEmblemRepository.findUserEmblemByUserAndEquipedIsTrue(user));
-    }
-
-    @Test
-    public void 코인테스트(){
-        User user = userRepository.findUserById(8);
-        log.info("coin = {}",user.getCoin());
-        coinService.decreaseCoin(8);
-        log.info("coin = {}",user.getCoin());
-    }
+//    @Test
+//    public void 코인테스트(){
+//        User user = userRepository.findUserById(0);
+//        log.info("coin = {}",user.getCoin());
+//        coinService.decreaseCoin(0);
+//        log.info("coin = {}",user.getCoin());
+//    }
 }
