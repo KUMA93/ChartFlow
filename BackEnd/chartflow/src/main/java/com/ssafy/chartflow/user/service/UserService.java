@@ -1,6 +1,5 @@
 package com.ssafy.chartflow.user.service;
 
-import com.ssafy.chartflow.emblem.repository.UserEmblemRepository;
 import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
 import com.ssafy.chartflow.info.repository.RedisRankingRepository;
 import com.ssafy.chartflow.security.service.JwtService;
@@ -33,7 +32,6 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final RedisRankingRepository rankingRepository;
-    private final UserEmblemRepository userEmblemRepository;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
     private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
@@ -85,6 +83,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void updateNickname(User user, String newNickname) {
+        user.setNickname(newNickname);
+        userRepository.save(user);
+    }
+
 
     public ResponseAssetsDto getAssets(Long userId) {
         User user = userRepository.findUserById(userId);
@@ -95,23 +98,28 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUser(Long userId){
+        return userRepository.findUserById(userId);
+    }
+
     public ResponseMyPageDto getMyPage(Long userId) {
         User user = userRepository.findUserById(userId);
-
-        Long ranking = rankingRepository.getUserRank(userId);
-        String equipedEmblem = userEmblemRepository.findUserEmblemByUserAndEquipedIsTrue(user).getEmblem().getName();
-        ResponseUserInfoDto userInfoDto = ResponseUserInfoDto.builder()
-                .selected_emblem(equipedEmblem)
-                .id(userId)
-                .ranking(ranking)
-                .email(user.getEmail())
-                .name(user.getName())
-                .nickname(user.getNickname())
-                .build();
+        user.setRanking(rankingRepository.getUserRank(userId));
+        System.out.println("--------- rank : "+user.getRanking());
+        ResponseUserInfoDto userInfoDto = new ResponseUserInfoDto(userId, user.getName(), user.getNickname(), user.getEmail(), user.getSelected_emblem(), user.getRanking());
         ResponseAssetsDto userAssetsDto = new ResponseAssetsDto(user.getCoin(), user.getBudget());
-
+        System.out.println(user);
         System.out.println(userInfoDto);
         return new ResponseMyPageDto(userInfoDto, userAssetsDto);
     }
+
+//    public Map<String, Object> getMyBoard(Long userId) {
+//        Map<String, Object> response = new HashMap<>();
+//
+//
+//
+//        response.put("data", new ResponseMyPageDto(userInfoDto, userAssetsDto));
+//        return response;
+//    }
 
 }

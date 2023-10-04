@@ -59,6 +59,12 @@
         @Column(name = "cancel")
         private int cancel;
 
+        @Column(name = "selected_emblem")
+        private String selected_emblem;
+
+        @Column(name = "ranking")
+        private Long ranking;
+
         @OneToMany(mappedBy = "user")
         private final List<UserEmblem> emblems = new ArrayList<>();
 
