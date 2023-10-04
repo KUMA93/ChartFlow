@@ -33,7 +33,13 @@ export const deleteBoard = async (requestData) => {
 };
 
 // 게시글 좋아요
-// export const likeBoard = async (requestData) => {
-//   const res = await axiosServer().put(`/game`, requestData);
-//   return res.data;
-// };
+export const likeBoard = async (requestData) => {
+  const res = await axiosServer().post(`/game`, requestData);
+  return res.data;
+};
+
+// 게시글 좋아요 취소
+export const notlikeBoard = async (requestData) => {
+  const res = await axiosServer().delete(`/game`, requestData);
+  return res.data;
+};
