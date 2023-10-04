@@ -2,21 +2,23 @@ import styles from "./Articles.module.css";
 import thumbsup from "../../assets/images/thumbsup.png";
 import chatting from "../../assets/images/chatting.png";
 import eye from "../../assets/images/eye.png";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
 import { useEffect } from "react";
 import { seeAllBoard } from "../../services/apis/board";
 import { useState } from "react";
 
 function Articles(alignMode) {
+  const { handleBoardViewNavigate } = useCustomNavigate();
   const Line = () => <div className={styles.line}></div>;
-  const [articles, setArticles] = useState();
+  const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    seeAllBoard(currentPage, 8)
+    seeAllBoard()
       .then((res) => {
-        setArticles(res.articles);
-        setTotalPages(Math.ceil(res.articles.length / 8) + 1);
+        setTotalPages(Math.ceil(res.articles.length / 8));
+        seeAllBoard(currentPage, 8).then((res) => setArticles(res.articles));
       })
       .catch((err) => console.error(err));
   }, [currentPage]);
@@ -26,7 +28,16 @@ function Articles(alignMode) {
     const registerDate = new Date(registerTime);
     const timeDifference = currentDate - registerDate;
     const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    return `${daysAgo}일 전`;
+
+    if (daysAgo < 1) {
+      const hoursAgo = Math.floor(timeDifference / (1000 * 60 * 60));
+      return `${hoursAgo}시간 전`;
+    } else if (daysAgo < 30) {
+      return `${daysAgo}일 전`;
+    } else {
+      const monthsAgo = Math.floor(daysAgo / 30);
+      return `${monthsAgo}달 전`;
+    }
   }
 
   return (
@@ -36,8 +47,13 @@ function Articles(alignMode) {
           {articles?.map((article) => (
             <>
               <div className={styles.article} key={article.id}>
-                <div className={styles.tag}>[자유일상]</div>
-                <div className={styles.title}>{article.title}</div>
+                <div
+                  onClick={() => handleBoardViewNavigate(article.id)}
+                  className={styles.tagTitle}
+                >
+                  <div className={styles.tag}>[자유일상]</div>
+                  <div className={styles.title}>{article.title}</div>
+                </div>
                 <div className={styles.date}>
                   {calculateDaysAgo(article.registerTime)}
                 </div>
@@ -46,10 +62,10 @@ function Articles(alignMode) {
                   <div className={styles.num}>{article.views}</div>
                   <div className={styles.dot}>⋅</div>
                   <img src={thumbsup} alt="" className={styles.Img} />
-                  <div className={styles.num}>10</div>
+                  <div className={styles.num}>{article.likes}</div>
                   <div className={styles.dot}>⋅</div>
                   <img src={chatting} alt="" className={styles.Img} />
-                  <div className={styles.num}>10</div>
+                  <div className={styles.num}>{article.views}</div>
                 </div>
               </div>
               <Line />

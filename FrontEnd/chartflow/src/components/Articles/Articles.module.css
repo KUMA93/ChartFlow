@@ -22,6 +22,10 @@
   overflow: hidden;
 }
 
+.tagTitle {
+  display: flex;
+  cursor: pointer;
+}
 .tag {
   margin-right: 5px;
   min-width: max-content;
@@ -54,7 +58,7 @@
   position: absolute;
   display: flex;
   align-items: center;
-  margin-left: 50vw;
+  margin-left: 55vw;
 }
 .Img {
   width: 25px;
@@ -88,9 +92,12 @@
   display: flex;
   color: #8effa7;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .page {
   display: flex;
   color: #6c00ff;
+
+  cursor: pointer;
 }
