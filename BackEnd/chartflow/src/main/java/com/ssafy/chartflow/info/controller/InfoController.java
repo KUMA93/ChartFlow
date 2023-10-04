@@ -57,8 +57,8 @@ public class InfoController {
 
     @Operation(summary = "유저 랭킹", description = "유저 랭킹 상위 10명 조회")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "자산 조회 성공"),
-            @ApiResponse(responseCode = "500", description = "로그인 실패 - 내부 서버 오류")
+            @ApiResponse(responseCode = "200", description = "랭킹 조회 성공"),
+            @ApiResponse(responseCode = "500", description = "랭킹 조회 실패 - 내부 서버 오류")
     })
     @GetMapping("/rankings")
     public ResponseEntity<Map<String, Object>> userRankings() {
@@ -68,7 +68,7 @@ public class InfoController {
             response.put("rankings",rankingService.getRankers(10));
         } catch (Exception e) {
             response.put("message", "랭킹 조회 실패");
-            log.error("user Assets 오류 - {}",e.getMessage());
+            log.error("랭킹 조회 오류 - {}",e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
