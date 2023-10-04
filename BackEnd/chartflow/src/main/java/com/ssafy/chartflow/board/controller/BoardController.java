@@ -51,6 +51,7 @@ public class BoardController {
                         .content(article.getContent())
                         .title(article.getTitle())
                         .registerTime(article.getRegisterTime())
+                        .tag(article.getTag())
                         .build();
                 responseArticles.add(articleResponseDto);
             }
@@ -79,6 +80,7 @@ public class BoardController {
                         .content(article.getContent())
                         .title(article.getTitle())
                         .registerTime(article.getRegisterTime())
+                        .tag(article.getTag())
                         .build();
                 responseArticles.add(articleResponseDto);
             }
@@ -162,6 +164,7 @@ public class BoardController {
                     .content(article.getContent())
                     .title(article.getTitle())
                     .registerTime(article.getRegisterTime())
+                    .tag(article.getTag())
                     .build();
 
 
