@@ -4,6 +4,7 @@ import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
 import com.ssafy.chartflow.emblem.repository.EmblemRepository;
 import com.ssafy.chartflow.emblem.repository.UserEmblemRepository;
+import com.ssafy.chartflow.info.service.CoinService;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,9 @@ class UserServiceTest {
     UserEmblemRepository userEmblemRepository;
     @Autowired
     EmblemRepository emblemRepository;
+
+    @Autowired
+    CoinService coinService;
     @Test
     public void 마이페이지테스트(){
         User user = userRepository.findUserById(8);
@@ -37,5 +41,13 @@ class UserServiceTest {
         userEmblemRepository.save(userEmblem);
 
         log.info("userEmblem = {}", userEmblemRepository.findUserEmblemByUserAndEquipedIsTrue(user));
+    }
+
+    @Test
+    public void 코인테스트(){
+        User user = userRepository.findUserById(8);
+        log.info("coin = {}",user.getCoin());
+        coinService.decreaseCoin(8);
+        log.info("coin = {}",user.getCoin());
     }
 }
