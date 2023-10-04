@@ -132,7 +132,7 @@ public class GameController {
         }
     }
 
-    @GetMapping("/history")
+    @GetMapping("/game/history")
     public ResponseEntity<Map<String,Object>> userHistory(@RequestHeader("Authorization") String token){
         token = token.split(" ")[1];
         Map<String,Object> response = new HashMap<>();
