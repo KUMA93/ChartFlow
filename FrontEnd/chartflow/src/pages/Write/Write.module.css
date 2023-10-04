@@ -1,0 +1,97 @@
+.container {
+  margin-top: 20px;
+  display: grid;
+  grid-gap: 20px;
+  height: 100vh;
+  grid-template-areas:
+    "board newArticle"
+    "board newComment"
+    "submit submit";
+  grid-template-columns: 0.7fr 0.3fr;
+  grid-template-rows: 0.45fr 0.45fr 0.5fr;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  grid-area: board;
+  display: flex;
+  border-radius: 30px;
+}
+
+.title {
+  display: flex;
+  width: 100%;
+  height: 60px;
+}
+
+.tags {
+  width: 25%;
+  border-radius: 30px 0px 0px 30px;
+  outline: none;
+  border: 1px solid rgba(116, 116, 116, 0.6);
+  font-size: 17px;
+  text-indent: 20px;
+}
+
+.inputTitle {
+  width: 75%;
+  font-size: 13px;
+  text-indent: 20px;
+  border-radius: 0px 30px 30px 0px;
+  outline: none;
+  border: 1px solid rgba(116, 116, 116, 0.6);
+}
+
+.content {
+  background-color: #fff;
+  width: 100%;
+  height: 95%;
+  border-radius: 30px;
+  margin-top: 20px;
+  outline: none;
+  border: 0;
+  font-size: 13px;
+  text-indent: 30px;
+  padding-top: 30px;
+}
+
+.newArticle {
+  grid-area: newArticle;
+}
+
+.newComment {
+  grid-area: newComment;
+}
+
+.submit {
+  grid-area: submit;
+}
+
+.done {
+  width: 90px;
+  height: 55px;
+  border-radius: 30px;
+  border: 0;
+  background: #6c00ff;
+  box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.25);
+  color: #8effa7;
+  font-size: 17px;
+  font-weight: 600;
+  margin-left: 35vw;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.back {
+  width: 90px;
+  height: 55px;
+  border-radius: 30px;
+  background: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  color: #6c00ff;
+  border: 0;
+  box-shadow: 4px 4px 7px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}

@@ -19,26 +19,21 @@
   font-weight: 600;
 }
 
-.fireImg {
-  width: 35px;
-  height: 35px;
-}
-
 .line {
   margin-top: 9px;
   border-bottom: 2px solid #959595;
 }
 
 .titleName {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
-  margin-top: 13px;
+  margin-top: 11px;
   margin-left: 3px;
 }
 
 .article {
   display: flex;
-  font-size: 16px;
+  font-size: 18px;
   max-width: 100%;
   margin-top: 16px;
   margin-left: 10px;
