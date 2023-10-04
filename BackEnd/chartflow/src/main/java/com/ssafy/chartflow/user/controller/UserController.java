@@ -10,7 +10,6 @@ import com.ssafy.chartflow.user.service.EmailService;
 import com.ssafy.chartflow.user.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -129,9 +128,7 @@ public class UserController {
 
     @GetMapping("")
     @Operation(summary = "마이페이지에 띄울 정보 불러오기", description = "싹다 불러온다.")
-    public ResponseEntity<?> loadMyPage(
-            @Parameter(hidden = true)
-            @RequestHeader("Authorization") String token) throws Exception {
+    public ResponseEntity<?> loadMyPage(@RequestHeader("Authorization") String token) throws Exception {
         token = token.split(" ")[1];
         Map<String,Object> response = new HashMap<>();
 
@@ -144,6 +141,50 @@ public class UserController {
             log.info("마이페이지 불러오기 실패");
             response.put("httpStatus", FAIL);
             return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+//    @GetMapping("")
+//    @Operation(summary = "내 게시판 활동 불러오기", description = "쓴글과 좋아요 누른글을 불러온다.")
+//    public ResponseEntity<?> getMyBoard(@RequestHeader("Authorization") String token) throws Exception {
+//        token = token.split(" ")[1];
+//        Map<String,Object> response = new HashMap<>();
+//
+//        try {
+//            Long userId = jwtService.extractUserId(token);
+//            response.put("data", userService.getMyBoard(userId));
+//            response.put("httpStatus", SUCCESS);
+//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+//        } catch (Exception e) {
+//            log.info("내 게시판 활동 불러오기 실패");
+//            response.put("httpStatus", FAIL);
+//            return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+    @PatchMapping()
+    @Operation(summary = "마이페이지에서 유저정보 수정하기", description = "유저 정보를 수정한다.")
+    public ResponseEntity<Map<String, Object>> updateUser(@RequestHeader("Authorization") String token,
+                                                            @RequestBody RequestUpdateDto requestUpdateDto) {
+        token = token.split(" ")[1];
+        Map<String,Object> response = new HashMap<>();
+
+        try {
+            log.info("User Controller - 유저 정보 수정");
+            Long userId = jwtService.extractUserId(token);
+
+            User user = userService.getUser(userId);
+            userService.updatePassword(user, requestUpdateDto.getPassword());
+            userService.updateNickname(user, requestUpdateDto.getNickname());
+
+            response.put("httpStatus", SUCCESS);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e) {
+            log.info("User Controller - 유저 정보 수정 실패");
+            response.put("httpStatus", FAIL);
+
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
