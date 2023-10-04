@@ -8,7 +8,7 @@
     "board newComment"
     "submit submit";
   grid-template-columns: 0.7fr 0.3fr;
-  grid-template-rows: 0.45fr 0.45fr 0.5fr;
+  grid-template-rows: 1.2fr 1.2fr 0.5fr;
 }
 
 .board {
@@ -58,10 +58,12 @@
 
 .newArticle {
   grid-area: newArticle;
+  overflow: hidden;
 }
 
 .newComment {
   grid-area: newComment;
+  overflow: hidden;
 }
 
 .submit {
