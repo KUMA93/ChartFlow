@@ -60,12 +60,12 @@ public class InfoController {
             @ApiResponse(responseCode = "200", description = "랭킹 조회 성공"),
             @ApiResponse(responseCode = "500", description = "랭킹 조회 실패 - 내부 서버 오류")
     })
-    @GetMapping("/rankings")
-    public ResponseEntity<Map<String, Object>> userRankings() {
+    @GetMapping("/rankings/{limit}")
+    public ResponseEntity<Map<String, Object>> userRankings(@PathVariable int limit) {
         Map<String,Object> response = new HashMap<>();
 
         try {
-            response.put("rankings",rankingService.getRankers(10));
+            response.put("rankings",rankingService.getRankers(limit));
         } catch (Exception e) {
             response.put("message", "랭킹 조회 실패");
             log.error("랭킹 조회 오류 - {}",e.getMessage());
