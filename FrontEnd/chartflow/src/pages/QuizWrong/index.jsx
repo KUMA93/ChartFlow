@@ -1,6 +1,6 @@
 import Header from "../../components/Header";
 import styles from "./QuizCorrect.module.css"
-import correctImg from "../../assets/images/correct.png"
+import wrongImg from "../../assets/images/wrong.png"
 import useCustomNavigate from "../../hooks/useCustomNavigate";
 
 function Quiz() {
@@ -12,10 +12,9 @@ function Quiz() {
       <Header />
       <div className={styles.fullBox}>
         <div className={styles.font1}>
-          정답입니다!
+          틀렸습니다.
         </div>
-        <div className={styles.font2}>코인을 1개 획득하였습니다.</div>
-        <img src={correctImg} alt="" className={styles.imgSize}/>
+        <img src={wrongImg} alt="" className={styles.imgSize}/>
         <div className={styles.nextBtn} onClick={handleQuizNavigate}>다음 문제 풀기</div>
       </div>
     </>
