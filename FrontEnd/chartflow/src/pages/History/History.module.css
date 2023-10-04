@@ -162,53 +162,50 @@
   margin-left: 3%;
 }
 
-.userBox {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
+.gContainer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.gItem {
+  border: 2px solid #fdd6d6;
+  border-radius: 10px;
   width: 11vw;
-  height: 150px;
-  border-radius: 30px;
-  border: 3px solid #FFD2E8;
+  height: 22vh;
+  flex-direction: column;
+  margin: auto;
 }
 
 .perFont {
-  display: flex;
-  justify-content: center;
-  color: #E62D2D;
-  font-family: Fugaz One;
-  font-size: 190%;
-  font-style: normal;
-  font-weight: 400;
+  color: #b62b2b;
+  font-family: SUITE;
+  font-size: 20px;
+  font-weight: 800;
 }
 
-.price1 {
-  margin-top: 10px;
-  color: #FFF;
+.upFont {
+  color: #6C00FF;
   font-family: SUITE;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
+  font-size: 30px;
+  font-weight: 800;
 }
-.price2 {
+
+.div1 {
   display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  color: #8A8A8A;
-  font-family: SUITE;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 80%;
+  text-align: center;
+  align-items: center;
 }
 
 .userName {
-  margin-top: 10px;
+  margin-top: 20px;
   color: #000;
   font-family: SUITE;
-  font-size: 26px;
-  font-style: normal;
+  font-size: 26px;;
   font-weight: 600;
-  line-height: normal;
 }
 
 .rankUser {
@@ -242,34 +239,4 @@
   font-style: normal;
   font-weight: 600;
   margin-right: 10px;
-}
-
-.con3 {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.hisFont {
-  margin-top: 16px;
-  margin-left: 20px;
-  margin-bottom: 20px;
-  color: #000;
-  font-family: SUITE;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-.gameFont {
-  color: #5563E7;
-  font-family: SUITE;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 5px;
 }

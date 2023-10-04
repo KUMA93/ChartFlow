@@ -1,0 +1,22 @@
+.shade {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  flex-shrink: 0;
+  background-color: rgba(43, 40, 38, 0.6);
+  z-index: 1;
+  }
+
+.modalRecord {
+  position: absolute;
+  margin: 13vh 20vw;
+  padding: 5vh 2vw;
+  width: 370px;
+  height: 46vh;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background-color: #fff;
+  z-index: 2;
+  }

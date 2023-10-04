@@ -71,32 +71,43 @@ function History() {
           </div>
           <div className={styles.mainFont}>이번주 급상승한 유저</div>
           <div className={styles.con2}>
-            <div className={styles.userBox}>
-              <div className={styles.userName}>유저1</div>
-              <div className={styles.price2}>8900000000 원</div>
-              <div className={styles.perFont}>56%</div>
+            <div className={styles.gContainer}>
+              <div className={styles.gItem}>
+                <div className={styles.userName}>유저1</div>
+                <div className={styles.div1}>
+                  <div className={styles.perFont}>2억 9천만원</div>
+                  <div className={styles.upFont}>51%</div>
+                </div>
+              </div>
+              <div className={styles.gItem}>
+                <div className={styles.userName}>유저1</div>
+                <div className={styles.div1}>
+                  <div className={styles.perFont}>2억 9천만원</div>
+                  <div className={styles.upFont}>51%</div>
+                </div>
+              </div>
+              <div className={styles.gItem}>
+                <div className={styles.userName}>유저1</div>
+                <div className={styles.div1}>
+                  <div className={styles.perFont}>2억 9천만원</div>
+                  <div className={styles.upFont}>51%</div>
+                </div>
+              </div>
+              <div className={styles.gItem}>
+                <div className={styles.userName}>유저1</div>
+                <div className={styles.div1}>
+                  <div className={styles.perFont}>2억 9천만원</div>
+                  <div className={styles.upFont}>51%</div>
+                </div>
+              </div>
+              <div className={styles.gItem}>
+                <div className={styles.userName}>유저1</div>
+                <div className={styles.div1}>
+                  <div className={styles.perFont}>2억 9천만원</div>
+                  <div className={styles.upFont}>51%</div>
+                </div>
+              </div>
             </div>
-            <div className={styles.userBox}>
-              <div className={styles.userName}>유저1</div>
-              <div className={styles.price2}>8900000000 원</div>
-              <div className={styles.perFont}>56%</div>
-            </div>
-            <div className={styles.userBox}>
-              <div className={styles.userName}>유저1</div>
-              <div className={styles.price2}>8900000000 원</div>
-              <div className={styles.perFont}>56%</div>
-            </div>
-            <div className={styles.userBox}>
-              <div className={styles.userName}>유저1</div>
-              <div className={styles.price2}>8900000000 원</div>
-              <div className={styles.perFont}>56%</div>
-            </div>
-            <div className={styles.userBox}>
-              <div className={styles.userName}>유저1</div>
-              <div className={styles.price2}>8900000000 원</div>
-              <div className={styles.perFont}>56%</div>
-            </div>
-            
           </div>
 
         </div>
