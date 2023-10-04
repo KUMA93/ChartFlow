@@ -6,17 +6,28 @@ import write from "../../assets/images/write.png";
 import align from "../../assets/images/align.png";
 import search from "../../assets/images/search.png";
 import { useInput } from "../../hooks/useInput";
+import { useState } from "react";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
 
 function Board() {
   const { handleBoardWriteNavigate } = useCustomNavigate();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [alignMode, setAlignMode] = useState(0);
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
   };
+
   const [inputValue, handleChangeValue] = useInput("", handleSubmit);
-  const handleAlign = (event) => {
+
+  const handleAlign = (event, mode) => {
     event.preventDefault();
+    setAlignMode(mode);
+    toggleDropdown();
   };
 
   return (
@@ -41,7 +52,7 @@ function Board() {
           </button>
         </div>
         <div className={styles.inner2}>
-          <div className={styles.search}>
+          <form className={styles.search} onSubmit={handleSubmit}>
             <img
               src={search}
               alt=""
@@ -56,16 +67,38 @@ function Board() {
               required
               autoComplete="on"
             ></input>
-          </div>
+          </form>
           <img
             src={align}
             alt=""
             className={styles.alignImg}
-            onClick={handleAlign}
+            onClick={toggleDropdown}
           />
+          {dropdownVisible && (
+            <div className={styles.dropdown}>
+              <button
+                className={styles.dropdownButton}
+                onClick={(event) => handleAlign(event, 0)}
+              >
+                최신순
+              </button>
+              <button
+                className={styles.dropdownButton}
+                onClick={(event) => handleAlign(event, 1)}
+              >
+                인기순
+              </button>
+              <button
+                className={styles.dropdownButton}
+                onClick={(event) => handleAlign(event, 2)}
+              >
+                댓글 많은 순
+              </button>
+            </div>
+          )}
         </div>
         <div className={styles.articles}>
-          <Articles />
+          <Articles alignMode={alignMode} />
         </div>
       </div>
     </>

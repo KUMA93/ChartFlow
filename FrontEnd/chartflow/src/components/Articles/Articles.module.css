@@ -32,9 +32,10 @@
 }
 
 .date {
+  position: absolute;
   color: rgba(0, 0, 0, 0.5);
   min-width: max-content;
-  margin-left: 20vw;
+  margin-left: 35vw;
   font-size: 15px;
 }
 
@@ -43,9 +44,10 @@
 }
 
 .iconGroup {
+  position: absolute;
   display: flex;
   align-items: center;
-  margin-left: 10vw;
+  margin-left: 50vw;
 }
 .Img {
   width: 25px;

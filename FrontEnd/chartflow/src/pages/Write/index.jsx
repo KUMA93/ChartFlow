@@ -16,8 +16,9 @@ function Write() {
     });
     writeBoard(requestData, {
       headers: { "Content-Type": "application/json" },
-    });
+    }).then(handleBoardNavigate());
   };
+  const [inputTag, handleChangeTag] = useInput("", handleSubmit);
   const [inputTitle, handleChangeTitle] = useInput("", handleSubmit);
   const [inputContent, handleChangeContent] = useInput("", handleSubmit);
 
@@ -27,7 +28,12 @@ function Write() {
       <div className={styles.container}>
         <div className={styles.board}>
           <div className={styles.title}>
-            <select id="tag-select" className={styles.tags}>
+            <select
+              id="tag-select"
+              className={styles.tags}
+              value={inputTag}
+              onChange={handleChangeTag}
+            >
               <option value="태그 선택">태그 선택</option>
               <option value="자유일상">자유일상</option>
               <option value="유머/좋은글">유머/좋은글</option>

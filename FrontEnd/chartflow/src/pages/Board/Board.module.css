@@ -119,3 +119,31 @@
 .inputSearch:focus {
   outline: none;
 }
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  margin-left: 140px;
+  top: 56vh;
+  left: 73vw;
+  background-color: #fff;
+  width: 80px;
+  border: 0;
+  border-radius: 4px;
+  z-index: 3;
+}
+
+.dropdownButton {
+  background-color: #fff;
+  color: black;
+  font-weight: bolder;
+  font-size: 14px;
+  height: 35px;
+  border: 1px solid black;
+  padding: 5px;
+  cursor: pointer;
+}
+.dropdownButton:hover {
+  color: #6c00ff;
+}
