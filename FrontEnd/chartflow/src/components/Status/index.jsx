@@ -38,6 +38,7 @@ function GameStatus() {
       setAvgPriceNum(res.gameHistory.price);
       setStocksNum(res.gameHistory.quantity);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flag]);
 
   setAssetNum(

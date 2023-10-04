@@ -36,7 +36,7 @@ function Order(props) {
       </div>
       <input
         type="number"
-        value={props.orderedStocks}
+        value={String(props.orderedStocks)}
         className={styles.input1}
         onChange={handleChange}
       />

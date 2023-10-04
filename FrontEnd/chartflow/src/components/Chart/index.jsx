@@ -455,6 +455,7 @@ function Chart(props) {
     return () => {
       root.dispose();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.thisTurn]);
 
   return (

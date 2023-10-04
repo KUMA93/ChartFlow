@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import UserContext from "../../context/UserContext";
 import main_logo from "./../../assets/images/main_logo.png";
 import Login from "../Login";
@@ -8,7 +8,7 @@ import UserIcon from "./UserIcon";
 
 function Header() {
   const navigate = useNavigate();
-  const { isLogin, setIsLogin } = useContext(UserContext);
+  const { isLogin } = useContext(UserContext);
 
   const MainLogo = () => (
     <a href="/">

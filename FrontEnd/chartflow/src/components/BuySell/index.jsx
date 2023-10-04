@@ -24,6 +24,7 @@ function BuySell() {
     loadGameHistory().then((res) => {
       setThisTurn(res.gameHistory.turn);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flag]);
 
   const Turn = () => (
@@ -92,6 +93,7 @@ function BuySell() {
       orderedStocks > originSellStocks || originSellStocks <= 0
     );
     // setIsSellBtnDisabled(originSellStocks <= 0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderedStocks, handleSell, handleBuy]);
 
   let buyDisabled;
