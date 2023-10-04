@@ -1,5 +1,6 @@
 package com.ssafy.chartflow.quiz.service;
 
+import com.ssafy.chartflow.info.service.CoinService;
 import com.ssafy.chartflow.quiz.dto.ResponseQuizDto;
 import com.ssafy.chartflow.quiz.entity.Quiz;
 import com.ssafy.chartflow.quiz.entity.QuizChoices;
@@ -24,6 +25,8 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Slf4j
 @RequiredArgsConstructor
 public class QuizService {
+
+    private final CoinService coinService;
 
     private final QuizRepository quizRepository;
     private final QuizChoicesRepository quizChoicesRepository;
@@ -110,10 +113,11 @@ public class QuizService {
                 .build();
         userQuizRepository.save(userQuiz);
 
-        if (choice.equals(correct_content))
+        if (choice.equals(correct_content)) {
+            coinService.increaseCoin(userId);
             return true;
-        else
-            return false;
+        }
+        else return false;
 
     }
 

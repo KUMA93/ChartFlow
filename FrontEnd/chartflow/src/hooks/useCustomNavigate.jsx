@@ -75,6 +75,14 @@ const useCustomNavigate = () => {
     navigate("/quiz");
   };
 
+  const handleQuizCorrectNavigate = () => {
+    navigate("/quiz/correct");
+  };
+
+  const handleQuizWrongNavigate = () => {
+    navigate("/quiz/wrong");
+  };
+
   /* 히스토리 */
   const handleRankingNavigate = () => {
     navigate("/hist/ranking");
@@ -104,6 +112,8 @@ const useCustomNavigate = () => {
     handleBoardEditNavigate,
     handleGameNavigate,
     handleQuizNavigate,
+    handleQuizCorrectNavigate,
+    handleQuizWrongNavigate,
     handleRankingNavigate,
     handleRecordNavigate,
     handleEmblemNavigate,
