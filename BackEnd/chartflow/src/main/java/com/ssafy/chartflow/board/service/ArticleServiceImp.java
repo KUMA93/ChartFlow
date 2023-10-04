@@ -40,18 +40,17 @@ public class ArticleServiceImp implements ArticleService {
     }
 
     @Override
-    public void writeArticle(long userId, String title, String content) {
+    public void writeArticle(long userId, String tag,String title, String content) {
         User user = userRepository.findUserById(userId);
         Article article = new Article();
         article.setUser(user);
         article.setRegisterTime(LocalDateTime.now());
         article.setTitle(title);
+        article.setContent(content);
+        article.setTag(tag);
 
         userRepository.save(user);
         articleRepository.save(article);
-
-
-
     }
 
     @Override

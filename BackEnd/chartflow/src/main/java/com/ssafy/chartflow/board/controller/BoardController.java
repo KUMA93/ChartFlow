@@ -100,9 +100,10 @@ public class BoardController {
 
         try {
             Long userId = jwtService.extractUserId(token);
+            String tag = requestWriteArticleDto.getTag();
             String title = requestWriteArticleDto.getTitle();
             String content = requestWriteArticleDto.getContent();
-            articleService.writeArticle(userId, title, content);
+            articleService.writeArticle(userId, tag, title, content);
 
             response.put("status", "success");
             response.put("message", "Article successfully created.");
