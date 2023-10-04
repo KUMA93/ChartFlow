@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ArticleService {
+    //키워드 글 목록 조회
+    Page<Article> getAllKeywordArticles(String keyword,Pageable pageable);
     //글 목록 조회
     public Page<Article> getAllArticles(Pageable pageable);
     //글 작성
@@ -24,5 +26,6 @@ public interface ArticleService {
     public void withdrawLike(long likeId);
 
     public Article findArticleByArticleId(long articleId);
+
 
 }

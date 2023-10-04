@@ -25,6 +25,9 @@ public class Article {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Enumerated(EnumType.STRING)
+    private String tag;
+
     @Column(name = "views")
     private int views;
 

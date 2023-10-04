@@ -32,6 +32,34 @@ public class BoardController {
     private final ArticleService articleService;
     private final JwtService jwtService;
 
+    //키워드 검색 목록 조회
+    @GetMapping("/list/{keyword}")
+    public ResponseEntity<Map<String,Object>> getAllKeywordArticles(Pageable pageable,@PathVariable("keyword") String keyword){
+        Map<String,Object> response = new HashMap<>();
+
+        try{
+            Page<Article> allArticles = articleService.getAllKeywordArticles(keyword,pageable);
+            List<ArticleResponseDto> responseArticles = new ArrayList<>();
+
+            for(Article article : allArticles){
+                ArticleResponseDto articleResponseDto = ArticleResponseDto.builder()
+                        .id(article.getId())
+                        .nickName(article.getUser().getNickname())
+                        .views(article.getViews())
+                        .likes(article.getLikes().size())
+                        .content(article.getContent())
+                        .title(article.getTitle())
+                        .registerTime(article.getRegisterTime())
+                        .build();
+                responseArticles.add(articleResponseDto);
+            }
+            response.put("articles",responseArticles);
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     //글 목록 조회
     @GetMapping("/list")
     public ResponseEntity<Map<String,Object>> getAllArticles(Pageable pageable){
@@ -46,6 +74,7 @@ public class BoardController {
                         .id(article.getId())
                         .nickName(article.getUser().getNickname())
                         .views(article.getViews())
+                        .likes(article.getLikes().size())
                         .content(article.getContent())
                         .title(article.getTitle())
                         .registerTime(article.getRegisterTime())
@@ -127,6 +156,7 @@ public class BoardController {
                     .id(article.getId())
                     .nickName(article.getUser().getNickname())
                     .views(article.getViews())
+                    .likes(article.getLikes().size())
                     .content(article.getContent())
                     .title(article.getTitle())
                     .registerTime(article.getRegisterTime())
@@ -178,13 +208,13 @@ public class BoardController {
     public ResponseEntity<Map<String,Object>> likeArticle(
             @Parameter(hidden = true)
             @RequestHeader("Authorization") String token,
-            @RequestBody Long articleId
+            @RequestBody RequestLikeDto requestLikeDto
     ){
         Map<String,Object> response = new HashMap<>();
         token = token.split(" ")[1];
         try {
             Long userId = jwtService.extractUserId(token);
-            articleService.likeArticle(userId, articleId);
+            articleService.likeArticle(userId, requestLikeDto.getArticleId());
             response.put("message", "success");
         } catch (LikeDuplicateException e) {
             response.put("message", e.getMessage());

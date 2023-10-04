@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ArticleRepository extends JpaRepository<Article,Long> {
+    Page<Article> findAllByTitleLike(String keyword,Pageable pageable);
     Page<Article> findAll(Pageable pageable);
     Article findArticleById(Long articleId);
     List<Article> findAllByUserId(long userId);

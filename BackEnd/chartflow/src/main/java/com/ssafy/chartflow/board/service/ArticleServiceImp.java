@@ -28,6 +28,12 @@ public class ArticleServiceImp implements ArticleService {
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
 
+
+    @Override
+    public Page<Article> getAllKeywordArticles(String keyword, Pageable pageable) {
+        return articleRepository.findAllByTitleLike(keyword,pageable);
+    }
+
     @Override
     public Page<Article> getAllArticles(Pageable pageable) {
         return articleRepository.findAll(pageable);
