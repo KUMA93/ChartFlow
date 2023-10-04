@@ -9,6 +9,7 @@ import com.ssafy.chartflow.game.entity.GameTurns;
 import com.ssafy.chartflow.game.repository.GameHistoryStocksRepository;
 import com.ssafy.chartflow.game.repository.GameRepository;
 import com.ssafy.chartflow.game.repository.GameTurnsRepository;
+import com.ssafy.chartflow.info.service.CoinService;
 import com.ssafy.chartflow.stocks.entity.Stocks;
 import com.ssafy.chartflow.stocks.repository.StocksRepository;
 import com.ssafy.chartflow.user.entity.User;
@@ -40,6 +41,7 @@ public class GameService {
     private final GameTurnsRepository gameTurnsRepository;
     private final GameHistoryStocksRepository gameHistoryStocksRepository;
     private final StocksRepository stocksRepository;
+    private final CoinService coinService;
 
     private final EmblemService emblemService;
 
@@ -125,6 +127,13 @@ public class GameService {
     public void startGame(long userId) {
 
         User user = userRepository.findUserById(userId);
+
+        if (user.getCoin() > 0){
+            coinService.decreaseCoin(userId);
+        }else{
+            //todo: throw exception
+            return;
+        }
 
         // 랜덤 주식 정보에 access, PK는 1 ~ 3000000 범위
         Random random = new Random();
