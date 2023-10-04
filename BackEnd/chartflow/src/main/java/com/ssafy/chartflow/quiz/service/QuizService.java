@@ -1,5 +1,6 @@
 package com.ssafy.chartflow.quiz.service;
 
+import com.ssafy.chartflow.quiz.dto.ResponseQuizDto;
 import com.ssafy.chartflow.quiz.entity.Quiz;
 import com.ssafy.chartflow.quiz.entity.QuizChoices;
 import com.ssafy.chartflow.quiz.entity.UserQuiz;
@@ -31,7 +32,7 @@ public class QuizService {
     private final int QuizCount = 3;  // 가져올 퀴즈의 개수
 
     // 오늘의 퀴즈 리스트 리턴
-    public Quiz getTodayQuizzes(Long userId) {
+    public ResponseQuizDto getTodayQuizzes(Long userId) {
         long id = -1L;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate date1 = LocalDate.parse("20230906", formatter);
@@ -59,7 +60,22 @@ public class QuizService {
             }
         }
 
-        return returnData;
+        ResponseQuizDto responseQuizDto = ResponseQuizDto.builder()
+                .quizId(returnData.getId())
+                .question(returnData.getQuestion())
+                .answer(returnData.getAnswer())
+                .build();
+
+        List<QuizChoices> quizChoices = returnData.getQuizChoices();
+        List<String> returnChoices = new ArrayList<>();
+
+        for (QuizChoices quizChoice : quizChoices) {
+            returnChoices.add(quizChoice.getContent());
+        }
+
+        responseQuizDto.setChoices(returnChoices);
+
+        return responseQuizDto;
     }
 
 

@@ -7,6 +7,7 @@ import { useState } from "react";
 import MainPage from "./pages/MainPage";
 import ChartGame from "./pages/ChartGame";
 import Board from "./pages/Board";
+import Write from "./pages/Write";
 import Quiz from "./pages/Quiz";
 import History from "./pages/History";
 import MyPage from "./pages/MyPage";
@@ -31,6 +32,23 @@ function App() {
     return storedThisTurn;
   });
 
+  const [isSaved, setIsSaved] = useState(() => {
+    const storedIsSaved = localStorage.getItem("isSaved");
+    return storedIsSaved;
+  });
+
+  const [assetNum, setAssetNum] = useState("-");
+  const [assetPer, setAssetPer] = useState("-");
+  const [assetGap, setAssetGap] = useState("-");
+  const [initNum, setInitNum] = useState("-");
+  const [cashNum, setCashNum] = useState("-");
+  const [stocksAmt, setStocksAmt] = useState("-");
+  const [stocksNum, setStocksNum] = useState("-");
+  const [avgPriceNum, setAvgPriceNum] = useState("-");
+  const [curPriceNum, setCurPriceNum] = useState("-");
+  const [coin, setCoin] = useState("-");
+  const [flag, setFlag] = useState(true);
+
   return (
     <Router>
       <ThemeProvider>
@@ -41,13 +59,43 @@ function App() {
           }}
         >
           <GameContext.Provider
-            value={{ gameId, setGameId, thisTurn, setThisTurn }}
+            value={{
+              gameId,
+              setGameId,
+              thisTurn,
+              setThisTurn,
+              assetNum,
+              setAssetNum,
+              assetPer,
+              setAssetPer,
+              assetGap,
+              setAssetGap,
+              initNum,
+              setInitNum,
+              cashNum,
+              setCashNum,
+              stocksAmt,
+              setStocksAmt,
+              stocksNum,
+              setStocksNum,
+              avgPriceNum,
+              setAvgPriceNum,
+              curPriceNum,
+              setCurPriceNum,
+              flag,
+              setFlag,
+              isSaved,
+              setIsSaved,
+              coin,
+              setCoin,
+            }}
           >
             <GlobalStyle />
             <Routes>
               <Route path="/" element={<MainPage />} />
               <Route path="/game" element={<ChartGame />} />
               <Route path="/board/*" element={<Board />} />
+              <Route path="/board/new" element={<Write />} />
               <Route path="/quiz/*" element={<Quiz />} />
               <Route path="/hist/*" element={<History />} />
               <Route path="/mypage" element={<MyPage />} />

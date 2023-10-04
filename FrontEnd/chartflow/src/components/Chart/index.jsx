@@ -1,13 +1,17 @@
 /* eslint-disable no-unused-vars */
-import { Component } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./Chart.css";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import * as am5stock from "@amcharts/amcharts5/stock";
+import GameContext from "../../context/GameContext";
 
-class Chart extends Component {
-  componentDidMount() {
+function Chart(props) {
+  const [dayCount, setDayCount] = useState(365);
+  const { curPriceNum, setCurPriceNum } = useContext(GameContext);
+
+  useEffect(() => {
     /* Chart code */
     // Create root element
     // -------------------------------------------------------------------------------
@@ -144,9 +148,9 @@ class Chart extends Component {
         const dataItem = target.dataItem;
         if (dataItem) {
           if (dataItem.get("valueY") > dataItem.get("openValueY")) {
-            return am5.color("#0000FF"); // 상승 캔들에 대한 파란색
+            return am5.color("#FF0000"); // 상승 캔들에 대한 빨간색
           } else {
-            return am5.color("#FF0000"); // 하락 캔들에 대한 빨간색
+            return am5.color("#0000FF"); // 하락 캔들에 대한 파란색
           }
         }
         return stroke;
@@ -301,6 +305,24 @@ class Chart extends Component {
     // Stock toolbar
     // -------------------------------------------------------------------------------
     // https://www.amcharts.com/docs/v5/charts/stock/toolbar/
+
+    // 추가
+    let periodSelector = am5stock.PeriodSelector.new(root, {
+      stockChart: stockChart,
+      periods: [
+        { timeUnit: "day", count: 1, name: "1D" },
+        { timeUnit: "month", count: 1, name: "1M" },
+        { timeUnit: "month", count: 3, name: "3M" },
+        { timeUnit: "month", count: 6, name: "6M" },
+        { timeUnit: "year", count: 1, name: "1Y" },
+        { timeUnit: "max", name: "Max" },
+      ],
+    });
+
+    valueSeries.events.once("datavalidated", function () {
+      periodSelector.selectPeriod({ timeUnit: "month", count: 6 });
+    });
+
     let toolbar = am5stock.StockToolbar.new(root, {
       container: document.getElementById("chartcontrols"),
       stockChart: stockChart,
@@ -312,9 +334,7 @@ class Chart extends Component {
         am5stock.DateRangeSelector.new(root, {
           stockChart: stockChart,
         }),
-        am5stock.PeriodSelector.new(root, {
-          stockChart: stockChart,
-        }),
+        periodSelector,
         seriesSwitcher,
         am5stock.DrawingControl.new(root, {
           stockChart: stockChart,
@@ -394,9 +414,9 @@ class Chart extends Component {
     // valueSeries.data.setAll(data);
     // volumeSeries.data.setAll(data);
     // sbSeries.data.setAll(data);
-    const rawData = this.props.data || [];
-    // console.log("hi" + this.props.data);
-    const formattedData = rawData.map((item) => ({
+
+    let rawData = props.data || [];
+    let formattedData = rawData.map((item) => ({
       Date: item.date * 1000,
       Open: item.openPrice,
       High: item.highestPrice,
@@ -413,37 +433,37 @@ class Chart extends Component {
     // console.log(formattedData[0].Volume);
 
     // 변환된 데이터로 차트 설정
-    valueSeries.data.setAll(formattedData);
-    volumeSeries.data.setAll(formattedData);
-    sbSeries.data.setAll(formattedData);
+    setDayCount(365 + props.thisTurn);
+    valueSeries.data.setAll(formattedData.slice(0, dayCount));
+    volumeSeries.data.setAll(formattedData.slice(0, dayCount));
+    sbSeries.data.setAll(formattedData.slice(0, dayCount));
 
     valueSeries.columns.template.adapters.add("fill", function (fill, target) {
       const dataItem = target.dataItem;
       if (dataItem) {
         if (dataItem.get("valueY") > dataItem.get("openValueY")) {
-          return am5.color("#0000FF"); // 상승 캔들에 대한 파란색
+          return am5.color("#FF0000"); // 상승 캔들에 대한 빨간색
         } else {
-          return am5.color("#FF0000"); // 하락 캔들에 대한 빨간색
+          return am5.color("#0000FF"); // 하락 캔들에 대한 파란색
         }
       }
       return fill;
     });
-  }
 
-  componentWillUnmount() {
-    if (this.root) {
-      this.root.dispose();
-    }
-  }
+    // 현재가 update
+    setCurPriceNum(formattedData[dayCount - 1].Close);
+    return () => {
+      root.dispose();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.thisTurn]);
 
-  render() {
-    return (
-      <>
-        <div id="chartcontrols"></div>
-        <div id="chartdiv"></div>
-      </>
-    );
-  }
+  return (
+    <>
+      <div id="chartcontrols"></div>
+      <div id="chartdiv"></div>
+    </>
+  );
 }
 
 export default Chart;

@@ -12,6 +12,7 @@ function Quiz() {
   return (
     <>
       <Header />
+
       <div className={styles.fullBox}>
         <div className={styles.title}>오늘의 퀴즈
         <img src={lightimg} alt="" className={styles.imgSize}/>

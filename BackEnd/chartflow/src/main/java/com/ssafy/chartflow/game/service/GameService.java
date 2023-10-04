@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -69,6 +66,7 @@ public class GameService {
         return responseData;
     }
 
+    //특정 주가 , 주식 날짜 정보
 
     @Transactional(readOnly = true)
     public Map<String, Object> getGameData(long userId) {
@@ -101,8 +99,24 @@ public class GameService {
 
         response.put("gameHistory", gameHistoryData);
 
-        // companyCode를 통해 전체 차트데이터 조회
-        List<Stocks> stocksList = stocksRepository.findAllByTicker(companyCode);
+        // companyCode 전 1년 차트 데이터
+        String ticker = gameHistories.get(gameHistories.size()-1).getCompanyCode();
+        String date = gameHistories.get(gameHistories.size()-1).getChartDate();
+        log.info("==============검색할 날짜 : " + date);
+        List<Stocks> stocksList = stocksRepository.findAllPreviousStocks(ticker,date);
+        Collections.reverse(stocksList);
+        log.info("====================1년 전 주식 정보======================");
+        for (Stocks cur : stocksList) {
+            log.info(cur.getDate());
+        }
+
+        // 앞으로 51개 만큼의 차트 데이터 추가
+        List<GameHistoryStocks> after = gameHistories.get(gameHistories.size()-1).getGameHistoryStocks();
+        log.info("====================앞으로 붙일 주식 정보=====================");
+        for (GameHistoryStocks cur : after) {
+            log.info(cur.getStocks().getDate());
+            stocksList.add(cur.getStocks());
+        }
         response.put("chartData", stocksList);
 
         return response;
@@ -132,9 +146,13 @@ public class GameService {
                 .build();
         log.info("게임 히스토리 생성 완료 - " + gameHistory.toString());
 
-        // 51개 만큼 주식 데이터 저장
+        // 51개 만큼 주식 데이터 저장 게임을 진행해야하는 데이터
         List<Stocks> stocks = stocksRepository.findAllByTicker(stock.getTicker());
-
+//        int dayOfYear = 365;
+//        // 앞의 300개 데이터
+//        stocks = stocks.subList(dayOfYear + 10 , stocks.size() - dayOfYear );
+//        Stocks firstStocks = stocks.get(0);
+//        List<Stocks> allPreviousStocks = stocksRepository.findAllPreviousStocks(firstStocks.getTicker(), firstStocks.getDate());
 
         gameHistory.setUser(user);
 
@@ -155,6 +173,7 @@ public class GameService {
             }
         }
 
+        return;
     }
 
 
