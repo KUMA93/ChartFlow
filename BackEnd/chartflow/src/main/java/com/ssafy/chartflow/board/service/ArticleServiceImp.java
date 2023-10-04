@@ -94,8 +94,8 @@ public class ArticleServiceImp implements ArticleService {
     }
 
     @Override
-    public void withdrawLike(long likeId) {
-        likeRepository.deleteById(likeId);
+    public void withdrawLike(long userId,long articleId) {
+        likeRepository.deleteByUserIdAndArticleId(userId,articleId);
     }
 
     @Override

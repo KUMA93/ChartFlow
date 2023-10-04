@@ -1,5 +1,6 @@
 package com.ssafy.chartflow.board.controller;
 
+import com.ssafy.chartflow.board.dto.request.RequestDeleteArticleDto;
 import com.ssafy.chartflow.board.dto.request.RequestLikeDto;
 import com.ssafy.chartflow.board.dto.request.RequestModifyArticleDto;
 import com.ssafy.chartflow.board.dto.request.RequestWriteArticleDto;
@@ -184,24 +185,20 @@ public class BoardController {
     public ResponseEntity<Map<String,Object>> deleteArticle(
             @Parameter(hidden = true)
             @RequestHeader("Authorization") String jwtToken,
-            @RequestBody RequestModifyArticleDto requestModifyArticleDto
+            @RequestBody RequestDeleteArticleDto requestDeleteArticleDto
     ){
         Map<String,Object> response = new HashMap<>();
         try {
             long userId = jwtService.extractUserId(jwtToken);
-            List<Article> userArticles = articleService.findAllArticleByUserId(userId);
+            Article article = articleService.findArticleByArticleId(requestDeleteArticleDto.getArticleId());
 
-            for(Article userArticle : userArticles){
-                if(userArticle.getUser().getId() == userId){
-                    articleService.deleteArticle(requestModifyArticleDto.getArticleId());
-                    response.put("status", "success");
-                    response.put("message", "Article successfully deleted.");
-                    break;
-                }
+            if(article.getUser().getId() == userId){
+                article.setDeleted(true);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }else{
+                response.put("message","삭제 권한이 없습니다.");
+                return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
             }
-
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-
         } catch (Exception e) {
             response.put("status", "error");
             response.put("message", e.getMessage());
@@ -233,11 +230,14 @@ public class BoardController {
     public ResponseEntity<Map<String,Object>> withdrawLike(
             @Parameter(hidden = true)
             @RequestHeader("Authorization") String token,
-            @RequestBody long likeId
+            @RequestBody RequestLikeDto requestLikeDto
     ){
         Map<String,Object> response = new HashMap<>();
         try {
-            articleService.withdrawLike(likeId);
+            Long userId = jwtService.extractUserId(token);
+            Long articleId = requestLikeDto.getArticleId();
+            articleService.withdrawLike(userId,articleId);
+
             response.put("message", "success");
         } catch (Exception e) {
             response.put("message", "좋아요 취소 오류");

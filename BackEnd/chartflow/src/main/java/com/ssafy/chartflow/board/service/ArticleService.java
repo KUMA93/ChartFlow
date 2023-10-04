@@ -24,7 +24,7 @@ public interface ArticleService {
 
     public void likeArticle(long userId, long articleId);
 
-    public void withdrawLike(long likeId);
+    public void withdrawLike(long userId, long articleId);
 
     public Article findArticleByArticleId(long articleId);
 
