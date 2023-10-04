@@ -6,8 +6,11 @@ import write from "../../assets/images/write.png";
 import align from "../../assets/images/align.png";
 import search from "../../assets/images/search.png";
 import { useInput } from "../../hooks/useInput";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
 
 function Board() {
+  const { handleBoardWriteNavigate } = useCustomNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
   };
@@ -32,7 +35,7 @@ function Board() {
             <button className={styles.tag}>뽐뿌/핫딜</button>
             <button className={styles.tag}>재테크</button>
           </div>
-          <button className={styles.write}>
+          <button className={styles.write} onClick={handleBoardWriteNavigate}>
             글쓰기
             <img src={write} alt="" className={styles.writeImg} />
           </button>

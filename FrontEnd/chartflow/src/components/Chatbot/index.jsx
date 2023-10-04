@@ -10,7 +10,9 @@ const Chatbot = () => {
     return (
       <S.ChatbotWrapper onClick={chatbot} mode={chat}>
         <img src={chatBot} alt="" className={styles.img}/>
-        <div></div>
+        <div>
+          채팅창
+        </div>
       </S.ChatbotWrapper>
     );
   }

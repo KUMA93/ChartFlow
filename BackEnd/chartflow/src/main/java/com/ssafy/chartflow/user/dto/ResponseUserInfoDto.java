@@ -14,6 +14,6 @@ public class ResponseUserInfoDto {
     private String name;
     private String nickname;
     private String email;
-    private Long selected_emblem;
+    private String selected_emblem;
     private Long ranking;
 }

@@ -17,7 +17,7 @@
 
 .article {
   display: flex;
-  font-size: 18px;
+  font-size: 16px;
   max-width: 100%;
   overflow: hidden;
 }
@@ -34,7 +34,8 @@
 .date {
   color: rgba(0, 0, 0, 0.5);
   min-width: max-content;
-  margin-left: 15vw;
+  margin-left: 20vw;
+  font-size: 15px;
 }
 
 .pagination {
@@ -59,7 +60,7 @@
 .num {
   color: #d6b8ff;
   margin-left: 5px;
-  font-size: 20px;
+  font-size: 17px;
 }
 
 .dot {

@@ -11,11 +11,14 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString()
+@ToString(exclude = {"user", "emblem"})
 public class UserEmblem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "equiped", columnDefinition = "TINYINT(1) DEFAULT 0")
+    private boolean equiped;
 
     @ManyToOne
     @JoinColumn(name = "userId")

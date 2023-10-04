@@ -165,7 +165,7 @@ public class GameController {
                     log.info("Game Controller - 스킵");
                     int turn = gameService.skipTurn(requestGameProgressDto.getGameHistoryId(), userId);
 
-                    if (turn < 50) break;
+                    if (turn < 51) break;
 
                 // 종료
                 default:

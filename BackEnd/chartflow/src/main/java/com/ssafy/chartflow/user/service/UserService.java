@@ -1,5 +1,6 @@
 package com.ssafy.chartflow.user.service;
 
+import com.ssafy.chartflow.emblem.repository.UserEmblemRepository;
 import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
 import com.ssafy.chartflow.info.repository.RedisRankingRepository;
 import com.ssafy.chartflow.security.service.JwtService;
@@ -32,6 +33,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final RedisRankingRepository rankingRepository;
+    private final UserEmblemRepository userEmblemRepository;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
     private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
@@ -93,17 +95,23 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Map<String, Object> getMyPage(Long userId) {
-        Map<String, Object> response = new HashMap<>();
+    public ResponseMyPageDto getMyPage(Long userId) {
         User user = userRepository.findUserById(userId);
-        user.setRanking(rankingRepository.getUserRank(userId));
-        System.out.println("--------- rank : "+user.getRanking());
-        ResponseUserInfoDto userInfoDto = new ResponseUserInfoDto(userId, user.getName(), user.getNickname(), user.getEmail(), user.getSelected_emblem(), user.getRanking());
+
+        Long ranking = rankingRepository.getUserRank(userId);
+        String equipedEmblem = userEmblemRepository.findUserEmblemByUserAndEquipedIsTrue(user).getEmblem().getName();
+        ResponseUserInfoDto userInfoDto = ResponseUserInfoDto.builder()
+                .selected_emblem(equipedEmblem)
+                .id(userId)
+                .ranking(ranking)
+                .email(user.getEmail())
+                .name(user.getName())
+                .nickname(user.getNickname())
+                .build();
         ResponseAssetsDto userAssetsDto = new ResponseAssetsDto(user.getCoin(), user.getBudget());
-        System.out.println(user);
+
         System.out.println(userInfoDto);
-        response.put("data", new ResponseMyPageDto(userInfoDto, userAssetsDto));
-        return response;
+        return new ResponseMyPageDto(userInfoDto, userAssetsDto);
     }
 
 }
