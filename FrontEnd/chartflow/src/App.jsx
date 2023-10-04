@@ -14,6 +14,7 @@ import MyPage from "./pages/MyPage";
 import Join from "./pages/Join";
 import NotFound from "./pages/NotFound";
 import QuizCorrect from "./pages/QuizCorrect";
+import QuizWrong from "./pages/QuizWrong";
 import JoinComplete from "./pages/JoinComplete";
 import Forget from "./pages/Forget";
 
@@ -103,7 +104,9 @@ function App() {
               <Route path="/complete" element={<JoinComplete />} />
               <Route path="/forget" element={<Forget />} />
               <Route path="/*" element={<NotFound />} />
-              <Route path="/quizcorrect" element={<QuizCorrect />} />
+              <Route path="/quiz/correct" element={<QuizCorrect />} />
+              <Route path="/quiz/wrong" element={<QuizWrong />} />
+
             </Routes>
           </GameContext.Provider>
         </UserContext.Provider>
