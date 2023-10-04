@@ -9,18 +9,17 @@ import { useState } from "react";
 function Articles(alignMode) {
   const Line = () => <div className={styles.line}></div>;
   const [articles, setArticles] = useState();
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    const requestData = JSON.stringify({
-      page: 0,
-      size: 5,
-      sort: ["string"],
-    });
-
-    seeAllBoard(requestData)
-      .then((res) => setArticles(res.articles))
+    seeAllBoard(currentPage, 8)
+      .then((res) => {
+        setArticles(res.articles);
+        setTotalPages(Math.ceil(res.articles.length / 8) + 1);
+      })
       .catch((err) => console.error(err));
-  }, []);
+  }, [currentPage]);
 
   function calculateDaysAgo(registerTime) {
     const currentDate = new Date();
@@ -58,7 +57,22 @@ function Articles(alignMode) {
           ))}
         </div>
       </div>
-      <div className={styles.pagination}>pagination</div>
+      <div className={styles.pagination}>
+        {totalPages > 0 &&
+          Array(totalPages)
+            .fill(0)
+            .map((_, index) => (
+              <div
+                key={index}
+                onClick={() => setCurrentPage(index)}
+                className={
+                  currentPage === index ? styles.currentPage : styles.page
+                }
+              >
+                {index + 1}
+              </div>
+            ))}
+      </div>
     </>
   );
 }

@@ -8,7 +8,7 @@
     "inner1"
     "inner2"
     "articles";
-  grid-template-rows: 0.8fr 0.2fr 0.2fr 1.5fr;
+  grid-template-rows: 190px 50px 50px 330px;
 }
 
 .hotUpdate {
@@ -123,9 +123,9 @@
 .dropdown {
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   margin-left: 140px;
-  top: 56vh;
+  top: 59vh;
   left: 73vw;
   background-color: #fff;
   width: 80px;

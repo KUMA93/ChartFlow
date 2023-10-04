@@ -1,8 +1,10 @@
 import { axiosServer, axiosServerWithoutToken } from "../axiosInstance";
 
 // 전체 게시글 조회
-export const seeAllBoard = async (requestData) => {
-  const res = await axiosServerWithoutToken().get(`/board/list`, requestData);
+export const seeAllBoard = async (page, size) => {
+  const res = await axiosServerWithoutToken().get(
+    `/board/list?page=${page}&size=${size}`
+  );
   return res.data;
 };
 
