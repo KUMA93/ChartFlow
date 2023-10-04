@@ -22,8 +22,9 @@ function BoardOne() {
       <Header />
       <div className={styles.container}>
         <div className={styles.board}>
-          {/* <div className={styles.title}>{article.title}</div>
-          <div className={styles.content}>{article.content}</div> */}
+          <div className={styles.title}>{article?.title}</div>
+          <div className={styles.line}></div>
+          <div className={styles.content}>{article?.content}</div>
         </div>
         <div className={styles.newArticle}>
           <NewArticle />
