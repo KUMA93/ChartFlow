@@ -40,7 +40,14 @@
 }
 
 .pagination {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 17px;
+  font-weight: 600;
+}
+.pagination > * {
+  margin: 0 5px;
 }
 
 .iconGroup {
@@ -75,4 +82,15 @@
   height: 7px;
   border-bottom: 2px solid #959595;
   margin-bottom: 12px;
+}
+
+.currentPage {
+  display: flex;
+  color: #8effa7;
+  font-size: 20px;
+}
+
+.page {
+  display: flex;
+  color: #6c00ff;
 }
