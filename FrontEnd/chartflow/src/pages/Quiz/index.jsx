@@ -47,20 +47,31 @@ function Quiz() {
   return (
     <>
       <Header />
-      <div className={styles.fullBox}>
-        <div className={styles.title}>오늘의 퀴즈
-        <img src={lightimg} alt="" className={styles.imgSize}/>
+      {quiz.quizId === 0 ? 
+        <div className={styles.fullBox}>
+          <div className={styles.title}>오늘의 퀴즈
+            <img src={lightimg} alt="" className={styles.imgSize}/>
+          </div>
+          <div className={styles.quizFont}>
+            오늘의 퀴즈를 전부 풀었습니다! 내일 다시 도전해주세요.
+          </div>
         </div>
-        <div className={styles.quizFont}>
-        {quiz.question}
+      : 
+        <div className={styles.fullBox}>
+          <div className={styles.title}>오늘의 퀴즈
+          <img src={lightimg} alt="" className={styles.imgSize}/>
+          </div>
+          <div className={styles.quizFont}>
+            {quiz.question}
+          </div>
+          <div className={styles.ansContainer}>
+            <div className={styles.ansBtn1} onClick={() => handleQuiz(quiz.choices[0])}>1. {quiz.choices && quiz.choices[0]}</div>
+            <div className={styles.ansBtn2} onClick={() => handleQuiz(quiz.choices[1])}>2. {quiz.choices && quiz.choices[1]}</div>
+            <div className={styles.ansBtn3} onClick={() => handleQuiz(quiz.choices[2])}>3. {quiz.choices && quiz.choices[2]}</div>
+            <div className={styles.ansBtn4} onClick={() => handleQuiz(quiz.choices[3])}>4. {quiz.choices && quiz.choices[3]}</div>
+          </div>
         </div>
-      <div className={styles.ansContainer}>
-        <div className={styles.ansBtn1} onClick={() => handleQuiz(quiz.choices[0])}>1. {quiz.choices && quiz.choices[0]}</div>
-        <div className={styles.ansBtn2} onClick={() => handleQuiz(quiz.choices[1])}>2. {quiz.choices && quiz.choices[1]}</div>
-        <div className={styles.ansBtn3} onClick={() => handleQuiz(quiz.choices[2])}>3. {quiz.choices && quiz.choices[2]}</div>
-        <div className={styles.ansBtn4} onClick={() => handleQuiz(quiz.choices[3])}>4. {quiz.choices && quiz.choices[3]}</div>
-      </div>
-    </div>    
+      }
     </>
   );
 }
