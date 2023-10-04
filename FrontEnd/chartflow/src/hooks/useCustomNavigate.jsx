@@ -53,9 +53,9 @@ const useCustomNavigate = () => {
     navigate("/board/new");
   };
 
-  const handleBoardViewNavigate = (articleId) => {
+  function handleBoardViewNavigate(articleId) {
     navigate(`/board/${articleId}`);
-  };
+  }
 
   const handleBoardEditNavigate = (postId) => {
     navigate("/board/edit/" + postId);

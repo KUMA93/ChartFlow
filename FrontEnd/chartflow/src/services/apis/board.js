@@ -10,7 +10,7 @@ export const seeAllBoard = async (page, size) => {
 
 // 특정 게시글 조회
 export const seeOneBoard = async (articleId) => {
-  const res = await axiosServerWithoutToken().get(`/board/${articleId}`);
+  const res = await axiosServer().get(`/board/${articleId}`);
   return res.data;
 };
 

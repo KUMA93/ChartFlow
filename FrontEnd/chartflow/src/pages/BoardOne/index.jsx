@@ -1,4 +1,5 @@
 import styles from "./BoardOne.module.css";
+import { useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import NewArticle from "../../components/NewArticle";
 import NewComments from "../../components/NewComments";
@@ -6,16 +7,16 @@ import useCustomNavigate from "../../hooks/useCustomNavigate";
 import { seeOneBoard } from "../../services/apis/board";
 import { useState, useEffect } from "react";
 
-function BoardOne(articleId) {
+function BoardOne() {
   const { handleBoardNavigate } = useCustomNavigate();
+  const { articleId } = useParams();
   const [article, setArticle] = useState();
+
   useEffect(() => {
     seeOneBoard(articleId)
       .then((res) => setArticle(res.article))
       .catch((err) => console.error(err));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  console.log(articleId);
+  }, [articleId]);
   return (
     <>
       <Header />
