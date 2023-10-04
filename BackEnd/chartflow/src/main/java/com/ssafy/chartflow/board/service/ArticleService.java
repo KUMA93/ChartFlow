@@ -2,6 +2,7 @@ package com.ssafy.chartflow.board.service;
 
 import com.ssafy.chartflow.board.dto.response.ArticleResponseDto;
 import com.ssafy.chartflow.board.entity.Article;
+import com.ssafy.chartflow.board.entity.ArticleTag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,7 +14,7 @@ public interface ArticleService {
     //글 목록 조회
     public Page<Article> getAllArticles(Pageable pageable);
     //글 작성
-    public void writeArticle(long userId,String tag,String title, String content);
+    public void writeArticle(long userId, ArticleTag tag, String title, String content);
     //글 수정
     public void modifyArticle(long articleId, String title,String content);
     //글 삭제

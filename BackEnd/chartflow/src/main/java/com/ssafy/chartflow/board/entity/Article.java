@@ -26,7 +26,7 @@ public class Article {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private String tag;
+    private ArticleTag tag;
 
     @Column(name = "views")
     private int views;

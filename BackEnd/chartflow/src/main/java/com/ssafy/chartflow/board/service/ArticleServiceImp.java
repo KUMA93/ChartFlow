@@ -2,6 +2,7 @@ package com.ssafy.chartflow.board.service;
 
 import com.ssafy.chartflow.board.dto.response.ArticleResponseDto;
 import com.ssafy.chartflow.board.entity.Article;
+import com.ssafy.chartflow.board.entity.ArticleTag;
 import com.ssafy.chartflow.board.entity.Likes;
 import com.ssafy.chartflow.board.repository.ArticleRepository;
 import com.ssafy.chartflow.board.repository.CustomLikeRepository;
@@ -40,7 +41,7 @@ public class ArticleServiceImp implements ArticleService {
     }
 
     @Override
-    public void writeArticle(long userId, String tag,String title, String content) {
+    public void writeArticle(long userId, ArticleTag tag, String title, String content) {
         User user = userRepository.findUserById(userId);
         Article article = new Article();
         article.setUser(user);

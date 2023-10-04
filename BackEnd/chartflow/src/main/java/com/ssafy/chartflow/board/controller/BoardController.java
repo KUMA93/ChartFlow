@@ -5,6 +5,7 @@ import com.ssafy.chartflow.board.dto.request.RequestModifyArticleDto;
 import com.ssafy.chartflow.board.dto.request.RequestWriteArticleDto;
 import com.ssafy.chartflow.board.dto.response.ArticleResponseDto;
 import com.ssafy.chartflow.board.entity.Article;
+import com.ssafy.chartflow.board.entity.ArticleTag;
 import com.ssafy.chartflow.board.service.ArticleService;
 import com.ssafy.chartflow.exception.LikeDuplicateException;
 import com.ssafy.chartflow.exception.NoSuchLikeException;
@@ -100,7 +101,7 @@ public class BoardController {
 
         try {
             Long userId = jwtService.extractUserId(token);
-            String tag = requestWriteArticleDto.getTag();
+            ArticleTag tag = requestWriteArticleDto.getTag();
             String title = requestWriteArticleDto.getTitle();
             String content = requestWriteArticleDto.getContent();
             articleService.writeArticle(userId, tag, title, content);
