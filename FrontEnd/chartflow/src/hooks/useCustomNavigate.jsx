@@ -37,10 +37,6 @@ const useCustomNavigate = () => {
     navigate("/board");
   };
 
-  const handleBoardHotNavigate = () => {
-    navigate("/board/hot");
-  };
-
   // const handleBoardMyPostNavigate = () => {
   //   navigate("/board/my-post");
   // };
@@ -54,7 +50,7 @@ const useCustomNavigate = () => {
   // };
 
   const handleBoardWriteNavigate = () => {
-    navigate("/board/write");
+    navigate("/board/new");
   };
 
   const handleBoardViewNavigate = () => {
@@ -97,7 +93,6 @@ const useCustomNavigate = () => {
     handleJoinNavigate,
     handleMyPageNavigate,
     handleBoardNavigate,
-    handleBoardHotNavigate,
     handleBoardSearchNavigate,
     handleForgetNavigate,
     // handleBoardMyPostNavigate,

@@ -35,7 +35,6 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final RedisRankingRepository rankingRepository;
-    private final ArticleRepository articleRepository;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
     private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저

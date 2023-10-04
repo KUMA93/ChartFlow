@@ -1,4 +1,4 @@
-import { axiosServer, axiosServerWithoutToken } from "../axiosInstance";
+import { axiosServerWithoutToken } from "../axiosInstance";
 
 // 로그인
 export const login = async (requestLogin) => {
@@ -29,13 +29,13 @@ export const emailAuthentication = async (email) => {
 // 임시비밀번호 발급
 export const temporaryPassword = async (email) => {
   const request = {
-    email: email
+    email: email,
   };
 
   const res = await axiosServerWithoutToken().post(`/user/pass`, request);
 
   return res.data;
-}
+};
 
 // 닉네임 중복 확인
 export const verifyNickname = async (nickname) => {

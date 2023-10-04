@@ -8,5 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestLikeDto {
+    Long userId;
     Long articleId;
 }

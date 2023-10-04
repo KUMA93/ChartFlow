@@ -10,7 +10,7 @@ import { useContext } from "react";
 function Login({ modalShow, handleClose }) {
   const { handleMainNavigate, handleJoinNavigate, handleForgetNavigate } =
     useCustomNavigate();
-  const { isLogin, setIsLogin } = useContext(UserContext);
+  const { setIsLogin } = useContext(UserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();

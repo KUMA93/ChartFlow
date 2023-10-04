@@ -17,7 +17,7 @@ function Carousel() {
     },
     {
       key: 1,
-      title: "comm",
+      title: "board",
       icon: require("../../assets/images/carousel-community.png"),
     },
     {
@@ -26,7 +26,7 @@ function Carousel() {
       icon: require("../../assets/images/carousel-quiz.png"),
     },
     {
-      key: 3  ,
+      key: 3,
       title: "hist",
       icon: require("../../assets/images/carousel-history.png"),
     },

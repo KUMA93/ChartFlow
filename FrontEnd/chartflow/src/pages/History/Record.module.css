@@ -1,0 +1,77 @@
+.back {
+  width: 64vw;
+  height: 510px;
+  border-radius: 20px;
+  background: #FFF;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  margin: auto;
+}
+
+.gridCon {
+  display: grid;
+  justify-content: space-around;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+}
+
+.item {
+  border: 2px solid #8EFFA7;
+  border-radius: 20px;
+  width: 30vw;
+  height: 18vh;
+  flex-direction: column;
+  margin: auto;
+}
+
+.tFont {
+  font-family: SUITE;
+  font-weight: 500;
+  font-size: 18px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.div1 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 60%;
+  text-align: center;
+  align-items: center;
+}
+
+.money {
+  font-family: SUITE;
+  font-weight: 800;
+  font-size: 30px;
+  color: rgb(197, 26, 26);
+}
+
+.coin {
+  font-family: SUITE;
+  font-weight: 800;
+  font-size: 30px;
+  color: #000;
+}
+
+.exFont {
+  font-family: SUITE;
+  font-size: 15px;
+  margin-top: 7px;
+  color: #6C00FF;
+}
+
+.btn {
+  border: 0;
+  border-radius: 10px;
+  background-color: rgb(221, 221, 221);
+  width: 35%;
+  height: 25px;
+  font-family: SUITE;
+  margin-top: 8px;
+  cursor: pointer;
+}

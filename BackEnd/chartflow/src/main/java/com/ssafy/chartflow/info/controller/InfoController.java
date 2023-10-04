@@ -52,4 +52,30 @@ public class InfoController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @Operation(summary = "유저 랭킹", description = "유저 랭킹 상위 10명 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "자산 조회 성공"),
+            @ApiResponse(responseCode = "500", description = "로그인 실패 - 내부 서버 오류")
+    })
+    @GetMapping("/rankings")
+    public ResponseEntity<Map<String, Object>> userRankings(
+            @Parameter(hidden = true)
+            @RequestHeader("Authorization") String token) {
+        Map<String,Object> response = new HashMap<>();
+        token = token.split(" ")[1];
+
+        try {
+            Long userId = jwtService.extractUserId(token);
+            ResponseAssetsDto dto = userService.getAssets(userId);
+            response.put("assets" , dto);
+            response.put("message", "success");
+        } catch (Exception e) {
+            response.put("message", "유저자산조회 실패");
+            log.error("user Assets 오류 - {}",e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

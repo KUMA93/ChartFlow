@@ -1,9 +1,7 @@
 package com.ssafy.chartflow.game.service;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
-import com.ssafy.chartflow.emblem.entity.Emblem;
 import com.ssafy.chartflow.emblem.service.EmblemService;
-import com.ssafy.chartflow.game.dto.request.RequestGameProgressDto;
 import com.ssafy.chartflow.game.dto.response.ResponseGameHistoryDto;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameHistoryStocks;
@@ -11,6 +9,7 @@ import com.ssafy.chartflow.game.entity.GameTurns;
 import com.ssafy.chartflow.game.repository.GameHistoryStocksRepository;
 import com.ssafy.chartflow.game.repository.GameRepository;
 import com.ssafy.chartflow.game.repository.GameTurnsRepository;
+import com.ssafy.chartflow.info.service.CoinService;
 import com.ssafy.chartflow.stocks.entity.Stocks;
 import com.ssafy.chartflow.stocks.repository.StocksRepository;
 import com.ssafy.chartflow.user.entity.User;
@@ -18,14 +17,10 @@ import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -46,6 +41,7 @@ public class GameService {
     private final GameTurnsRepository gameTurnsRepository;
     private final GameHistoryStocksRepository gameHistoryStocksRepository;
     private final StocksRepository stocksRepository;
+    private final CoinService coinService;
 
     private final EmblemService emblemService;
 
@@ -72,7 +68,9 @@ public class GameService {
         return responseData;
     }
 
+    //특정 주가 , 주식 날짜 정보
 
+    @Transactional(readOnly = true)
     public Map<String, Object> getGameData(long userId) {
         Map<String,Object> response = new HashMap<>();
 
@@ -103,8 +101,24 @@ public class GameService {
 
         response.put("gameHistory", gameHistoryData);
 
-        // companyCode를 통해 전체 차트데이터 조회
-        List<Stocks> stocksList = stocksRepository.findAllByTicker(companyCode);
+        // companyCode 전 1년 차트 데이터
+        String ticker = gameHistories.get(gameHistories.size()-1).getCompanyCode();
+        String date = gameHistories.get(gameHistories.size()-1).getChartDate();
+        log.info("==============검색할 날짜 : " + date);
+        List<Stocks> stocksList = stocksRepository.findAllPreviousStocks(ticker,date);
+        Collections.reverse(stocksList);
+        log.info("====================1년 전 주식 정보======================");
+        for (Stocks cur : stocksList) {
+            log.info(cur.getDate());
+        }
+
+        // 앞으로 51개 만큼의 차트 데이터 추가
+        List<GameHistoryStocks> after = gameHistories.get(gameHistories.size()-1).getGameHistoryStocks();
+        log.info("====================앞으로 붙일 주식 정보=====================");
+        for (GameHistoryStocks cur : after) {
+            log.info(cur.getStocks().getDate());
+            stocksList.add(cur.getStocks());
+        }
         response.put("chartData", stocksList);
 
         return response;
@@ -113,6 +127,13 @@ public class GameService {
     public void startGame(long userId) {
 
         User user = userRepository.findUserById(userId);
+
+        if (user.getCoin() > 0){
+            coinService.decreaseCoin(userId);
+        }else{
+            //todo: throw exception
+            return;
+        }
 
         // 랜덤 주식 정보에 access, PK는 1 ~ 3000000 범위
         Random random = new Random();
@@ -134,9 +155,13 @@ public class GameService {
                 .build();
         log.info("게임 히스토리 생성 완료 - " + gameHistory.toString());
 
-        // 51개 만큼 주식 데이터 저장
+        // 51개 만큼 주식 데이터 저장 게임을 진행해야하는 데이터
         List<Stocks> stocks = stocksRepository.findAllByTicker(stock.getTicker());
-
+//        int dayOfYear = 365;
+//        // 앞의 300개 데이터
+//        stocks = stocks.subList(dayOfYear + 10 , stocks.size() - dayOfYear );
+//        Stocks firstStocks = stocks.get(0);
+//        List<Stocks> allPreviousStocks = stocksRepository.findAllPreviousStocks(firstStocks.getTicker(), firstStocks.getDate());
 
         gameHistory.setUser(user);
 
@@ -157,6 +182,7 @@ public class GameService {
             }
         }
 
+        return;
     }
 
 

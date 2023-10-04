@@ -8,21 +8,46 @@
     "inner1"
     "inner2"
     "articles";
-  grid-template-rows: 20vh 30px 30px 1fr 20px;
+  grid-template-rows: 190px 50px 50px 330px;
 }
 
 .hotUpdate {
   grid-area: hotUpdate;
+  overflow: hidden;
 }
 
 .inner1 {
   grid-area: inner1;
   display: flex;
   width: 100%;
+  overflow: hidden;
 }
 
 .tags {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 75%;
+}
+
+.tag {
+  display: flex;
+  background: #fff;
+  border: 0;
+  border-radius: 30px;
+  width: 120px;
+  height: 100%;
+  flex-shrink: 0;
+  font-size: 17px;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.tag:focus {
+  outline: none;
+  background: #8effa7;
+  color: #6c00ff;
 }
 
 .write {
@@ -38,12 +63,87 @@
   font-weight: 600;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+.write:focus {
+  outline: none;
 }
 
 .inner2 {
   grid-area: inner2;
+  display: flex;
+  width: 100%;
 }
 
+.search {
+  display: flex;
+  width: 80%;
+  background: #fff;
+  border: 0;
+  border-radius: 30px;
+  align-items: center;
+}
+.searchImg {
+  width: 30px;
+  height: 30px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.alignImg {
+  margin-left: auto;
+  margin-top: 8px;
+  width: 37px;
+  height: 33px;
+  cursor: pointer;
+}
 .articles {
   grid-area: articles;
+}
+
+.inputSearch {
+  font-size: 18px;
+  text-indent: 4px;
+  color: #222222;
+  width: 90%;
+  border: none;
+  position: relative;
+  background: none;
+  z-index: 5;
+  cursor: text;
+}
+.inputSearch::placeholder {
+  color: #aaaaaa;
+  font-size: 18px;
+}
+.inputSearch:focus {
+  outline: none;
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin-left: 140px;
+  top: 59vh;
+  left: 73vw;
+  background-color: #fff;
+  width: 80px;
+  border: 0;
+  border-radius: 4px;
+  z-index: 3;
+}
+
+.dropdownButton {
+  background-color: #fff;
+  color: black;
+  font-weight: bolder;
+  font-size: 14px;
+  height: 35px;
+  border: 1px solid black;
+  padding: 5px;
+  cursor: pointer;
+}
+.dropdownButton:hover {
+  color: #6c00ff;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import { FaUserCircle } from "react-icons/fa";
 import useCustomNavigate from "../../hooks/useCustomNavigate";

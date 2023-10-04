@@ -9,6 +9,7 @@
 .mainLogo {
   width: 250px;
   margin-left: 2vw;
+  cursor: pointer;
 }
 
 .menu {

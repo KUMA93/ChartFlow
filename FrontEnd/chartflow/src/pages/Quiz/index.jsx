@@ -1,11 +1,18 @@
 import Header from "../../components/Header";
 import styles from "./Quiz.module.css"
 import lightimg from "../../assets/images/light.png"
+import { useEffect } from "react";
 
 function Quiz() {
+
+  useEffect(() => {
+    
+  }, [])
+
   return (
     <>
       <Header />
+
       <div className={styles.fullBox}>
         <div className={styles.title}>오늘의 퀴즈
         <img src={lightimg} alt="" className={styles.imgSize}/>

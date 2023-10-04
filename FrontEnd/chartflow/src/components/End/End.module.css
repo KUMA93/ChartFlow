@@ -9,7 +9,7 @@
   z-index: 1;
 }
 
-.modalLogin {
+.modal {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,7 +51,12 @@
   flex-shrink: 0;
   border-radius: 30px;
   margin-left: 5px;
+  cursor: pointer;
 }
+.goNew:focus {
+  outline: none;
+}
+
 .goResult {
   background-color: #6c00ff;
   color: #8effa7;
@@ -62,6 +67,10 @@
   flex-shrink: 0;
   border-radius: 30px;
   margin-left: 5px;
+  cursor: pointer;
+}
+.goResult:focus {
+  outline: none;
 }
 
 .coinLeft {

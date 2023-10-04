@@ -1,5 +1,6 @@
 package com.ssafy.chartflow.quiz.service;
 
+import com.ssafy.chartflow.quiz.dto.ResponseQuizDto;
 import com.ssafy.chartflow.quiz.entity.Quiz;
 import com.ssafy.chartflow.quiz.entity.QuizChoices;
 import com.ssafy.chartflow.quiz.entity.UserQuiz;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -29,19 +31,51 @@ public class QuizService {
     private final UserRepository userRepository;
     private final int QuizCount = 3;  // 가져올 퀴즈의 개수
 
-    // 오늘의 퀴즈 id리턴
-    public Long getTodayQuizId() {
+    // 오늘의 퀴즈 리스트 리턴
+    public ResponseQuizDto getTodayQuizzes(Long userId) {
         long id = -1L;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate date1 = LocalDate.parse("20230906", formatter);
         LocalDate date2 = LocalDate.now();
         id = DAYS.between(date1, date2) * QuizCount;
-        return id;
-    }
+        long cnt = quizRepository.countBy();
 
-    // 오늘의 퀴즈 리스트 리턴
-    public List<Quiz> getTodayQuizzes() {
-        return quizRepository.findFirst3ByIdGreaterThanOrderByIdAsc(getTodayQuizId());
+        long[] idList = new long[] { id % cnt, (id+1) % cnt, (id+2) % cnt };
+        List<Quiz> todayQuizzes = new ArrayList<>();
+
+        for (long cur : idList){
+            todayQuizzes.add(quizRepository.findById(cur));
+        }
+
+        Quiz returnData = Quiz.builder()
+                .id(0L)
+                .build();
+
+        for (Quiz quiz : todayQuizzes) {
+            UserQuiz userQuiz = userQuizRepository.findUserQuizByUserIdAndQuizId(userId, quiz.getId());
+
+            if (userQuiz == null) {
+                returnData = quiz;
+                break;
+            }
+        }
+
+        ResponseQuizDto responseQuizDto = ResponseQuizDto.builder()
+                .quizId(returnData.getId())
+                .question(returnData.getQuestion())
+                .answer(returnData.getAnswer())
+                .build();
+
+        List<QuizChoices> quizChoices = returnData.getQuizChoices();
+        List<String> returnChoices = new ArrayList<>();
+
+        for (QuizChoices quizChoice : quizChoices) {
+            returnChoices.add(quizChoice.getContent());
+        }
+
+        responseQuizDto.setChoices(returnChoices);
+
+        return responseQuizDto;
     }
 
 

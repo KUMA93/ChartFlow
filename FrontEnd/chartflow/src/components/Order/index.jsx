@@ -2,13 +2,13 @@ import styles from "./Order.module.css";
 
 function Order(props) {
   const handleStocks10 = () => {
-    props.setOrderedStocks(props.originStocks * 0.1);
+    props.setOrderedStocks(Math.floor(props.originStocks * 0.1));
   };
   const handleStocks25 = () => {
-    props.setOrderedStocks(props.originStocks * 0.25);
+    props.setOrderedStocks(Math.floor(props.originStocks * 0.25));
   };
   const handleStocks50 = () => {
-    props.setOrderedStocks(props.originStocks * 0.5);
+    props.setOrderedStocks(Math.floor(props.originStocks * 0.5));
   };
   const handleStocks100 = () => {
     props.setOrderedStocks(props.originStocks * 1);
@@ -26,11 +26,17 @@ function Order(props) {
   return (
     <div className={styles.container2}>
       <div className={styles.quantity}>주문수량</div>
-      <div className={styles.available}>주문가능</div>
-      <div className={styles.availquant}>{props.originStocks}주</div>
+      <div className={styles.buyable}>매수가능</div>
+      <div className={styles.buyNum}>
+        {props.originBuyStocks ? props.originBuyStocks : "-"}주
+      </div>
+      <div className={styles.sellable}>매도가능</div>
+      <div className={styles.sellNum}>
+        {props.originSellStocks ? props.originSellStocks : "-"}주
+      </div>
       <input
         type="number"
-        value={props.orderedStocks}
+        value={String(props.orderedStocks)}
         className={styles.input1}
         onChange={handleChange}
       />
