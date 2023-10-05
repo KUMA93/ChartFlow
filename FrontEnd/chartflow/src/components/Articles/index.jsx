@@ -3,6 +3,7 @@ import thumbsup from "../../assets/images/thumbsup.png";
 import chatting from "../../assets/images/chatting.png";
 import eye from "../../assets/images/eye.png";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
+import calculateDaysAgo from "../../assets/calculate.js";
 import { useEffect } from "react";
 import { seeAllBoard } from "../../services/apis/board";
 import { useState } from "react";
@@ -22,23 +23,6 @@ function Articles(alignMode) {
       })
       .catch((err) => console.error(err));
   }, [currentPage]);
-
-  function calculateDaysAgo(registerTime) {
-    const currentDate = new Date();
-    const registerDate = new Date(registerTime);
-    const timeDifference = currentDate - registerDate;
-    const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-
-    if (daysAgo < 1) {
-      const hoursAgo = Math.floor(timeDifference / (1000 * 60 * 60));
-      return `${hoursAgo}시간 전`;
-    } else if (daysAgo < 30) {
-      return `${daysAgo}일 전`;
-    } else {
-      const monthsAgo = Math.floor(daysAgo / 30);
-      return `${monthsAgo}달 전`;
-    }
-  }
 
   return (
     <>

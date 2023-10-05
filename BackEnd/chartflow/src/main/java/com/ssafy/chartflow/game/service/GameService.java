@@ -3,6 +3,7 @@ package com.ssafy.chartflow.game.service;
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
 import com.ssafy.chartflow.emblem.service.EmblemService;
 import com.ssafy.chartflow.game.dto.response.ResponseGameHistoryDto;
+import com.ssafy.chartflow.game.dto.response.ResponseRecentGameHistoryDto;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameHistoryStocks;
 import com.ssafy.chartflow.game.entity.GameTurns;
@@ -16,6 +17,10 @@ import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +49,25 @@ public class GameService {
     private final CoinService coinService;
 
     private final EmblemService emblemService;
+
+    public List<ResponseRecentGameHistoryDto> getRecentGameHistory(long userId){
+        User user = userRepository.findUserById(userId);
+        Pageable pageable = PageRequest.of(0, 9, Sort.by("endTime").descending());
+        Page<GameHistory> page = gameRepository.findGameHistoriesByUser(user,pageable);
+        List<GameHistory> gameHistories = page.getContent();
+
+        List<ResponseRecentGameHistoryDto> responseRecentGameHistoryDtos = new ArrayList<>();
+
+        for(GameHistory gameHistory : gameHistories){
+           ResponseRecentGameHistoryDto responseRecentGameHistoryDto = ResponseRecentGameHistoryDto.builder()
+                   .budget(gameHistory.getCashBudget())
+                   .date(gameHistory.getChartDate())
+                   .build();
+           responseRecentGameHistoryDtos.add(responseRecentGameHistoryDto);
+        }
+
+        return responseRecentGameHistoryDtos;
+    }
 
     public ResponseGameHistoryDto getGameHistory(long userId) {
 

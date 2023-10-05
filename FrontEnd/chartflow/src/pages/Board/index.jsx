@@ -6,13 +6,15 @@ import write from "../../assets/images/write.png";
 import align from "../../assets/images/align.png";
 import search from "../../assets/images/search.png";
 import { useInput } from "../../hooks/useInput";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../../context/UserContext";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
 
 function Board() {
   const { handleBoardWriteNavigate } = useCustomNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [alignMode, setAlignMode] = useState(0);
+  const { isLogin } = useContext(UserContext);
 
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
@@ -46,10 +48,12 @@ function Board() {
             <button className={styles.tag}>뽐뿌/핫딜</button>
             <button className={styles.tag}>재테크</button>
           </div>
-          <button className={styles.write} onClick={handleBoardWriteNavigate}>
-            글쓰기
-            <img src={write} alt="" className={styles.writeImg} />
-          </button>
+          {isLogin && (
+            <button className={styles.write} onClick={handleBoardWriteNavigate}>
+              글쓰기
+              <img src={write} alt="" className={styles.writeImg} />
+            </button>
+          )}
         </div>
         <div className={styles.inner2}>
           <form className={styles.search} onSubmit={handleSubmit}>

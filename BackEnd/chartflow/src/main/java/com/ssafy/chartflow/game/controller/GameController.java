@@ -4,6 +4,7 @@ import com.ssafy.chartflow.board.service.CommentService;
 import com.ssafy.chartflow.game.dto.request.RequestGameProgressDto;
 import com.ssafy.chartflow.game.dto.response.ResponseChartDataDto;
 import com.ssafy.chartflow.game.dto.response.ResponseGameHistoryDto;
+import com.ssafy.chartflow.game.dto.response.ResponseRecentGameHistoryDto;
 import com.ssafy.chartflow.game.service.GameService;
 import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.stocks.entity.Stocks;
@@ -131,6 +132,25 @@ public class GameController {
         }
     }
 
+    @GetMapping("/game/history")
+    public ResponseEntity<Map<String,Object>> userHistory(@RequestHeader("Authorization") String token){
+        token = token.split(" ")[1];
+        Map<String,Object> response = new HashMap<>();
+
+        try {
+            Long userId = jwtService.extractUserId(token);
+            List<ResponseRecentGameHistoryDto> recentGameHistory = gameService.getRecentGameHistory(userId);
+            response.put("recentHistories",recentGameHistory);
+            response.put("httpStatus", SUCCESS);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e) {
+
+            response.put("httpStatus", FAIL);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
     @Operation(summary = "게임 턴 진행", description = "유저가 한 턴에 행동한 내용에 따라 매수, 매도, 스킵, 종료를 수행한다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "게임 턴 진행 성공"),

@@ -1,6 +1,7 @@
 package com.ssafy.chartflow.info.controller;
 
 import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
+import com.ssafy.chartflow.info.service.RankingService;
 import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class InfoController {
     private final UserService userService;
     private final JwtService jwtService;
+    private final RankingService rankingService;
 
     @Operation(summary = "유저 자산", description = "유저 코인 및 잔액 조회")
     @ApiResponses({
@@ -55,24 +57,18 @@ public class InfoController {
 
     @Operation(summary = "유저 랭킹", description = "유저 랭킹 상위 10명 조회")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "자산 조회 성공"),
-            @ApiResponse(responseCode = "500", description = "로그인 실패 - 내부 서버 오류")
+            @ApiResponse(responseCode = "200", description = "랭킹 조회 성공"),
+            @ApiResponse(responseCode = "500", description = "랭킹 조회 실패 - 내부 서버 오류")
     })
-    @GetMapping("/rankings")
-    public ResponseEntity<Map<String, Object>> userRankings(
-            @Parameter(hidden = true)
-            @RequestHeader("Authorization") String token) {
+    @GetMapping("/rankings/{limit}")
+    public ResponseEntity<Map<String, Object>> userRankings(@PathVariable int limit) {
         Map<String,Object> response = new HashMap<>();
-        token = token.split(" ")[1];
 
         try {
-            Long userId = jwtService.extractUserId(token);
-            ResponseAssetsDto dto = userService.getAssets(userId);
-            response.put("assets" , dto);
-            response.put("message", "success");
+            response.put("rankings",rankingService.getRankers(limit));
         } catch (Exception e) {
-            response.put("message", "유저자산조회 실패");
-            log.error("user Assets 오류 - {}",e.getMessage());
+            response.put("message", "랭킹 조회 실패");
+            log.error("랭킹 조회 오류 - {}",e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

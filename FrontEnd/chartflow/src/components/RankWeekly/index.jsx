@@ -1,15 +1,25 @@
+import React, { useState, useEffect } from 'react';
 import styles from "./RankWeekly.module.css";
 import medal from "../../assets/images/medal.png";
+import { topNranking } from "../../services/apis/ranking";
 
 function RankWeekly() {
   const Line = () => <div className={styles.line}></div>;
-  const members = [
-    { number: 1, username: "name" },
-    { number: 2, username: "name" },
-    { number: 3, username: "name" },
-    { number: 4, username: "name" },
-    { number: 5, username: "name" },
-  ];
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await topNranking(5); 
+      const rankings = Object.entries(data.rankings).map(([username, score], index) => ({
+        number: index + 1,
+        username,
+        score
+      }));
+      setMembers(rankings);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -17,7 +27,7 @@ function RankWeekly() {
         <div className={styles.innerText}>
           <div className={styles.title}>
             <img src={medal} alt="" className={styles.medalImg} />
-            <div className={styles.titleName}>이번주 랭킹 TOP 5</div>
+            <div className={styles.titleName}>랭킹 TOP 5</div>
           </div>
           <Line />
           <div className={styles.list}>

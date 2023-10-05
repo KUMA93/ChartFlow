@@ -5,22 +5,27 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 @Repository
 @RequiredArgsConstructor
 @Slf4j
 public class RedisRankingRepository {
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final StringRedisTemplate redisTemplate;
 
     public void initializeRanking(List<User> users) {
+        redisTemplate.delete("userRanking");
         for (User user : users) {
             log.info(user.getUsername());
-            redisTemplate.opsForZSet().add("userRanking", String.valueOf(user.getId()), user.getBudget());
+            redisTemplate.opsForZSet().add("userRanking", String.valueOf(user.getNickname()), user.getBudget());
         }
     }
     public void addUserToRanking(User user) {
@@ -43,8 +48,18 @@ public class RedisRankingRepository {
         return null;
     }
 
-    public Set<Object> getTopUsers(int topN) {
-        return redisTemplate.opsForZSet().reverseRange("userRanking", 0, topN - 1);
+    public Map<?,?> getTopUsers(int topN) {
+        Set<ZSetOperations.TypedTuple<String>> topUsers = redisTemplate.opsForZSet().reverseRangeWithScores("userRanking", 0, topN - 1);
+        assert topUsers != null;
+        TreeMap<String,Double> userwithScore = new TreeMap<>();
+        for (ZSetOperations.TypedTuple<String> user : topUsers) {
+            String userName = user.getValue();
+            double asset = user.getScore();
+            userwithScore.put(userName, asset);
+        }
+
+        return userwithScore;
+        //return redisTemplate.opsForZSet().range("userRanking", 0, topN - 1);
     }
 
     public void updateUserBudget(User user) {
