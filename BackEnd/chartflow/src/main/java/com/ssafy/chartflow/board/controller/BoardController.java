@@ -233,10 +233,10 @@ public class BoardController {
             @RequestBody RequestLikeDto requestLikeDto
     ){
         Map<String,Object> response = new HashMap<>();
+        token = token.split(" ")[1];
         try {
             Long userId = jwtService.extractUserId(token);
-            Long articleId = requestLikeDto.getArticleId();
-            articleService.withdrawLike(userId,articleId);
+            articleService.withdrawLike(userId,requestLikeDto.getArticleId());
 
             response.put("message", "success");
         } catch (Exception e) {
