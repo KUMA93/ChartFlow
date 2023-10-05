@@ -2,6 +2,7 @@ package com.ssafy.chartflow.game.service;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
 import com.ssafy.chartflow.emblem.service.EmblemService;
+import com.ssafy.chartflow.game.dto.projection.GameHistoryProjection;
 import com.ssafy.chartflow.game.dto.response.ResponseGameHistoryDto;
 import com.ssafy.chartflow.game.dto.response.ResponseRecentGameHistoryDto;
 import com.ssafy.chartflow.game.entity.GameHistory;
@@ -41,6 +42,8 @@ public class GameService {
     private final int WIN = 1;
     private final int LOSE = 2;
 
+    private final int MAX_HISTORY_LENGTH = 10;
+
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final GameTurnsRepository gameTurnsRepository;
@@ -51,22 +54,25 @@ public class GameService {
     private final EmblemService emblemService;
 
     public List<ResponseRecentGameHistoryDto> getRecentGameHistory(long userId){
-        User user = userRepository.findUserById(userId);
-        Pageable pageable = PageRequest.of(0, 9, Sort.by("endTime").descending());
-        Page<GameHistory> page = gameRepository.findGameHistoriesByUser(user,pageable);
-        List<GameHistory> gameHistories = page.getContent();
+        List<ResponseRecentGameHistoryDto>  result = new ArrayList<>();
+        List<GameHistory> userHistories = gameRepository.findGameHistoriesByUserId(userId);
 
-        List<ResponseRecentGameHistoryDto> responseRecentGameHistoryDtos = new ArrayList<>();
-
-        for(GameHistory gameHistory : gameHistories){
-           ResponseRecentGameHistoryDto responseRecentGameHistoryDto = ResponseRecentGameHistoryDto.builder()
-                   .budget(gameHistory.getCashBudget())
-                   .date(gameHistory.getChartDate())
-                   .build();
-           responseRecentGameHistoryDtos.add(responseRecentGameHistoryDto);
+        if(userHistories.size() > MAX_HISTORY_LENGTH){
+            userHistories = userHistories.subList(0,MAX_HISTORY_LENGTH);
         }
-
-        return responseRecentGameHistoryDtos;
+        for(GameHistory gameHistory : userHistories){
+            String ticker = gameHistory.getCompanyCode();
+            String companyName = stocksRepository.findStocksByTicker(ticker).get(0).getName();
+            ResponseRecentGameHistoryDto responseRecentGameHistoryDto =
+                    ResponseRecentGameHistoryDto
+                            .builder()
+                            .companyName(companyName)
+                            .initialBudget(gameHistory.getInitialBudget())
+                            .lastBudget(gameHistory.getCashBudget())
+                            .build();
+            result.add(responseRecentGameHistoryDto);
+        }
+        return result;
     }
 
     public ResponseGameHistoryDto getGameHistory(long userId) {

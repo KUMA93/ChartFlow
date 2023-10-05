@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseRecentGameHistoryDto {
-    private String date;
-    private Long budget;
+    private String companyName;
+    private Long initialBudget;
+    private Long lastBudget;
 }

@@ -132,7 +132,7 @@ public class GameController {
         }
     }
 
-    @GetMapping("/game/history")
+    @GetMapping("/recent-history")
     public ResponseEntity<Map<String,Object>> userHistory(@RequestHeader("Authorization") String token){
         token = token.split(" ")[1];
         Map<String,Object> response = new HashMap<>();
@@ -140,7 +140,7 @@ public class GameController {
         try {
             Long userId = jwtService.extractUserId(token);
             List<ResponseRecentGameHistoryDto> recentGameHistory = gameService.getRecentGameHistory(userId);
-            response.put("recentHistories",recentGameHistory);
+            response.put("recentGameHistory",recentGameHistory);
             response.put("httpStatus", SUCCESS);
 
             return new ResponseEntity<>(response, HttpStatus.OK);

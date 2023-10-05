@@ -82,6 +82,7 @@ public class BoardController {
                         .title(article.getTitle())
                         .registerTime(article.getRegisterTime())
                         .tag(article.getTag())
+                        .isDeleted(article.isDeleted())
                         .build();
                 responseArticles.add(articleResponseDto);
             }
@@ -193,7 +194,8 @@ public class BoardController {
             Article article = articleService.findArticleByArticleId(requestDeleteArticleDto.getArticleId());
 
             if(article.getUser().getId() == userId){
-                article.setDeleted(true);
+                //todo
+                articleService.deleteArticle(article.getId());
                 return new ResponseEntity<>(response, HttpStatus.OK);
             }else{
                 response.put("message","삭제 권한이 없습니다.");
