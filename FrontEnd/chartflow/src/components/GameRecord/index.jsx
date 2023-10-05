@@ -19,6 +19,24 @@ function GameRecord({ isOpen, closeModal }) {
               </div>
               <div className={s.gFont}>+ 3백만원</div>
             </div>
+            <div className={s.nemo}>
+              <div className={s.gFont}>삼성전자</div>
+              <div className={s.con}>
+                <div>1억 1천만원</div>
+                <img src={arrow} alt="" className={s.arrow}/>
+                <div>1억 1천 3백만원</div>
+              </div>
+              <div className={s.gFont}>+ 3백만원</div>
+            </div>
+            <div className={s.nemo}>
+              <div className={s.gFont}>삼성전자</div>
+              <div className={s.con}>
+                <div>1억 1천만원</div>
+                <img src={arrow} alt="" className={s.arrow}/>
+                <div>1억 1천 3백만원</div>
+              </div>
+              <div className={s.gFont}>+ 3백만원</div>
+            </div>
           </div>
           <button onClick={closeModal} className={s.closeBtn}>닫기</button>
         </div>

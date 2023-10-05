@@ -1,23 +1,46 @@
-import { useTheme } from "../../hooks/useTheme";
-import * as S from "./Chatbot.styled.js";
-import chatBot from "../../assets/images/chatbot.png"
-import styles from "./Chatbot.module.css"
+import s from "./Chatbot.module.css"
+import { useState } from 'react';
 
-const Chatbot = () => {
-  const [ThemeMode, ChatbotTheme] = useTheme();
+function Chatbot({ isOpen, closeModal}) {
 
-  function ThemeChatbot({ chatbot, chat }) {
-    return (
-      <S.ChatbotWrapper onClick={chatbot} mode={chat}>
-        <img src={chatBot} alt="" className={styles.img}/>
-        <div>
-          채팅창
+  const [inputText, setInputText] = useState('');
+  const [displayText, setDisplayText] = useState('');
+
+  const handleInputChange = (event) => {
+    setInputText(event.target.value);
+  };
+
+  const handleEnterPress = (event) => {
+    if (event.key === 'Enter') {
+      setDisplayText(inputText);
+    }
+  };
+
+  return (
+      <div style={{ display: isOpen ? "block": "none" }}>
+        <div className={s.shade}>
+          <div className={s.modalChat}>
+            <div className={s.font}>
+              무엇이 궁금한가요?
+            </div>
+            <div className={s.chatCon}>
+              <div className={s.inputText}>
+                {displayText}
+              </div>
+            </div>
+            
+            <input 
+              type="text"
+              className={s.chat}
+              value={inputText}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress}
+            />
+            <button className={s.closeBtn} onClick={closeModal}>닫기</button>
+          </div>
         </div>
-      </S.ChatbotWrapper>
-    );
-  }
-  
-  return <ThemeChatbot toggle={ChatbotTheme} mode={ThemeMode}></ThemeChatbot>;
-};
+      </div>
+  );
+}
 
-export default Chatbot;
+export default Chatbot

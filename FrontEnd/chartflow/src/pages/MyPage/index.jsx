@@ -20,9 +20,7 @@ function MyPage() {
   const [inputPw, handleChangePw] = useInput("", handleComplete);
 
   useEffect(() => {
-    getMypage()
-    .then((res) => {
-      console.log(res);
+    getMypage().then((res) => {
       setData(res.data);
       setUserInfo(res.data.userInfoDto);
     });
@@ -48,7 +46,7 @@ function MyPage() {
       </div>
       {left ? (
         <div className={styles.back}>
-          <div className={styles.nickname}>내 칭호</div>
+          <div className={styles.nickname}>{userInfo?.selected_emblem}</div>
           <div className={styles.container1}>
             <div className={styles.profile}>
               <img

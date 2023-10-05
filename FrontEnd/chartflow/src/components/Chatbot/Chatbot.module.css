@@ -1,4 +1,61 @@
-.img {
+.shade {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+}
+
+.modalChat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  margin-left: 70vw;
+  width: 20vw;
+  height: 80vh;
+  border-radius: 20px;
+  outline: 2px solid #565656;
+  background-color: #e6eff9;
+  z-index: 3;
+  font-family: SUITE;
+}
+
+.chatCon {
+  height: 50vh;
+}
+
+.closeBtn {
   width: 60px;
-  height: 60px;
+  height: 30px;
+  border-radius: 20px;
+  border: 0;
+  background: #cfdae5;
+  color: #555;
+  font-family: SUITE;
+  cursor: pointer;
+  margin-left: 15vw;
+}
+
+.font {
+  margin-top: 18px;
+  font-size: 20px;
+}
+
+.chat {
+  width: 18vw;
+  height: 30px;
+  border-radius: 5px;
+  border: 0;
+}
+.chat:focus {
+  outline: 0;
+}
+
+.inputText {
+  color: #404076;
+  display: flex;
 }

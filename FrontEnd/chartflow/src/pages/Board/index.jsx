@@ -5,7 +5,6 @@ import styles from "./Board.module.css";
 import write from "../../assets/images/write.png";
 import align from "../../assets/images/align.png";
 import search from "../../assets/images/search.png";
-import { useInput } from "../../hooks/useInput";
 import { useState, useContext } from "react";
 import UserContext from "../../context/UserContext";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
@@ -16,6 +15,8 @@ function Board() {
   const [alignMode, setAlignMode] = useState(0);
   const { isLogin } = useContext(UserContext);
   const [selectedTag, setSelectedTag] = useState(null);
+  const [inputKeyword, setInputKeyword] = useState("");
+  const [clicked, setClicked] = useState(true);
   const handleTagClick = (tag) => {
     setSelectedTag(tag);
   };
@@ -23,11 +24,11 @@ function Board() {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSearch = () => {
+    setClicked(!clicked);
+    const keyword = inputKeyword.trim();
+    setInputKeyword(keyword);
   };
-
-  const [inputValue, handleChangeValue] = useInput("", handleSubmit);
 
   const handleAlign = (event, mode) => {
     event.preventDefault();
@@ -86,20 +87,25 @@ function Board() {
           )}
         </div>
         <div className={styles.inner2}>
-          <form className={styles.search} onSubmit={handleSubmit}>
+          <form className={styles.search} onSubmit={handleSearch}>
             <img
               src={search}
               alt=""
               className={styles.searchImg}
-              onClick={handleSubmit}
+              onClick={handleSearch}
             />
             <input
               className={styles.inputSearch}
-              value={inputValue}
-              onChange={handleChangeValue}
+              value={inputKeyword}
+              onChange={(e) => setInputKeyword(e.target.value)}
               placeholder="게시글 검색"
               required
               autoComplete="on"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
             ></input>
           </form>
           <img
@@ -132,7 +138,12 @@ function Board() {
           )}
         </div>
         <div className={styles.articles}>
-          <Articles alignMode={alignMode} selectedTag={selectedTag} />
+          <Articles
+            alignMode={alignMode}
+            selectedTag={selectedTag}
+            keyword={inputKeyword}
+            clicked={clicked}
+          />
         </div>
       </div>
     </>
