@@ -5,14 +5,18 @@ import Comments from "../../components/Comments";
 import NewArticle from "../../components/NewArticle";
 import NewComments from "../../components/NewComments";
 import { seeOneBoard } from "../../services/apis/board";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import noThumbsup from "../../assets/images/thumbsupWhite.png";
 import Thumbsup from "../../assets/images/thumbsupBlack.png";
+import UserContext from "../../context/UserContext";
 
 function BoardOne() {
   const { articleId } = useParams();
   const [article, setArticle] = useState();
   const [thumbsup, setThumbsup] = useState(false);
+  const handleRevise = () => {};
+  const handleDelete = () => {};
+  const { isLogin } = useContext(UserContext);
 
   useEffect(() => {
     seeOneBoard(articleId)
@@ -37,7 +41,19 @@ function BoardOne() {
               ></img>
             </div>
             <div className={styles.line}></div>
-            <div className={styles.content}>{article?.content}</div>
+            <div className={styles.content}>
+              {article?.content}
+              {isLogin && (
+                <div className={styles.submit}>
+                  <button className={styles.revise} onClick={handleRevise}>
+                    수정
+                  </button>
+                  <button className={styles.delete} onClick={handleDelete}>
+                    삭제
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
           <div className={styles.comments}>
             <Comments articleId={articleId} />

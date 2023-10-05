@@ -43,3 +43,9 @@ export const notlikeBoard = async (requestData) => {
   const res = await axiosServer().delete(`/game`, requestData);
   return res.data;
 };
+
+// 게시글 검색
+export const searchBoard = async (requestData) => {
+  const res = await axiosServer().get("board/list", requestData);
+  return res.data;
+};

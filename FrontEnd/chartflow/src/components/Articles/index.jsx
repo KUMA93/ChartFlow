@@ -7,7 +7,13 @@ import calculateDaysAgo from "../../assets/calculate.js";
 import { useEffect, useState } from "react";
 import { seeAllBoard } from "../../services/apis/board";
 
-function Articles({ alignMode, selectedTag }) {
+function Articles({ alignMode, selectedTag, keyword, clicked }) {
+  // console.log(keyword);
+
+  useEffect(() => {
+    console.log(keyword);
+  }, [clicked]);
+
   const { handleBoardViewNavigate } = useCustomNavigate();
   const Line = () => <div className={styles.line}></div>;
   const [articles, setArticles] = useState([]);
@@ -25,8 +31,11 @@ function Articles({ alignMode, selectedTag }) {
     seeAllBoard(currentPage, 8)
       .then((res) => {
         const filteredArticles = selectedTag
-          ? res.articles.filter((article) => article.tag === selectedTag)
-          : res.articles;
+          ? res.articles.filter(
+              (article) =>
+                article.tag === selectedTag && article.deleted === false
+            )
+          : res.articles.filter((article) => article.deleted === false);
 
         if (alignMode === 0) {
           filteredArticles.sort((a, b) => {
