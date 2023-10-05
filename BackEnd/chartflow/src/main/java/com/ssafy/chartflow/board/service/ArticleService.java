@@ -17,8 +17,7 @@ public interface ArticleService {
     public void writeArticle(long userId, ArticleTag tag, String title, String content);
     //글 수정
     public void modifyArticle(long articleId, String title,String content);
-    //글 삭제
-    public void deleteArticle(long articleId);
+    void deleteArticle(long articleId);
     //유저 아이디 -> 유저의 게시물 리스트 가져오기
     List<Article> findAllArticleByUserId(long userId);
 

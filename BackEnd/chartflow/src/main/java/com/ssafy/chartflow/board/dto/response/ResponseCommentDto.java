@@ -16,6 +16,7 @@ import java.util.List;
 public class ResponseCommentDto {
     private long commentId;
     private long userId;
+    private String nickname;
     private String content;
     private LocalDateTime registerTime;
     private int cancel;

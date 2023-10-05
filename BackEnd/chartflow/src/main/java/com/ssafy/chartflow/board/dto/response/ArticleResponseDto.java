@@ -17,5 +17,5 @@ public class ArticleResponseDto {
     long id;
     String content;
     int likes;
-
+    boolean isDeleted;
 }
