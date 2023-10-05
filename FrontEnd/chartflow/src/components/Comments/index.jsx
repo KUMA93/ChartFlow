@@ -125,6 +125,7 @@ function Comments(props) {
               onClick={() => handleCommentClick(comment.commentId)}
             >
               {comment.content}
+              <button className={styles.ReComWriteBtn}>대댓</button>
             </div>
             {openRe && renderReplyForm(comment.commentId)}
             <div className={styles.line3}></div>

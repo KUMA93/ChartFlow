@@ -34,8 +34,13 @@ public class EmblemService {
     public void notifyObserver(UserGameDto userGameDto, int flag) {
         List<UserEmblem> emblems = userGameDto.getUser().getEmblems();
         userGameDto.setEmblems(emblems);
+        for (EmblemObserver observer: observers){
+            log.info("type = {}", observer.getClass());
+
+        }
         for (EmblemObserver observer : observers){
             if (flag == 0 && observer instanceof TurnFinishObserver){
+                log.info("-------------turnobserver update called -------------");
                 observer.update(userGameDto);
             }else if (flag == 1 && observer instanceof GameFinishObserver){
                 observer.update(userGameDto);

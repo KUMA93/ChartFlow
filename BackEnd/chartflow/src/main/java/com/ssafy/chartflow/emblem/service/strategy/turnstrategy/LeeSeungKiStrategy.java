@@ -4,9 +4,11 @@ import com.ssafy.chartflow.emblem.dto.UserGameDto;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameTurns;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class LeeSeungKiStrategy implements TurnStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {

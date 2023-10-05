@@ -419,6 +419,14 @@ public class GameService {
         gameTurnsRepository.save(gameTurns);
         gameRepository.save(gameHistory);
         userRepository.save(user);
+
+        UserGameDto userGameDto = UserGameDto.builder()
+                .user(user)
+                .gameTurns(gameTurns)
+                .gameHistory(gameHistory)
+                .build();
+
+        emblemService.notifyObserver(userGameDto, 1);
     }
 
 }

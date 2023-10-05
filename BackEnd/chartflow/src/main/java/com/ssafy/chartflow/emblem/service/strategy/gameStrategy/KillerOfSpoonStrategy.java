@@ -5,9 +5,11 @@ import com.ssafy.chartflow.emblem.entity.UserEmblem;
 import com.ssafy.chartflow.emblem.service.strategy.turnstrategy.TurnStrategy;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.user.entity.User;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class KillerOfSpoonStrategy implements GameStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {

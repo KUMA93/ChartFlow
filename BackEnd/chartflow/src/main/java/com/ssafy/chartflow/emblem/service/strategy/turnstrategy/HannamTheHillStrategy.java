@@ -3,9 +3,11 @@ package com.ssafy.chartflow.emblem.service.strategy.turnstrategy;
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
 import com.ssafy.chartflow.emblem.entity.UserEmblem;
 import com.ssafy.chartflow.user.entity.User;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class HannamTheHillStrategy implements TurnStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {
