@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 public class ResponseMyPageDto {
     private ResponseUserInfoDto userInfoDto;
     private ResponseAssetsDto userAssetsDto;
+    private String userEquipedEmblem;
 }

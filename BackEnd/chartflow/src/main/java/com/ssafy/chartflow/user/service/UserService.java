@@ -1,5 +1,7 @@
 package com.ssafy.chartflow.user.service;
 
+import com.ssafy.chartflow.emblem.entity.UserEmblem;
+import com.ssafy.chartflow.emblem.repository.UserEmblemRepository;
 import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
 import com.ssafy.chartflow.info.repository.RedisRankingRepository;
 import com.ssafy.chartflow.security.service.JwtService;
@@ -32,6 +34,7 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final RedisRankingRepository rankingRepository;
+    private final UserEmblemRepository userEmblemRepository;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
     private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
@@ -106,11 +109,14 @@ public class UserService {
         User user = userRepository.findUserById(userId);
         user.setRanking(rankingRepository.getUserRank(userId));
         System.out.println("--------- rank : "+user.getRanking());
-        ResponseUserInfoDto userInfoDto = new ResponseUserInfoDto(userId, user.getName(), user.getNickname(), user.getEmail(), user.getSelected_emblem(), user.getRanking());
+        UserEmblem userEmblem  = userEmblemRepository.findUserEmblemByUserAndEquipedIsTrue(user);
+        log.info(userEmblem.getEmblem().getName());
+        ResponseUserInfoDto userInfoDto = new ResponseUserInfoDto(userId, user.getName(), user.getNickname(), user.getEmail(), userEmblem.getEmblem().getName(), user.getRanking());
         ResponseAssetsDto userAssetsDto = new ResponseAssetsDto(user.getCoin(), user.getBudget());
+
         System.out.println(user);
         System.out.println(userInfoDto);
-        return new ResponseMyPageDto(userInfoDto, userAssetsDto);
+        return new ResponseMyPageDto(userInfoDto, userAssetsDto, userEmblem.getEmblem().getName());
     }
 
 //    public Map<String, Object> getMyBoard(Long userId) {

@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.ssafy.chartflow.emblem.entity.QUserEmblem.userEmblem;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -47,6 +49,7 @@ public class UserEmblemService {
 
     @Transactional
     public void equipEmblem(User user, long userEmblemId){
-        //userEmblemRepository
+        UserEmblem emblem = userEmblemRepository.findById(userEmblemId).get();
+        userEmblemRepository.equipEmblem(emblem);
     }
 }
