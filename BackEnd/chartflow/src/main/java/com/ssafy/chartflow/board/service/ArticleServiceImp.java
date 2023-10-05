@@ -32,7 +32,7 @@ public class ArticleServiceImp implements ArticleService {
 
     @Override
     public Page<Article> getAllKeywordArticles(String keyword, Pageable pageable) {
-        return articleRepository.findAllByTitleLike(keyword,pageable);
+        return articleRepository.findAllByTitleLike("%" + keyword +"%",pageable);
     }
 
     @Override
