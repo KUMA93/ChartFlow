@@ -49,6 +49,10 @@ const useCustomNavigate = () => {
   //   navigate("/board/my-scrap");
   // };
 
+  const handleBoardReviseNavigate = (initialData) => {
+    navigate("/board/new", { state: initialData });
+  };
+
   const handleBoardWriteNavigate = () => {
     navigate("/board/new");
   };
@@ -107,6 +111,7 @@ const useCustomNavigate = () => {
     // handleBoardMyCommentedPostNavigate,
     // handleBoardMyScrapNavigate,
     handleJoinCompleteNavigate,
+    handleBoardReviseNavigate,
     handleBoardWriteNavigate,
     handleBoardViewNavigate,
     handleBoardEditNavigate,

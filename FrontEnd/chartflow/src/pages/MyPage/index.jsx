@@ -21,7 +21,6 @@ function MyPage() {
 
   useEffect(() => {
     getMypage().then((res) => {
-      console.log(res);
       setData(res.data);
       setUserInfo(res.data.userInfoDto);
     });

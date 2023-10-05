@@ -3,15 +3,28 @@ import styles from "./Write.module.css";
 import NewArticle from "../../components/NewArticle";
 import NewComments from "../../components/NewComments";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useInput } from "../../hooks/useInput";
 import { writeBoard } from "../../services/apis/board";
 
 function Write() {
-  const { handleBoardNavigate } = useCustomNavigate();
+  const location = useLocation();
 
-  const [inputTitle, handleChangeTitle] = useInput("");
-  const [inputContent, handleChangeContent] = useInput("");
-  const [selectedTag, handleChangeTag] = useInput("");
+  const { handleBoardNavigate } = useCustomNavigate();
+  const [inputTitle, handleChangeTitle, setInputTitle] = useInput(
+    location.state !== null ? location.state.title : ""
+  );
+  const [inputContent, handleChangeContent, setInputContent] = useInput(
+    location.state !== null ? location.state.content : ""
+  );
+  const [selectedTag, handleChangeTag, setSelectedTag] = useInput("");
+
+  useEffect(() => {
+    setSelectedTag(location.state !== null ? location.state.tag : "");
+    setInputTitle(location.state !== null ? location.state.title : "");
+    setInputContent(location.state !== null ? location.state.content : "");
+  }, [location]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

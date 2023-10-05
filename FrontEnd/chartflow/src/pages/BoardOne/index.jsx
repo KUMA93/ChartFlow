@@ -5,24 +5,36 @@ import Comments from "../../components/Comments";
 import NewArticle from "../../components/NewArticle";
 import NewComments from "../../components/NewComments";
 import { seeOneBoard } from "../../services/apis/board";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import noThumbsup from "../../assets/images/thumbsupWhite.png";
 import Thumbsup from "../../assets/images/thumbsupBlack.png";
-import UserContext from "../../context/UserContext";
+import { getMypage } from "../../services/apis/user";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
 
 function BoardOne() {
   const { articleId } = useParams();
   const [article, setArticle] = useState();
+  const [writer, setWriter] = useState();
   const [thumbsup, setThumbsup] = useState(false);
-  const handleRevise = () => {};
+  const { handleBoardReviseNavigate } = useCustomNavigate();
+  const handleRevise = () => {
+    handleBoardReviseNavigate({
+      tag: article?.tag || "",
+      title: article?.title || "",
+      content: article?.content || "",
+    });
+  };
   const handleDelete = () => {};
-  const { isLogin } = useContext(UserContext);
 
   useEffect(() => {
     seeOneBoard(articleId)
       .then((res) => setArticle(res.article))
       .catch((err) => console.error(err));
+    getMypage()
+      .then((res) => setWriter(res.data.userInfoDto.nickname))
+      .catch((err) => console.error(err));
   }, [articleId]);
+
   return (
     <>
       <Header />
@@ -43,7 +55,7 @@ function BoardOne() {
             <div className={styles.line}></div>
             <div className={styles.content}>
               {article?.content}
-              {isLogin && (
+              {writer === article?.nickName && (
                 <div className={styles.submit}>
                   <button className={styles.revise} onClick={handleRevise}>
                     수정
