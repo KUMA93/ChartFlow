@@ -20,9 +20,11 @@ function MyPage() {
   const [inputPw, handleChangePw] = useInput("", handleComplete);
 
   useEffect(() => {
-    getMypage().then((res) => {
+    getMypage()
+    .then((res) => {
+      console.log(res);
       setData(res.data);
-      setUserInfo(data.userInfoDto);
+      setUserInfo(res.data.userInfoDto);
     });
   }, []);
 

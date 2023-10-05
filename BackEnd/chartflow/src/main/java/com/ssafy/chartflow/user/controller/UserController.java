@@ -162,7 +162,7 @@ public class UserController {
 //        }
 //    }
 
-    @PatchMapping()
+    @PatchMapping("")
     @Operation(summary = "마이페이지에서 유저정보 수정하기", description = "유저 정보를 수정한다.")
     public ResponseEntity<Map<String, Object>> updateUser(@RequestHeader("Authorization") String token,
                                                             @RequestBody RequestUpdateDto requestUpdateDto) {

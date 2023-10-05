@@ -15,6 +15,7 @@ public class ResponseReCommentDto {
     private long reCommentId;
     private long commentId;
     private long userId;
+    private String nickname;
     private String content;
     private LocalDateTime registerTime;
     private int cancel;

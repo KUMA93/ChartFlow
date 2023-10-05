@@ -24,7 +24,7 @@
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    @ToString(exclude = {"emblems", "userGameHistories", "userLikes", "userComments", "userArticle", "userRecomments"})
+    @ToString(exclude = {"emblems", "gameHistories", "likes", "comments", "articles", "reComments", "Quizs"})
     public class User implements UserDetails {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
