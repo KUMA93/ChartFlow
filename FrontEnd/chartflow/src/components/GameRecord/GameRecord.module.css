@@ -8,7 +8,7 @@
   background-color: rgba(43, 40, 38, 0.6);
   z-index: 1;
   display: flex;
-  }
+}
 
 .modalRecord {
   margin: auto;
@@ -20,7 +20,7 @@
   background-color: #fff;
   z-index: 2;
   font-family: SUITE;
-  }
+}
 
 .closeBtn {
   margin-top: 15px;
@@ -44,10 +44,9 @@
 
 .nemo {
   justify-content: space-evenly;
-  padding: 2px 2px;
   display: flex;
   align-items: center;
-  margin: auto;
+  margin-bottom: 10px;
   width: 42vw;
   height: 10vh;
   border-radius: 20px;

@@ -1,10 +1,11 @@
 import Header from "../../components/Header";
-import styles from "./History.module.css"
+import styles from "./History.module.css";
 import { useState } from "react";
-import rank1 from "../../assets/images/rank1.png"
-import rank2 from "../../assets/images/rank2.png"
+import rank1 from "../../assets/images/rank1.png";
+import rank2 from "../../assets/images/rank2.png";
 import s from "./Record.module.css"
 import GameRecord from "../../components/GameRecord";
+import Acquire from "../../components/Acquire";
 
 function History() {
   const [selectedOption, setSelectedOption] = useState(0);
@@ -22,9 +23,12 @@ function History() {
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const [isTitleOpen, setIsTitleOpen] = useState(false)
+  const openTitle = () => setIsTitleOpen(true);
+  const closeTitle = () => setIsTitleOpen(false);
 
   return (
     <>
@@ -175,7 +179,8 @@ function History() {
           </div>
           <div>
             <div className={styles.titleFont}>획득을 기다리는 칭호</div>
-            <button className={styles.nick2}>한강물</button>
+            <button className={styles.nick2} onClick={openTitle}>한강물</button>
+            <Acquire isOpen={isTitleOpen} closeModal={closeTitle}/>
             <button className={styles.nick2}>야수의 심장</button>
             <button className={styles.nick2}>칭호3</button>
             <button className={styles.nick2}>칭호4</button>

@@ -6,6 +6,7 @@ import Carousel from "../../components/Carousel";
 import HotUpdate from "../../components/HotUpdate";
 import RankWeekly from "../../components/RankWeekly";
 import { useContext } from "react";
+import { useState } from "react";
 
 import UserContext from "../../context/UserContext";
 
@@ -16,6 +17,10 @@ const MainPage = () => {
     window.location.href = "/game";
   };
   const { isLogin } = useContext(UserContext);
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <>
@@ -39,7 +44,8 @@ const MainPage = () => {
           <RankWeekly />
         </div>
       </div>
-      <Chatbot />
+      <button className={styles.chatbotBtn} onClick={openModal}>궁금해요</button>
+      <Chatbot isOpen={isModalOpen} closeModal={closeModal}/>
       <Toggle />
       <Footer />
     </>

@@ -40,3 +40,18 @@
 .rankWeekly {
   grid-area: rankWeekly;
 }
+
+.chatbotBtn {
+  font-family: SUITE;
+  font-size: 16px;
+  position: fixed;
+  z-index: 5;
+  bottom: 12%;
+  right: 3%;
+  background-color: rgb(242, 242, 183);
+  border: 2px solid #535353;
+  border-radius: 30px;
+  width: 96px;
+  height: 48px;
+  cursor: pointer;
+}

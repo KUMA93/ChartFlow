@@ -56,6 +56,12 @@
   margin-bottom: 50px;
 }
 
+.price1 {
+  color: #FFF;
+  font-family: SUITE;
+  margin-top: 5px;
+}
+
 .nick1 {
   margin-top: 20px;
   display: flex;
@@ -73,12 +79,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  cursor: pointer;
   border: 0;
-}
-
-.nick1:focus {
-  outline: 4px solid #62BDFF;
 }
 
 .nick2 {
