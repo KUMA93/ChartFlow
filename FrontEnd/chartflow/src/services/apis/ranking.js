@@ -1,4 +1,4 @@
-import { axiosServer, axiosServerWithoutToken } from "../axiosInstance";
+import { axiosServerWithoutToken } from "../axiosInstance";
 
 // 로그인
 export const topNranking = async (limit) => {

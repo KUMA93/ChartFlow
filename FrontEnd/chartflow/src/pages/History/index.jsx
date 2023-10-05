@@ -4,6 +4,7 @@ import { useState } from "react";
 import rank1 from "../../assets/images/rank1.png"
 import rank2 from "../../assets/images/rank2.png"
 import s from "./Record.module.css"
+import GameRecord from "../../components/GameRecord";
 
 function History() {
   const [selectedOption, setSelectedOption] = useState(0);
@@ -18,7 +19,12 @@ function History() {
 
   const handleRightClick = () => {
     setSelectedOption(2);
-  } 
+  }
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <>
@@ -134,7 +140,8 @@ function History() {
               <div className={s.tFont}>내 전적</div>
               <div className={s.div1}>
                 <div className={s.coin}>10승 10패</div>
-                <button className={s.btn}>지난 게임 보기</button>
+                <button className={s.btn} onClick={openModal}>지난 게임 보기</button>
+                <GameRecord isOpen={isModalOpen} closeModal={closeModal} />
               </div>
             </div>
             <div className={s.item}>

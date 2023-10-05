@@ -67,10 +67,11 @@
 .btn {
   border: 0;
   border-radius: 10px;
-  background-color: rgb(221, 221, 221);
-  width: 35%;
-  height: 25px;
+  background: #D9D9D9;
+  width: 24%;
+  height: 30px;
   font-family: SUITE;
   margin-top: 8px;
   cursor: pointer;
+  color: #555;
 }
