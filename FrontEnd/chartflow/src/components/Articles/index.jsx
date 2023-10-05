@@ -4,25 +4,47 @@ import chatting from "../../assets/images/chatting.png";
 import eye from "../../assets/images/eye.png";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
 import calculateDaysAgo from "../../assets/calculate.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { seeAllBoard } from "../../services/apis/board";
-import { useState } from "react";
 
-function Articles(alignMode) {
+function Articles({ alignMode, selectedTag }) {
   const { handleBoardViewNavigate } = useCustomNavigate();
   const Line = () => <div className={styles.line}></div>;
   const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const tagMappings = {
+    FREE_DAILY: "자유일상",
+    HUMOR_GOODWRITING: "유머/좋은글",
+    TRAVEL: "여행",
+    HOTDEAL: "뽐뿌/핫딜",
+    FINANCE: "재태크",
+  };
 
   useEffect(() => {
-    seeAllBoard()
+    seeAllBoard(currentPage, 8)
       .then((res) => {
-        setTotalPages(Math.ceil(res.articles.length / 8));
-        seeAllBoard(currentPage, 8).then((res) => setArticles(res.articles));
+        const filteredArticles = selectedTag
+          ? res.articles.filter((article) => article.tag === selectedTag)
+          : res.articles;
+
+        if (alignMode === 0) {
+          filteredArticles.sort((a, b) => {
+            const dateA = new Date(a.registerTime);
+            const dateB = new Date(b.registerTime);
+            return dateB - dateA;
+          });
+        } else if (alignMode === 1) {
+          filteredArticles.sort((a, b) => b.likes - a.likes);
+        } else if (alignMode === 2) {
+          filteredArticles.sort((a, b) => b.views - a.views);
+        }
+
+        setTotalPages(Math.ceil(filteredArticles.length / 8));
+        setArticles(filteredArticles);
       })
       .catch((err) => console.error(err));
-  }, [currentPage]);
+  }, [currentPage, alignMode, selectedTag]);
 
   return (
     <>
@@ -35,7 +57,10 @@ function Articles(alignMode) {
                   onClick={() => handleBoardViewNavigate(article.id)}
                   className={styles.tagTitle}
                 >
-                  <div className={styles.tag}>[자유일상]</div>
+                  <div className={styles.tag}>
+                    {" "}
+                    [{tagMappings[article.tag]}]
+                  </div>
                   <div className={styles.title}>{article.title}</div>
                 </div>
                 <div className={styles.date}>

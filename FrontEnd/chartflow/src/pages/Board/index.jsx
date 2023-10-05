@@ -15,7 +15,10 @@ function Board() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [alignMode, setAlignMode] = useState(0);
   const { isLogin } = useContext(UserContext);
-
+  const [selectedTag, setSelectedTag] = useState(null);
+  const handleTagClick = (tag) => {
+    setSelectedTag(tag);
+  };
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -41,12 +44,39 @@ function Board() {
         </div>
         <div className={styles.inner1}>
           <div className={styles.tags}>
-            <button className={styles.tag}>전체</button>
-            <button className={styles.tag}>자유일상</button>
-            <button className={styles.tag}>유머/좋은글</button>
-            <button className={styles.tag}>여행</button>
-            <button className={styles.tag}>뽐뿌/핫딜</button>
-            <button className={styles.tag}>재테크</button>
+            <button className={styles.tag} onClick={() => handleTagClick(null)}>
+              전체
+            </button>
+            <button
+              className={styles.tag}
+              onClick={() => handleTagClick("FREE_DAILY")}
+            >
+              자유일상
+            </button>
+            <button
+              className={styles.tag}
+              onClick={() => handleTagClick("HUMOR_GOODWRITING")}
+            >
+              유머/좋은글
+            </button>
+            <button
+              className={styles.tag}
+              onClick={() => handleTagClick("TRAVEL")}
+            >
+              여행
+            </button>
+            <button
+              className={styles.tag}
+              onClick={() => handleTagClick("HOTDEAL")}
+            >
+              뽐뿌/핫딜
+            </button>
+            <button
+              className={styles.tag}
+              onClick={() => handleTagClick("FINANCE")}
+            >
+              재테크
+            </button>
           </div>
           {isLogin && (
             <button className={styles.write} onClick={handleBoardWriteNavigate}>
@@ -102,7 +132,7 @@ function Board() {
           )}
         </div>
         <div className={styles.articles}>
-          <Articles alignMode={alignMode} />
+          <Articles alignMode={alignMode} selectedTag={selectedTag} />
         </div>
       </div>
     </>

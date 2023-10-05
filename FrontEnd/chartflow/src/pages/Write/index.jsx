@@ -4,15 +4,34 @@ import NewArticle from "../../components/NewArticle";
 import NewComments from "../../components/NewComments";
 import useCustomNavigate from "../../hooks/useCustomNavigate";
 import { useInput } from "../../hooks/useInput";
+import { writeBoard } from "../../services/apis/board";
 
 function Write() {
   const { handleBoardNavigate } = useCustomNavigate();
+
+  const [inputTitle, handleChangeTitle] = useInput("");
+  const [inputContent, handleChangeContent] = useInput("");
+  const [selectedTag, handleChangeTag] = useInput("");
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleBoardNavigate();
+    if (!selectedTag) {
+      alert("태그를 선택해주세요");
+    } else if (!inputTitle) {
+      alert("제목을 입력해주세요");
+    } else if (!inputContent) {
+      alert("내용을 입력해주세요");
+    } else {
+      const requestData = JSON.stringify({
+        tag: selectedTag,
+        title: inputTitle,
+        content: inputContent,
+      });
+      writeBoard(requestData)
+        .then(handleBoardNavigate)
+        .catch((err) => console.error(err));
+    }
   };
-  const [inputTitle, handleChangeTitle] = useInput("", handleSubmit);
-  const [inputContent, handleChangeContent] = useInput("", handleSubmit);
 
   return (
     <>
@@ -20,13 +39,18 @@ function Write() {
       <div className={styles.container}>
         <div className={styles.board}>
           <div className={styles.title}>
-            <select id="tag-select" className={styles.tags}>
-              <option value="태그 선택">태그 선택</option>
-              <option value="자유일상">자유일상</option>
-              <option value="유머/좋은글">유머/좋은글</option>
-              <option value="여행">여행</option>
-              <option value="뽐뿌/핫딜">뽐뿌/핫딜</option>
-              <option value="재테크">재테크</option>
+            <select
+              id="tag-select"
+              className={styles.tags}
+              value={selectedTag}
+              onChange={handleChangeTag}
+            >
+              <option value="">태그 선택</option>
+              <option value="FREE_DAILY">자유일상</option>
+              <option value="HUMOR_GOODWRITING">유머/좋은글</option>
+              <option value="TRAVEL">여행</option>
+              <option value="HOTDEAL">뽐뿌/핫딜</option>
+              <option value="FINANCE">재테크</option>
             </select>
             <input
               className={styles.inputTitle}
