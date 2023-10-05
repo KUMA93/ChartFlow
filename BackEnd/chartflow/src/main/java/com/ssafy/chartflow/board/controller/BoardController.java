@@ -53,6 +53,7 @@ public class BoardController {
                         .title(article.getTitle())
                         .registerTime(article.getRegisterTime())
                         .tag(article.getTag())
+                        .isDeleted(article.isDeleted())
                         .build();
                 responseArticles.add(articleResponseDto);
             }
