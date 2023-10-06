@@ -125,7 +125,7 @@ public class GameController {
 //            response.put("currentDate",responseStocks.get(responseStocks.size()-1).getDate());
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e) {
-            log.info("Game Controller - 게임 시작하기 실패");
+            log.info("Game Controller - 게임 시작하기 실패" + e.getMessage());
             response.put("httpStatus", FAIL);
 
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
