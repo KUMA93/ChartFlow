@@ -55,7 +55,28 @@
   outline: 0;
 }
 
-.inputText {
-  color: #404076;
-  display: flex;
+.loading {
+  text-align: center;
+  font-weight: bold;
+}
+
+.chatCon {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.userText {
+  text-align: left;
+  background-color: #e6f7ff;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.botText {
+  text-align: right;
+  background-color: #f1f1f1;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 10px;
 }
