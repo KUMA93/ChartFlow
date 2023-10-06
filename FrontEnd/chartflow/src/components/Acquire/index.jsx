@@ -1,13 +1,13 @@
 import s from "./Acquire.module.css"
 
-function Acquire({ isOpen, closeModal}) {
+function Acquire({ isOpen, closeModal, emblem}) {
 
   return (
     <div style={{ display: isOpen ? "block": "none" }}>
       <div className={s.shade}>
         <div className={s.modalTitle}>
           <div>
-            칭호 획득 조건
+            {emblem}
           </div>
           <button onClick={closeModal} className={s.closeBtn}>닫기</button>
         </div>

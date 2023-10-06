@@ -47,7 +47,7 @@ function History() {
               <div className={styles.rank1}>
                 <div className={styles.rank1Font}>1</div>
                 <div>
-                  <div className={styles.rankUser}>최규헌</div>
+                  <div className={styles.rankUser}>라이온킹</div>
                   <div className={styles.price1}>5억 7천만원</div>
                 </div>
                 <img src={rank1} alt="" className={styles.imgSize}/>
@@ -55,7 +55,7 @@ function History() {
               <div className={styles.rank1}>
                 <div className={styles.rank1Font}>2</div>
                 <div>
-                  <div className={styles.rankUser}>최우석</div>
+                  <div className={styles.rankUser}>새로운</div>
                   <div className={styles.price1}>5억 3천만원</div>
                 </div>
                 <img src={rank2} alt="" className={styles.imgSize}/>
@@ -64,17 +64,17 @@ function History() {
             <div>
             <div className={styles.rank2}>
               <div className={styles.rank2Font}>3</div>
-              <div className={styles.user2}>손석구</div>
+              <div className={styles.user2}>일빠</div>
               <div className={styles.price3}>5억 1천 3백만원</div>
             </div>
             <div className={styles.rank2}>
               <div className={styles.rank2Font}>4</div>
-              <div className={styles.user2}>이제훈</div>
+              <div className={styles.user2}>최키키</div>
               <div className={styles.price3}>4억 9천 50만원</div>
             </div>
             <div className={styles.rank2}>
               <div className={styles.rank2Font}>5</div>
-              <div className={styles.user2}>카리나</div>
+              <div className={styles.user2}>킹현식</div>
               <div className={styles.price3}>4억 8천 3만원</div>
             </div>
             </div>
@@ -83,14 +83,14 @@ function History() {
           <div className={styles.con2}>
             <div className={styles.gContainer}>
               <div className={styles.gItem}>
-                <div className={styles.userName}>이연주</div>
+                <div className={styles.userName}>오이싫어</div>
                 <div className={styles.div1}>
                   <div className={styles.perFont}>2억 9천만원</div>
                   <div className={styles.upFont}>51%</div>
                 </div>
               </div>
               <div className={styles.gItem}>
-                <div className={styles.userName}>류나연</div>
+                <div className={styles.userName}>구루구루</div>
                 <div className={styles.div1}>
                   <div className={styles.perFont}>2억 4천만원</div>
                   <div className={styles.upFont}>47%</div>
@@ -104,14 +104,14 @@ function History() {
                 </div>
               </div>
               <div className={styles.gItem}>
-                <div className={styles.userName}>김태현</div>
+                <div className={styles.userName}>콩이</div>
                 <div className={styles.div1}>
                   <div className={styles.perFont}>2억 9천만원</div>
                   <div className={styles.upFont}>33%</div>
                 </div>
               </div>
               <div className={styles.gItem}>
-                <div className={styles.userName}>김현식</div>
+                <div className={styles.userName}>메롱</div>
                 <div className={styles.div1}>
                   <div className={styles.perFont}>3억 1천만원</div>
                   <div className={styles.upFont}>12%</div>
@@ -174,17 +174,18 @@ function History() {
         <div className={styles.con2}>
           <div>
             <div className={styles.titleFont}>내가 보유한 칭호</div>
-            <button className={styles.nick1}>한강물</button>
+            <button className={styles.nick1}>하남자</button>
             <button className={styles.nick1}>야수의 심장</button>
           </div>
           <div>
             <div className={styles.titleFont}>획득을 기다리는 칭호</div>
-            <button className={styles.nick2} onClick={openTitle}>한강물</button>
-            <Acquire isOpen={isTitleOpen} closeModal={closeTitle}/>
-            <button className={styles.nick2}>야수의 심장</button>
-            <button className={styles.nick2}>칭호3</button>
-            <button className={styles.nick2}>칭호4</button>
-            <button className={styles.nick2}>칭호5</button>
+            <button className={styles.nick2} onClick={openTitle}>숟가락살인마</button>
+            <Acquire isOpen={isTitleOpen} closeModal={closeTitle} emblem={'5% 이내 수익률 20회 이상'}/>
+            <button className={styles.nick2}>연금술사</button>
+            <button className={styles.nick2}>키보드워리어</button>
+            <button className={styles.nick2}>스톤헤드</button>
+            <button className={styles.nick2}>각도기</button>
+            <button className={styles.nick2}>머니메이커</button>
           </div>
         </div>
       </div>
