@@ -24,7 +24,7 @@
   justify-content: space-between;
 }
 
-.assetText {
+.assetPer {
   font-size: 14px;
 }
 
@@ -100,4 +100,16 @@
 }
 .curPriceNum {
   grid-area: curPriceNum;
+}
+
+.redText {
+  color: #f86565;
+}
+
+.blueText {
+  color: #5258e6;
+}
+
+.blackText {
+  color: black;
 }

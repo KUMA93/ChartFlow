@@ -1,0 +1,243 @@
+.con1 {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 15px;
+}
+
+.head1 {
+  display: flex;
+  margin-top: 15px;
+  border: 0;
+  flex-direction: column;
+  justify-content: center;
+  width: 19vw;
+  align-items: center;
+  height: 46px;
+  border-radius: 30px;
+  background: #fff;
+  text-align: center;
+  color: #000;
+  font-family: SUITE;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.head1:focus {
+  background: #fff176;
+}
+
+.back {
+  width: 64vw;
+  height: 70vh;
+  border-radius: 20px;
+  background: #fff;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.con2 {
+  margin-top: 20px;
+  display: flex;
+  text-align: center;
+  justify-content: space-evenly;
+}
+
+.titleFont {
+  margin-top: 20px;
+  color: #000;
+  font-family: SUITE;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 50px;
+}
+
+.price1 {
+  color: #FFF;
+  font-family: SUITE;
+  margin-top: 5px;
+}
+
+.nick1 {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 20vw;
+  height: 40px;
+  border-radius: 20px;
+  background: #8effa7;
+  color: #000;
+  text-align: center;
+  font-family: Diphylleia;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: 0;
+}
+
+.nick2 {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 20vw;
+  height: 40px;
+  border-radius: 20px;
+  background: #c9c9c9;
+  color: #000;
+  text-align: center;
+  align-items: center;
+  font-family: Diphylleia;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+  border: 0;
+}
+.nick2:focus {
+  outline: 4px solid #62bdff;
+}
+
+.rank1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 27vw;
+  height: 80px;
+  border-radius: 15px;
+  background: #6c00ff;
+  margin-bottom: 10px;
+}
+
+.rank2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 27vw;
+  height: 50px;
+  border-radius: 15px;
+  background: #d9d9d9;
+  margin-bottom: 10px;
+}
+
+.rank1Font {
+  margin-left: 20px;
+  display: flex;
+  color: #8effa7;
+  text-align: center;
+  font-family: Fugaz One;
+  font-size: 43px;
+  font-style: normal;
+  font-weight: 650;
+  line-height: normal;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.rank2Font {
+  margin-left: 5%;
+  display: flex;
+  color: #000;
+  font-family: Fugaz one;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.mainFont {
+  color: #000;
+  font-family: SUITE;
+  font-size: 27px;
+  font-style: normal;
+  font-weight: 700;
+  margin-top: 3%;
+  margin-left: 3%;
+}
+
+.gContainer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.gItem {
+  border: 2px solid #fdd6d6;
+  border-radius: 10px;
+  width: 11vw;
+  height: 22vh;
+  flex-direction: column;
+  margin: auto;
+}
+
+.perFont {
+  color: #b62b2b;
+  font-family: SUITE;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.upFont {
+  color: #6c00ff;
+  font-family: SUITE;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.div1 {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  height: 80%;
+  text-align: center;
+  align-items: center;
+}
+
+.userName {
+  margin-top: 20px;
+  color: #000;
+  font-family: SUITE;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.rankUser {
+  color: #8effa7;
+  text-align: center;
+  font-family: SUITE;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.imgSize {
+  margin-right: 20px;
+  width: 50px;
+  height: 50px;
+}
+
+.user2 {
+  color: #000;
+  font-family: SUITE;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.price3 {
+  color: #6c00ff;
+  font-family: SUITE;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  margin-right: 10px;
+}

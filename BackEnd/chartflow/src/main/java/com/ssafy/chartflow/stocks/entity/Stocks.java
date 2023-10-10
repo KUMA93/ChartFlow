@@ -1,5 +1,6 @@
 package com.ssafy.chartflow.stocks.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameHistoryStocks;
 import jakarta.persistence.*;
@@ -24,7 +25,7 @@ public class Stocks {
 
     private String name;
 
-    private LocalDate date;
+    private String date;
 
     private String ticker;
 
@@ -45,6 +46,7 @@ public class Stocks {
     private float rate;
 
     @OneToMany(mappedBy = "stocks")
+    @JsonIgnore
     private final List<GameHistoryStocks> gameHistoryStocks = new ArrayList<>();
 
 }

@@ -24,6 +24,7 @@ public class ChatBotService {
 
     // @Async를 해주지 않아도 WebClient를 사용하고 Mono를 반환하는 것 만으로 비동기
     public Mono<String> chatGPTChat(String textContent){
+        textContent+= ". 매우 짧게 말해줘";
         HttpClient httpClient = HttpClient.create()
                 .responseTimeout(Duration.ofMinutes(2)) // 2분 응답 타임아웃
                 .keepAlive(false);
@@ -37,8 +38,9 @@ public class ChatBotService {
         // Create the request body
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", model);
+        String finalTextContent = textContent;
         requestBody.put("messages", Arrays.asList(
-                new HashMap<String, String>() {{ put("role", "user"); put("content", textContent); }}
+                new HashMap<String, String>() {{ put("role", "user"); put("content", finalTextContent); }}
         ));
 
         return

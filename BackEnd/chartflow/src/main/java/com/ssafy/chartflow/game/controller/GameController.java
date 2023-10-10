@@ -2,9 +2,12 @@ package com.ssafy.chartflow.game.controller;
 
 import com.ssafy.chartflow.board.service.CommentService;
 import com.ssafy.chartflow.game.dto.request.RequestGameProgressDto;
+import com.ssafy.chartflow.game.dto.response.ResponseChartDataDto;
 import com.ssafy.chartflow.game.dto.response.ResponseGameHistoryDto;
+import com.ssafy.chartflow.game.dto.response.ResponseRecentGameHistoryDto;
 import com.ssafy.chartflow.game.service.GameService;
 import com.ssafy.chartflow.security.service.JwtService;
+import com.ssafy.chartflow.stocks.entity.Stocks;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -15,7 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -83,6 +88,7 @@ public class GameController {
         }
     }
 
+
     @Operation(summary = "게임 시작하기", description = "유저가 게임 시작 버튼을 클릭하면 랜덤 기업의 랜덤 시점으로 게임을 생성하고 gameHistory에 해당 데이터를 삽입한다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "게임 시작하기 성공"),
@@ -97,18 +103,54 @@ public class GameController {
             log.info("Game Controller - 게임 시작하기");
             Long userId = jwtService.extractUserId(token);
             gameService.startGame(userId);
+            //List<ResponseChartDataDto> responseStocks = new ArrayList<>();
 
+//            for(Stocks stock : stocks){
+//                ResponseChartDataDto responseChartDataDto = ResponseChartDataDto.builder()
+//                        .id(stock.getId())
+//                        .date(stock.getDate())
+//                        .rate(stock.getRate())
+//                        .highestPrice(stock.getHighestPrice())
+//                        .lowestPrice(stock.getLowestPrice())
+//                        .ticker(stock.getTicker())
+//                        .volumes(stock.getVolumes())
+//                        .closingPrice(stock.getClosingPrice())
+//                        .openPrice(stock.getOpenPrice())
+//                        .name(stock.getName())
+//                        .build();
+//                responseStocks.add(responseChartDataDto);
+//            }
             response.put("httpStatus", SUCCESS);
-
+//            response.put("previousStocks",responseStocks);
+//            response.put("currentDate",responseStocks.get(responseStocks.size()-1).getDate());
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e) {
-            log.info("Game Controller - 게임 시작하기 실패");
+            log.info("Game Controller - 게임 시작하기 실패" + e.getMessage());
             response.put("httpStatus", FAIL);
 
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @GetMapping("/recent-history")
+    public ResponseEntity<Map<String,Object>> userHistory(@RequestHeader("Authorization") String token){
+        token = token.split(" ")[1];
+        Map<String,Object> response = new HashMap<>();
+
+        try {
+            Long userId = jwtService.extractUserId(token);
+            List<ResponseRecentGameHistoryDto> recentGameHistory = gameService.getRecentGameHistory(userId);
+            response.put("recentGameHistory",recentGameHistory);
+            response.put("httpStatus", SUCCESS);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e) {
+
+            response.put("httpStatus", FAIL);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
     @Operation(summary = "게임 턴 진행", description = "유저가 한 턴에 행동한 내용에 따라 매수, 매도, 스킵, 종료를 수행한다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "게임 턴 진행 성공"),
@@ -143,7 +185,7 @@ public class GameController {
                     log.info("Game Controller - 스킵");
                     int turn = gameService.skipTurn(requestGameProgressDto.getGameHistoryId(), userId);
 
-                    if (turn < 50) break;
+                    if (turn < 51) break;
 
                 // 종료
                 default:

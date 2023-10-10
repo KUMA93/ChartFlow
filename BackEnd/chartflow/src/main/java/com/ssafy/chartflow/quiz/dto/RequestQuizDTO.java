@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestQuizDTO {   // 유저가 퀴즈 풀때 주는 request
-    private Long userId;
     private Long quizId;
     private String choice;
 }

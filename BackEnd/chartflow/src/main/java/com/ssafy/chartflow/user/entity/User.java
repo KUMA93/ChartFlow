@@ -1,5 +1,6 @@
     package com.ssafy.chartflow.user.entity;
 
+    import com.fasterxml.jackson.annotation.JsonIgnore;
     import com.ssafy.chartflow.board.entity.Article;
     import com.ssafy.chartflow.board.entity.Comments;
     import com.ssafy.chartflow.board.entity.Likes;
@@ -23,7 +24,7 @@
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    @ToString(exclude = {"emblems", "userGameHistories", "userLikes", "userComments", "userArticle", "userRecomments"})
+    @ToString(exclude = {"emblems", "gameHistories", "likes", "comments", "articles", "reComments", "Quizs"})
     public class User implements UserDetails {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,10 +59,17 @@
         @Column(name = "cancel")
         private int cancel;
 
+        @Column(name = "selected_emblem")
+        private String selected_emblem;
+
+        @Column(name = "ranking")
+        private Long ranking;
+
         @OneToMany(mappedBy = "user")
         private final List<UserEmblem> emblems = new ArrayList<>();
 
         @OneToMany(mappedBy = "user")
+        @JsonIgnore
         private final List<GameHistory> gameHistories = new ArrayList<>();
 
         @OneToMany(mappedBy = "user")
@@ -79,8 +87,6 @@
         @OneToMany(mappedBy = "user")
         private final List<UserQuiz> Quizs = new ArrayList<>();
 
-        @OneToOne(mappedBy = "user")
-        private RefreshToken refreshToken;
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
             return List.of(new SimpleGrantedAuthority(role.name()));
@@ -110,4 +116,5 @@
         public boolean isEnabled() {
             return true;
         }
+
     }

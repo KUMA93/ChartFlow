@@ -2,6 +2,7 @@ package com.ssafy.chartflow.board.service;
 
 import com.ssafy.chartflow.board.dto.response.ArticleResponseDto;
 import com.ssafy.chartflow.board.entity.Article;
+import com.ssafy.chartflow.board.entity.ArticleTag;
 import com.ssafy.chartflow.board.entity.Likes;
 import com.ssafy.chartflow.board.repository.ArticleRepository;
 import com.ssafy.chartflow.board.repository.CustomLikeRepository;
@@ -11,6 +12,8 @@ import com.ssafy.chartflow.exception.NoSuchLikeException;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,19 +29,29 @@ public class ArticleServiceImp implements ArticleService {
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
 
+
     @Override
-    public void writeArticle(long userId, String title, String content) {
+    public Page<Article> getAllKeywordArticles(String keyword, Pageable pageable) {
+        return articleRepository.findAllByTitleLike("%" + keyword +"%",pageable);
+    }
+
+    @Override
+    public Page<Article> getAllArticles(Pageable pageable) {
+        return articleRepository.findAll(pageable);
+    }
+
+    @Override
+    public void writeArticle(long userId, ArticleTag tag, String title, String content) {
         User user = userRepository.findUserById(userId);
         Article article = new Article();
         article.setUser(user);
         article.setRegisterTime(LocalDateTime.now());
         article.setTitle(title);
+        article.setContent(content);
+        article.setTag(tag);
 
         userRepository.save(user);
         articleRepository.save(article);
-
-
-
     }
 
     @Override
@@ -81,8 +94,8 @@ public class ArticleServiceImp implements ArticleService {
     }
 
     @Override
-    public void withdrawLike(long likeId) {
-        likeRepository.deleteById(likeId);
+    public void withdrawLike(long userId,long articleId) {
+        likeRepository.deleteByUserIdAndArticleId(userId,articleId);
     }
 
     @Override

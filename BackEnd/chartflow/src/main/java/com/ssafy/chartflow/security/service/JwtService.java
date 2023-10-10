@@ -74,11 +74,11 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails, accessTokenSecretKey, accessTokenExpirationHours);
     }
 
-    public String generateRefreshToken(UserDetails userDetails) {
+    public String generateRefreshToken(User userDetails) {
         String refreshToken = generateToken(new HashMap<>(), userDetails, refreshTokenSecretKey, refreshTokenExpirationHours);
         RefreshToken refreshTokenEntity = new RefreshToken();
         refreshTokenEntity.setToken(refreshToken);
-        refreshTokenEntity.setUser((User) userDetails);
+        refreshTokenEntity.setUser_id(userDetails.getId());
         refreshTokenService.save(refreshTokenEntity);
         return refreshToken;
     }
@@ -91,7 +91,7 @@ public class JwtService {
     private UserDetails loadUserByRefreshToken(String refreshToken) {
         RefreshToken storedRefreshToken = refreshTokenService.findByToken(refreshToken);
         if (storedRefreshToken != null) {
-            User user = storedRefreshToken.getUser();
+            User user = userRepository.findUserById(storedRefreshToken.getUser_id());
             log.info(user.getUsername());
             return user;
         } else {

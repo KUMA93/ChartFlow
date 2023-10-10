@@ -2,19 +2,45 @@ import styles from "./Login.module.css";
 import modal_logo from "./../../assets/images/free-icon-growth-chart.png";
 import closeBtn from "./../../assets/images/icons8-x-50.png";
 import { useInput } from "../../hooks/useInput";
+import { login } from "../../services/apis/user";
+import UserContext from "../../context/UserContext";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
+import { useContext } from "react";
 
 function Login({ modalShow, handleClose }) {
-  const handleSubmit = () => {
-    console.log("로그인 버튼 누름");
+  const { handleMainNavigate, handleJoinNavigate, handleForgetNavigate } =
+    useCustomNavigate();
+  const { setIsLogin } = useContext(UserContext);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const requestLogin = {
+      email: inputId,
+      password: inputPw,
+    };
+    login(requestLogin)
+      .then((res) => {
+        localStorage.setItem("access-token", res["access-token"]);
+        localStorage.setItem("refresh-token", res["refresh-token"]);
+        setIsLogin(true);
+        handleClose();
+
+        handleMainNavigate();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const [inputValue, handleChange] = useInput("", handleSubmit);
-  const [inputValue2, handleChange2] = useInput("", handleSubmit);
+  const [inputId, handleChangeId] = useInput("", handleSubmit);
+  const [inputPw, handleChangePw] = useInput("", handleSubmit);
 
   return (
     <div style={{ display: modalShow ? "block" : "none" }}>
-      <div className={styles.shade}>shade</div>
-      <div className={styles.login}>
+      <div className={styles.shade} onClick={handleClose}>
+        shade
+      </div>
+      <div className={styles.modalLogin}>
         <img
           src={closeBtn}
           alt="closeBtn"
@@ -31,30 +57,53 @@ function Login({ modalShow, handleClose }) {
           </div>
         </div>
         <div className={styles.forms}>
-          <div className={styles.form}>
-            <input value={inputValue} onChange={handleChange} required></input>
-            <label>이메일 주소</label>
-            <span></span>
-          </div>
-          <div className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <input
-              type="password"
-              value={inputValue2}
-              onChange={handleChange2}
+              className={styles.inputLogin}
+              value={inputId}
+              onChange={handleChangeId}
               required
+              autoComplete="on"
             ></input>
-            <label>비밀번호</label>
+            <label className={styles.labelLogin}>이메일 주소</label>
             <span></span>
-          </div>
-          <button className={styles.loginBtn} onClick={handleSubmit}>
+          </form>
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <input
+              className={styles.inputLogin}
+              type="password"
+              value={inputPw}
+              onChange={handleChangePw}
+              required
+              autoComplete="on"
+            ></input>
+            <label className={styles.labelLogin}>비밀번호</label>
+            <span></span>
+          </form>
+          <button
+            className={styles.loginBtn}
+            type="submit"
+            onClick={handleSubmit}
+          >
             로그인
           </button>
+          <div className={styles.end}>
+            <div className={styles.text2}>비밀번호를 잊으셨나요?</div>
+            <div
+              className={styles.signup}
+              onClick={() => {
+                handleForgetNavigate();
+              }}
+            >
+              여기
+            </div>
+          </div>
           <div className={styles.end}>
             <div className={styles.text2}>차트플로우가 처음이신가요?</div>
             <div
               className={styles.signup}
               onClick={() => {
-                window.location.href = "/signup";
+                handleJoinNavigate();
               }}
             >
               회원가입

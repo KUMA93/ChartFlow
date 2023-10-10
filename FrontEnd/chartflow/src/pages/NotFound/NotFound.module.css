@@ -1,0 +1,36 @@
+.font {
+  margin-top: 25px;
+  color: #000;
+  text-align: center;
+  font-family: SUITE;
+  font-size: 38px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.center {
+  text-align: center;
+}
+
+.margin {
+  margin-top: 160px;
+}
+
+.mainBtn {
+  display: inline-block;
+  margin-top: 100px;
+  width: 170px;
+  height: 48px;
+  border-radius: 20px;
+  border: 2px solid #767676;
+  background: #FFF;
+  box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.25);
+  color: #767676;
+  font-family: SUITE;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  cursor: pointer;
+}

@@ -8,6 +8,7 @@ import com.ssafy.chartflow.emblem.service.observer.EmblemObserver;
 import com.ssafy.chartflow.emblem.service.observer.GameFinishObserver;
 import com.ssafy.chartflow.emblem.service.observer.TurnFinishObserver;
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
+import com.ssafy.chartflow.emblem.service.strategy.EmblemStrategy;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +32,15 @@ public class EmblemService {
     }
 
     public void notifyObserver(UserGameDto userGameDto, int flag) {
+        List<UserEmblem> emblems = userGameDto.getUser().getEmblems();
+        userGameDto.setEmblems(emblems);
+        for (EmblemObserver observer: observers){
+            log.info("type = {}", observer.getClass());
 
+        }
         for (EmblemObserver observer : observers){
             if (flag == 0 && observer instanceof TurnFinishObserver){
+                log.info("-------------turnobserver update called -------------");
                 observer.update(userGameDto);
             }else if (flag == 1 && observer instanceof GameFinishObserver){
                 observer.update(userGameDto);

@@ -30,6 +30,7 @@
   font-size: 18px;
   font-weight: 800;
   border: 0;
+  cursor: pointer;
 }
 
 .buybtn {
@@ -60,4 +61,8 @@
 
 .all {
   font-size: 13px;
+}
+
+.disabled {
+  opacity: 0.5;
 }

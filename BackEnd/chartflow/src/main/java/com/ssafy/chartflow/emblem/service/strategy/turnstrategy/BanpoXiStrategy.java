@@ -1,23 +1,24 @@
 package com.ssafy.chartflow.emblem.service.strategy.turnstrategy;
 
 import com.ssafy.chartflow.emblem.dto.UserGameDto;
-import com.ssafy.chartflow.emblem.entity.Emblem;
-import com.ssafy.chartflow.emblem.service.strategy.GameStrategy;
+import com.ssafy.chartflow.emblem.entity.UserEmblem;
 import com.ssafy.chartflow.user.entity.User;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class BanpoXiStrategy implements TurnStrategy {
     @Override
     public boolean checkCondition(UserGameDto userGameDto) {
         // 자산이 30억 이상
         User user = userGameDto.getUser();
-        List<Emblem> emblems = userGameDto.getEmblems();
+        List<UserEmblem> emblems = userGameDto.getEmblems();
 
         long condition = 30000000000L;
         if (user.getBudget() >= condition){
             return emblems.stream()
-                    .noneMatch(emblem -> "반포자이".equals(emblem.getName()));
+                    .noneMatch(emblem -> "반포자이".equals(emblem.getEmblem().getName()));
         }
         return false;
     }

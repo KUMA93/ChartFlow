@@ -29,4 +29,21 @@ public class UserQuiz {
     @Column(name = "choice")
     private String choice;
 
+    public void setQuiz(Quiz quiz) {
+        if (quiz != null) {
+            quiz.getUserQuiz().remove(this);
+        }
+        this.quiz = quiz;
+        assert quiz != null;
+        quiz.getUserQuiz().add(this);
+    }
+
+    public void setUser(User user) {
+        if (user != null) {
+            user.getQuizs().remove(this);
+        }
+        this.user = user;
+        assert user != null;
+        user.getQuizs().add(this);
+    }
 }

@@ -1,0 +1,70 @@
+.shade {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  flex-shrink: 0;
+  background-color: rgba(43, 40, 38, 0.6);
+  z-index: 1;
+}
+
+.modalLogin {
+  position: absolute;
+  top: 30vh;
+  left: 30vw;
+  padding: 5vh 2vw;
+  width: 20vw;
+  height: 20vh;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.title {
+  font-size: 17px;
+  text-align: center;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 10%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  height: 48px;
+}
+
+.goBack {
+  background-color: #ececec;
+  color: #a2a2a2;
+  font-size: 16px;
+  width: 40%;
+  border: 0;
+  flex-shrink: 0;
+  border-radius: 30px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.goSave {
+  background-color: #6c00ff;
+  color: #8effa7;
+  font-size: 16px;
+  width: 50%;
+  border: 0;
+  flex-shrink: 0;
+  border-radius: 30px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.closeBtn {
+  position: absolute;
+  margin-left: 19vw;
+  margin-top: -2vh;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
