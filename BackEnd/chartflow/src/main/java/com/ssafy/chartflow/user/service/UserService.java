@@ -1,23 +1,28 @@
 package com.ssafy.chartflow.user.service;
 
+import com.ssafy.chartflow.emblem.entity.UserEmblem;
+import com.ssafy.chartflow.emblem.repository.UserEmblemRepository;
 import com.ssafy.chartflow.info.dto.ResponseAssetsDto;
+import com.ssafy.chartflow.info.repository.RedisRankingRepository;
 import com.ssafy.chartflow.security.service.JwtService;
 import com.ssafy.chartflow.user.dto.RequestLoginDto;
 import com.ssafy.chartflow.user.dto.ResponseAuthenticationDto;
+import com.ssafy.chartflow.user.dto.ResponseMyPageDto;
+import com.ssafy.chartflow.user.dto.ResponseUserInfoDto;
 import com.ssafy.chartflow.user.entity.Role;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -28,6 +33,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final RedisRankingRepository rankingRepository;
+    private final UserEmblemRepository userEmblemRepository;
 
     private static final int IS_CANCELED = 1; // 탈퇴 유저
     private static final int IS_NOT_CANCELED = 0; // 탈퇴 안 한 유저
@@ -47,6 +54,13 @@ public class UserService {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
+    }
+
+    public Boolean checkNickname(String Nickname) {
+        log.info("회원 서비스 - 닉네임 중복 체크");
+        User user = userRepository.findUserByNickname(Nickname);
+
+        return user == null;
     }
 
     public User regist(String email, String password, String name, String nickname) {
@@ -72,12 +86,46 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void updateNickname(User user, String newNickname) {
+        user.setNickname(newNickname);
+        userRepository.save(user);
+    }
+
+
     public ResponseAssetsDto getAssets(Long userId) {
         User user = userRepository.findUserById(userId);
         return new ResponseAssetsDto(user.getCoin(), user.getBudget());
     }
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    public User getUser(Long userId){
+        return userRepository.findUserById(userId);
+    }
+
+    public ResponseMyPageDto getMyPage(Long userId) {
+        User user = userRepository.findUserById(userId);
+        user.setRanking(rankingRepository.getUserRank(userId));
+        System.out.println("--------- rank : "+user.getRanking());
+        UserEmblem userEmblem  = userEmblemRepository.findUserEmblemByUserAndEquipedIsTrue(user);
+        log.info(userEmblem.getEmblem().getName());
+        ResponseUserInfoDto userInfoDto = new ResponseUserInfoDto(userId, user.getName(), user.getNickname(), user.getEmail(), userEmblem.getEmblem().getName(), user.getRanking());
+        ResponseAssetsDto userAssetsDto = new ResponseAssetsDto(user.getCoin(), user.getBudget());
+
+        System.out.println(user);
+        System.out.println(userInfoDto);
+        return new ResponseMyPageDto(userInfoDto, userAssetsDto, userEmblem.getEmblem().getName());
+    }
+
+//    public Map<String, Object> getMyBoard(Long userId) {
+//        Map<String, Object> response = new HashMap<>();
+//
+//
+//
+//        response.put("data", new ResponseMyPageDto(userInfoDto, userAssetsDto));
+//        return response;
+//    }
+
 }

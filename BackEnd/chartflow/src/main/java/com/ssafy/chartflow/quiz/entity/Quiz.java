@@ -26,10 +26,10 @@ public class Quiz {
     @Column(name = "answer")
     private String answer;
 
-//    @OneToMany(mappedBy = "quiz")
-//    private final List<QuizChoices> quizChoices = new ArrayList<>();
+    @OneToMany(mappedBy = "quiz")
+    private final List<QuizChoices> quizChoices = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "quiz")
-//    private final List<UserQuiz> userQuiz = new ArrayList<>();
+    @OneToMany(mappedBy = "quiz")
+    private final List<UserQuiz> userQuiz = new ArrayList<>();
 
 }

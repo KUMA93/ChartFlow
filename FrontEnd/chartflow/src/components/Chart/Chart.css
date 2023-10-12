@@ -1,0 +1,11 @@
+#chartcontrols {
+  height: auto;
+  padding: 5px 5px 0 16px;
+  max-width: 100%;
+}
+
+#chartdiv {
+  width: 100%;
+  height: 600px;
+  max-width: 100%;
+}

@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -28,7 +29,7 @@ public class RankingService {
         return redisRankingRepository.getUserRank(userId);
     }
 
-    public Set<?> getRankers(int range){
+    public Map<?,?> getRankers(int range){
         return redisRankingRepository.getTopUsers(range);
     }
 

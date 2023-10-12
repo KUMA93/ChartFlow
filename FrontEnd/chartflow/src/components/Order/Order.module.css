@@ -4,11 +4,12 @@
   width: fit-content;
   grid-gap: 5px;
   grid-template-areas:
-    "quantity quantity available availquant"
+    "quantity quantity quantity quantity"
+    "buyable buyNum sellable sellNum"
     "input input input input"
     "btn10 btn25 btn50 btn100";
 
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr 0.5fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
@@ -17,13 +18,27 @@
   font-size: 13px;
 }
 
-.available {
-  grid-area: available;
+.buyable {
+  grid-area: buyable;
+  font-size: 13px;
+  /* background-color: #f86565; */
+}
+
+.buyNum {
+  grid-area: buyNum;
+  overflow: hidden;
   font-size: 13px;
 }
 
-.availquant {
-  grid-area: availquant;
+.sellable {
+  grid-area: sellable;
+  font-size: 13px;
+  /* background-color: #5258e6; */
+}
+
+.sellNum {
+  grid-area: sellNum;
+  overflow: hidden;
   font-size: 13px;
 }
 
@@ -34,13 +49,17 @@
 
 .btn10 {
   grid-area: btn10;
+  cursor: pointer;
 }
 .btn25 {
   grid-area: btn25;
+  cursor: pointer;
 }
 .btn50 {
   grid-area: btn50;
+  cursor: pointer;
 }
 .btn100 {
   grid-area: btn100;
+  cursor: pointer;
 }

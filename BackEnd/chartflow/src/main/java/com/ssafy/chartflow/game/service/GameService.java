@@ -1,28 +1,32 @@
 package com.ssafy.chartflow.game.service;
 
-import com.ssafy.chartflow.game.dto.request.RequestGameProgressDto;
+import com.ssafy.chartflow.emblem.dto.UserGameDto;
+import com.ssafy.chartflow.emblem.service.EmblemService;
+import com.ssafy.chartflow.game.dto.projection.GameHistoryProjection;
 import com.ssafy.chartflow.game.dto.response.ResponseGameHistoryDto;
+import com.ssafy.chartflow.game.dto.response.ResponseRecentGameHistoryDto;
 import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.game.entity.GameHistoryStocks;
 import com.ssafy.chartflow.game.entity.GameTurns;
 import com.ssafy.chartflow.game.repository.GameHistoryStocksRepository;
 import com.ssafy.chartflow.game.repository.GameRepository;
 import com.ssafy.chartflow.game.repository.GameTurnsRepository;
+import com.ssafy.chartflow.info.service.CoinService;
 import com.ssafy.chartflow.stocks.entity.Stocks;
 import com.ssafy.chartflow.stocks.repository.StocksRepository;
 import com.ssafy.chartflow.user.entity.User;
 import com.ssafy.chartflow.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -34,11 +38,42 @@ public class GameService {
     private final int SKIP = 2;
     private final int QUIT = 3;
 
+    private final int DRAW = 0;
+    private final int WIN = 1;
+    private final int LOSE = 2;
+
+    private final int MAX_HISTORY_LENGTH = 10;
+
     private final UserRepository userRepository;
     private final GameRepository gameRepository;
     private final GameTurnsRepository gameTurnsRepository;
     private final GameHistoryStocksRepository gameHistoryStocksRepository;
     private final StocksRepository stocksRepository;
+    private final CoinService coinService;
+
+    private final EmblemService emblemService;
+
+    public List<ResponseRecentGameHistoryDto> getRecentGameHistory(long userId){
+        List<ResponseRecentGameHistoryDto>  result = new ArrayList<>();
+        List<GameHistory> userHistories = gameRepository.findGameHistoriesByUserId(userId);
+
+        if(userHistories.size() > MAX_HISTORY_LENGTH){
+            userHistories = userHistories.subList(0,MAX_HISTORY_LENGTH);
+        }
+        for(GameHistory gameHistory : userHistories){
+            String ticker = gameHistory.getCompanyCode();
+            String companyName = stocksRepository.findStocksByTicker(ticker).get(0).getName();
+            ResponseRecentGameHistoryDto responseRecentGameHistoryDto =
+                    ResponseRecentGameHistoryDto
+                            .builder()
+                            .companyName(companyName)
+                            .initialBudget(gameHistory.getInitialBudget())
+                            .lastBudget(gameHistory.getCashBudget())
+                            .build();
+            result.add(responseRecentGameHistoryDto);
+        }
+        return result;
+    }
 
     public ResponseGameHistoryDto getGameHistory(long userId) {
 
@@ -63,7 +98,9 @@ public class GameService {
         return responseData;
     }
 
+    //특정 주가 , 주식 날짜 정보
 
+    @Transactional(readOnly = true)
     public Map<String, Object> getGameData(long userId) {
         Map<String,Object> response = new HashMap<>();
 
@@ -75,6 +112,7 @@ public class GameService {
 
         // 현재 진행중인 game history 조회
         for (GameHistory gameHistory : gameHistories) {
+            log.info("======== search gameHistory ========");
             if (gameHistory.getEndTime() == null) {
                 gameHistoryData.setGameHistoryId(gameHistory.getId());
                 gameHistoryData.setRate(gameHistory.getRate());
@@ -86,14 +124,31 @@ public class GameService {
                 gameHistoryData.setCashBudget(gameHistory.getCashBudget());
 
                 companyCode = gameHistory.getCompanyCode();
+                log.info("=========== companyCode : " + companyCode);
                 break;
             }
         }
 
         response.put("gameHistory", gameHistoryData);
 
-        // companyCode를 통해 전체 차트데이터 조회
-        List<Stocks> stocksList = stocksRepository.findAllByTicker(companyCode);
+        // companyCode 전 1년 차트 데이터
+        String ticker = gameHistories.get(gameHistories.size()-1).getCompanyCode();
+        String date = gameHistories.get(gameHistories.size()-1).getChartDate();
+        log.info("==============검색할 날짜 : " + date);
+        List<Stocks> stocksList = stocksRepository.findAllPreviousStocks(ticker,date);
+        Collections.reverse(stocksList);
+        log.info("====================1년 전 주식 정보======================");
+        for (Stocks cur : stocksList) {
+            log.info(cur.getDate());
+        }
+
+        // 앞으로 51개 만큼의 차트 데이터 추가
+        List<GameHistoryStocks> after = gameHistories.get(gameHistories.size()-1).getGameHistoryStocks();
+        log.info("====================앞으로 붙일 주식 정보=====================");
+        for (GameHistoryStocks cur : after) {
+            log.info(cur.getStocks().getDate());
+            stocksList.add(cur.getStocks());
+        }
         response.put("chartData", stocksList);
 
         return response;
@@ -103,33 +158,51 @@ public class GameService {
 
         User user = userRepository.findUserById(userId);
 
-        // 랜덤 주식 정보에 access, PK는 1 ~ 390094 범위
+        if (user.getCoin() > 0){
+            coinService.decreaseCoin(userId);
+        }else{
+            //todo: throw exception
+            return;
+        }
+
+        // 랜덤 주식 정보에 access, PK는 1 ~ 3000000 범위
         Random random = new Random();
-        // 13만 ~ 26만 범위 난수 생성
-        long stockId = random.nextInt(130000) + 130000;
+        // 100만 ~ 200만 범위 난수 생성
+        long stockId = random.nextInt(1000000) + 1000000;
 
         Stocks stock = stocksRepository.findStocksById(stockId);
-
+        log.info("주식 PK: " + stockId);
         GameHistory gameHistory = GameHistory.builder()
                 .companyCode(stock.getTicker())
                 .chartDate(stock.getDate())
                 .startTime(LocalDateTime.now())
                 .initialBudget(user.getBudget())
                 .cashBudget(user.getBudget())
-                .turn(0)
-                .rate(0)
+                .turn(1)
+                .rate(0.00)
                 .price(0)
                 .quantity(0)
                 .build();
+        log.info("게임 히스토리 생성 완료 - " + gameHistory.toString());
 
-
-        // 51개 만큼 주식 데이터 저장
+        // 51개 만큼 주식 데이터 저장 게임을 진행해야하는 데이터
         List<Stocks> stocks = stocksRepository.findAllByTicker(stock.getTicker());
+//        int dayOfYear = 365;
+//        // 앞의 300개 데이터
+//        stocks = stocks.subList(dayOfYear + 10 , stocks.size() - dayOfYear );
+//        Stocks firstStocks = stocks.get(0);
+//        List<Stocks> allPreviousStocks = stocksRepository.findAllPreviousStocks(firstStocks.getTicker(), firstStocks.getDate());
+
+        gameHistory.setUser(user);
+
+        userRepository.save(user);
+        gameRepository.save(gameHistory);
+
 
         int cnt = 0;
         for (Stocks cur : stocks) {
-            if (cnt >= 51) break;
-            if (cur.getDate().isAfter(stock.getDate())) {
+            if (cnt > 51) break;
+            if (Integer.parseInt(cur.getDate()) >= Integer.parseInt(stock.getDate())) {
                 cnt++;
                 GameHistoryStocks gameHistoryStocks = new GameHistoryStocks();
                 gameHistoryStocks.setGameHistory(gameHistory);
@@ -139,13 +212,10 @@ public class GameService {
             }
         }
 
-        gameHistory.setUser(user);
-
-        userRepository.save(user);
-        gameRepository.save(gameHistory);
-
-        log.info("등록된 game history : " + gameHistory);
+        return;
     }
+
+
 
     public void buyStocks(long gameHistoryId, int quantity, long userId) {
         User user = userRepository.findUserById(userId);
@@ -224,7 +294,7 @@ public class GameService {
         gameRepository.save(gameHistory);
     }
 
-    public void skipTurn(long gameHistoryId, long userId) {
+    public int skipTurn(long gameHistoryId, long userId) {
         User user = userRepository.findUserById(userId);
         GameHistory gameHistory = gameRepository.findGameHistoryById(gameHistoryId);
 
@@ -236,43 +306,127 @@ public class GameService {
         long todayStockId = today.getStocks().getId();
         Stocks todayStock = stocksRepository.findStocksById(todayStockId);
 
-        int price = (todayStock.getHighestPrice() + todayStock.getLowestPrice()) / 2;
-
         // 내일 차트 정보 받아오기
         GameHistoryStocks tomorrow = gameHistoryStocks.get(turn + 1);
         long tomorrowStockId = tomorrow.getStocks().getId();
         Stocks tomorrowStock = stocksRepository.findStocksById(tomorrowStockId);
-        LocalDate date = tomorrowStock.getDate();
+        String date = tomorrowStock.getDate();
 
+        int price = (tomorrowStock.getHighestPrice() + tomorrowStock.getLowestPrice()) / 2;
         gameHistory.setChartDate(date);
 
-        // 해당 턴 동안의 등락률 계산,
-//        long totalAssets = gameHistory.getCashBudget();
-//
-//        // 전 날 대비 종가가 상승한 경우
-//        if (price <= tomorrowStock.getClosingPrice()) {
-//            totalAssets += (long) tomorrowStock.getHighestPrice() * quant;
-//        }
-//        // 전 날 대비 종가가 하락한 경우
-//        else {
-//            totalAssets -= (long) tomorrowStock.getLowestPrice() * quant;
-//        }
-//
-//        gameHistory.setRate(Math.round((totalAssets - gameHistory.getInitialBudget()) / gameHistory.getInitialBudget() * 100 * 100) / 100.0);
+        // 해당 턴 동안의 등락률 계산
+        long cashBudget = gameHistory.getCashBudget();
+        long initialBudget = gameHistory.getInitialBudget();
+        long currentStocks = initialBudget - cashBudget;
+        long totalAssets = cashBudget + price * gameHistory.getQuantity();
 
-        // 변동 사항 유저 정보에 저장 & 턴 증가
+        long tomorrowStocks = (long) price * gameHistory.getQuantity();
 
-        gameHistory.setTurn(turn + 1);
+        long gap = tomorrowStocks - currentStocks;
+
+        user.setBudget(totalAssets);
+        gameHistory.setRate(Math.round((float) (totalAssets - initialBudget) / initialBudget * 100 * 100) / 100.0);
+
+        // 유저 자산에 반영
         gameHistory.setUser(user);
+
+        // gameTurns 반영
+        GameTurns gameTurns = GameTurns.builder()
+                .behavior(SKIP)
+                .turn(turn)
+                .price(gameHistory.getPrice())
+                .quantity(gameHistory.getQuantity())
+                .currentStocks(currentStocks)
+                .cashBudget(cashBudget)
+                .totalAssets(totalAssets)
+                .rate(gameHistory.getRate())
+                .todayPrice(price)
+                .build();
+
+
+        gameTurns.setGameHistory(gameHistory);
+
+        gameTurnsRepository.save(gameTurns);
+        // 매 턴마다 칭호 획득 검사
+        UserGameDto userGameDto = UserGameDto.builder()
+                        .user(user)
+                        .gameTurns(gameTurns)
+                        .gameHistory(gameHistory)
+                        .build();
+
+        emblemService.notifyObserver(userGameDto, 0);
+
+        // 턴 증가
+        gameHistory.setTurn(turn + 1);
 
         gameRepository.save(gameHistory);
         userRepository.save(user);
+
+        return turn;
     }
 
     public void quitGame(long gameHistoryId, long userId) {
         User user = userRepository.findUserById(userId);
         GameHistory gameHistory = gameRepository.findGameHistoryById(gameHistoryId);
+        int turn = gameHistory.getTurn();
 
+        // 금일 가격 -> 최고가 + 최저가 평균
+        List<GameHistoryStocks> gameHistoryStocks = gameHistory.getGameHistoryStocks();
+        GameHistoryStocks today = gameHistoryStocks.get(turn);
+        long todayStockId = today.getStocks().getId();
+        Stocks todayStock = stocksRepository.findStocksById(todayStockId);
+
+        int price = (todayStock.getHighestPrice() + todayStock.getLowestPrice()) / 2;
+
+        // 가지고 있는 주식 전량 매도
+        long cashBudget = gameHistory.getCashBudget();
+        long initialBudget = gameHistory.getInitialBudget();
+        long totalAssets = cashBudget + price * gameHistory.getQuantity();
+
+        double rate = Math.round((float) (totalAssets - initialBudget) / initialBudget * 100 * 100) / 100.0;
+
+        user.setBudget(totalAssets);
+        gameHistory.setRate(rate);
+
+        if (rate > 0) gameHistory.setResult(WIN);
+        else if (rate == 0) gameHistory.setResult(DRAW);
+        else gameHistory.setResult(LOSE);
+
+        gameHistory.setPrice(0);
+        gameHistory.setQuantity(0);
+        gameHistory.setEndTime(LocalDateTime.now());
+        gameHistory.setCashBudget(totalAssets);
+
+        // 유저 자산에 반영
+        gameHistory.setUser(user);
+
+        // gameTurns 반영
+        GameTurns gameTurns = GameTurns.builder()
+                .behavior(QUIT)
+                .turn(turn)
+                .price(0)
+                .quantity(0)
+                .currentStocks(0)
+                .cashBudget(totalAssets)
+                .totalAssets(totalAssets)
+                .rate(rate)
+                .todayPrice(price)
+                .build();
+
+        gameTurns.setGameHistory(gameHistory);
+
+        gameTurnsRepository.save(gameTurns);
+        gameRepository.save(gameHistory);
+        userRepository.save(user);
+
+        UserGameDto userGameDto = UserGameDto.builder()
+                .user(user)
+                .gameTurns(gameTurns)
+                .gameHistory(gameHistory)
+                .build();
+
+        emblemService.notifyObserver(userGameDto, 1);
     }
 
 }

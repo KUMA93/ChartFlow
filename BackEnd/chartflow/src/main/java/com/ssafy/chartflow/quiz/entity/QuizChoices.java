@@ -1,4 +1,5 @@
 package com.ssafy.chartflow.quiz.entity;
+import com.ssafy.chartflow.game.entity.GameHistory;
 import com.ssafy.chartflow.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,4 +22,13 @@ public class QuizChoices {
 
     @Column(name = "content")
     private String content;
+
+    public void setQuiz(Quiz quiz) {
+        if (quiz != null) {
+            quiz.getQuizChoices().remove(this);
+        }
+        this.quiz = quiz;
+        assert quiz != null;
+        quiz.getQuizChoices().add(this);
+    }
 }

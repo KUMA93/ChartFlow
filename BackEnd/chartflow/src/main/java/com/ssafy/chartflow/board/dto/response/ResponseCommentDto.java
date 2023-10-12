@@ -14,9 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseCommentDto {
-    private long reCommentId;
     private long commentId;
     private long userId;
+    private String nickname;
     private String content;
     private LocalDateTime registerTime;
     private int cancel;

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class ReComments{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recomment_id")
     private long id;
 

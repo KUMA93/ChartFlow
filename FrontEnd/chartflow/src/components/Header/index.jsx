@@ -1,16 +1,28 @@
-import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserContext from "../../context/UserContext";
 import main_logo from "./../../assets/images/main_logo.png";
+import useCustomNavigate from "../../hooks/useCustomNavigate";
 import Login from "../Login";
+import UserIcon from "./UserIcon";
 
 function Header() {
-  const navigate = useNavigate();
+  const {
+    handleMainNavigate,
+    handleGameNavigate,
+    handleBoardNavigate,
+    handleQuizNavigate,
+    handleRankingNavigate,
+  } = useCustomNavigate();
+  const { isLogin } = useContext(UserContext);
 
   const MainLogo = () => (
-    <a href="/">
-      <img src={main_logo} alt="main_logo" className={styles.mainLogo} />
-    </a>
+    <img
+      src={main_logo}
+      alt="main_logo"
+      className={styles.mainLogo}
+      onClick={handleMainNavigate}
+    />
   );
   const MenuItems = () => (
     <ul className={styles.menu}>
@@ -18,19 +30,16 @@ function Header() {
         <button
           className={styles.tab}
           onClick={() => {
-            navigate("/game");
+            isLogin
+              ? handleGameNavigate()
+              : alert("로그인이 필요한 기능입니다.");
           }}
         >
           차트게임
         </button>
       </li>
       <li>
-        <button
-          className={styles.tab}
-          onClick={() => {
-            navigate("/boards");
-          }}
-        >
+        <button className={styles.tab} onClick={handleBoardNavigate}>
           커뮤니티
         </button>
       </li>
@@ -38,20 +47,17 @@ function Header() {
         <button
           className={styles.tab}
           onClick={() => {
-            navigate("/hist");
+            isLogin
+              ? handleQuizNavigate()
+              : alert("로그인이 필요한 기능입니다.");
           }}
         >
-          히스토리
+          주식퀴즈
         </button>
       </li>
       <li>
-        <button
-          className={styles.tab}
-          onClick={() => {
-            navigate("/mypage");
-          }}
-        >
-          마이페이지
+        <button className={styles.tab} onClick={handleRankingNavigate}>
+          히스토리
         </button>
       </li>
     </ul>
@@ -83,7 +89,7 @@ function Header() {
       <div className={styles.container}>
         <MainLogo />
         <MenuItems />
-        <Start />
+        {isLogin ? <UserIcon /> : <Start />}
       </div>
       <Line />
       {modalShow && <Login modalShow={modalShow} handleClose={handleClose} />}

@@ -1,0 +1,184 @@
+.bg {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 25vh;
+}
+
+.total {
+  left: 10px;
+  height: 25px;
+  white-space: nowrap;
+}
+
+.commentCount {
+  display: inline;
+  color: #6c00ff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.line {
+  border-bottom: 2px solid #959595;
+}
+.line2 {
+  border-bottom: 2px solid #6c00ff;
+}
+
+.comments {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.notice {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.silence {
+  width: 80px;
+  height: 80px;
+}
+
+.inputComment {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  height: 40px;
+  text-indent: 3%;
+  color: #222222;
+  width: 85%;
+  border: solid #aaaaaa 1px;
+  border-radius: 10px 0px 0px 10px;
+  position: relative;
+  background: none;
+  outline: none;
+  cursor: text;
+}
+.inputComment::placeholder {
+  color: #aaaaaa;
+}
+.inputComment:focus {
+  outline: none;
+}
+
+.ComBtn {
+  width: 13%;
+  height: 44px;
+  margin-top: 20px;
+  flex-shrink: 0;
+  border-radius: 0px 10px 10px 0px;
+  background: #6c00ff;
+  color: #fff;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+  border: 0;
+  cursor: pointer;
+}
+
+.inputReComment {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  height: 40px;
+  text-indent: 3%;
+  color: #222222;
+  width: 85%;
+  border: solid #e0dfdf 1px;
+  border-radius: 10px 0px 0px 10px;
+  background: none;
+  outline: none;
+  cursor: text;
+}
+.inputReComment::placeholder {
+  color: #aaaaaa;
+}
+.inputReComment:focus {
+  outline: none;
+}
+
+.ReComBtn {
+  width: 13%;
+  height: 44px;
+  margin-top: 20px;
+  flex-shrink: 0;
+  border-radius: 0px 10px 10px 0px;
+  background: #e0dfdf;
+  color: #aaaaaa;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 800;
+  border: 0;
+  cursor: pointer;
+}
+
+.ReComWriteBtn {
+  position: absolute;
+  width: 60px;
+  height: 40px;
+  right: 40vw;
+  margin-top: -20px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px #959595 solid;
+  background-color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.comment {
+  padding-top: 10px;
+  width: 100%;
+}
+
+.name {
+  display: inline;
+  color: #6c00ff;
+  font-weight: 600;
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.content {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  margin-left: 30px;
+  text-align: baseline;
+}
+
+.line3 {
+  border-bottom: 1px solid #959595;
+}
+
+.date {
+  display: inline;
+  margin-left: 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 17px;
+  font-weight: 600;
+}
+.pagination > * {
+  margin: 0 5px;
+}
+
+.currentPage {
+  display: flex;
+  color: #8effa7;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.page {
+  display: flex;
+  color: #6c00ff;
+
+  cursor: pointer;
+}

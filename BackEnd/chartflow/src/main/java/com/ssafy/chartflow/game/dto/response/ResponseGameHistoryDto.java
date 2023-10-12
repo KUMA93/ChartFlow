@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class ResponseGameHistoryDto {
 
     private long gameHistoryId;
-    private LocalDate chartDate;
+    private String chartDate;
     private int turn;
     private int price;
     private int quantity;

@@ -24,10 +24,92 @@
   justify-content: space-between;
 }
 
-.assetText {
+.assetPer {
   font-size: 14px;
 }
 
 .assetNum {
   font-size: 25px;
+}
+
+.container3 {
+  display: grid;
+  place-items: center;
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
+  grid-gap: 10px;
+  grid-template-areas:
+    "init initNum initNum"
+    "cash buystock stockValue"
+    "cashNum buystockNum stockValueNum"
+    "stocks avgPrice curPrice"
+    "stocksNum avgPriceNum curPriceNum";
+
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.init {
+  grid-area: init;
+  font-weight: 600;
+}
+
+.initNum {
+  grid-area: initNum;
+}
+
+.cash {
+  grid-area: cash;
+  font-weight: 600;
+}
+.cashNum {
+  grid-area: cashNum;
+}
+.buystock {
+  grid-area: buystock;
+  font-weight: 600;
+}
+.buystockNum {
+  grid-area: buystockNum;
+}
+.stockValue {
+  grid-area: stockValue;
+  font-weight: 600;
+}
+.stockValueNum {
+  grid-area: stockValueNum;
+}
+.stocks {
+  grid-area: stocks;
+  font-weight: 600;
+}
+.stocksNum {
+  grid-area: stocksNum;
+}
+.avgPrice {
+  grid-area: avgPrice;
+  font-weight: 600;
+}
+.avgPriceNum {
+  grid-area: avgPriceNum;
+}
+.curPrice {
+  grid-area: curPrice;
+  font-weight: 600;
+}
+.curPriceNum {
+  grid-area: curPriceNum;
+}
+
+.redText {
+  color: #f86565;
+}
+
+.blueText {
+  color: #5258e6;
+}
+
+.blackText {
+  color: black;
 }

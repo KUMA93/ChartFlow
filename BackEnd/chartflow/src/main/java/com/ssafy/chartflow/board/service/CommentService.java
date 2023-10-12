@@ -40,8 +40,9 @@ public class CommentService {
             for (ReComments reComments : reCommentList) {
                 ResponseReCommentDto responseReCommentDto = ResponseReCommentDto.builder()
                         .reCommentId(reComments.getId())
-                        .commentId(reComments.getId())
+                        .commentId(comments.getId())
                         .userId(reComments.getUser().getId())
+                        .nickname(reComments.getUser().getNickname())
                         .content(reComments.getContent())
                         .registerTime(reComments.getRegisterTime())
                         .cancel(reComments.getCancel())
@@ -53,6 +54,7 @@ public class CommentService {
             ResponseCommentDto responseCommentDto = ResponseCommentDto.builder()
                     .commentId(comments.getId())
                     .userId(comments.getUser().getId())
+                    .nickname(comments.getUser().getNickname())
                     .content(comments.getContent())
                     .registerTime(comments.getRegisterTime())
                     .cancel(comments.getCancel())
