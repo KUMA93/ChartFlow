@@ -14,6 +14,7 @@ import com.ssafy.chartflow.security.service.JwtService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,24 @@ import java.util.Map;
 public class BoardController {
     private final ArticleService articleService;
     private final JwtService jwtService;
+    //전체 글 조회
+    @GetMapping("/list")
+    public ResponseEntity<Map<String,Object>> listArticle(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+
+        Map<String,Object> response = new HashMap<>();
+
+        try{
+            Pageable pageable = PageRequest.of(page,size);
+            response.put("articles",pageable);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
     //키워드 검색 목록 조회
     @GetMapping("/list/{keyword}")

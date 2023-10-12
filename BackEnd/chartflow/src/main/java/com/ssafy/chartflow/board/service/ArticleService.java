@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ArticleService {
+    //게시판 페이징 조회
+    Page<Article> findArticles(Pageable pageable);
     //키워드 글 목록 조회
     Page<Article> getAllKeywordArticles(String keyword,Pageable pageable);
     //글 목록 조회

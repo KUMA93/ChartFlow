@@ -36,11 +36,13 @@ public class ArticleServiceImp implements ArticleService {
     }
 
     @Override
+    public Page<Article> findArticles(Pageable pageable) {
     public Page<Article> getAllArticles(Pageable pageable) {
         return articleRepository.findAll(pageable);
     }
 
     @Override
+    public void writeArticle(long userId, String title, String content) {
     public void writeArticle(long userId, ArticleTag tag, String title, String content) {
         User user = userRepository.findUserById(userId);
         Article article = new Article();
